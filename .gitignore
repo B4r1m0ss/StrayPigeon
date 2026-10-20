@@ -1,0 +1,43 @@
+# secrets / local state — never commit
+.env
+.env.*
+!.env.example
+*.invite
+invite*.txt
+vault*.json
+setup.local.json
+setup.*.local.json
+*.local.json
+*.secret.json
+*.pem
+*.key
+*.crt
+*.p12
+state/
+logs/
+*.log
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.spec
+*.egg-info/
+
+# local databases / caches
+*.db
+*.sqlite
+*.sqlite3
+
+# editor / OS
+.vscode/
+.idea/
+.DS_Store

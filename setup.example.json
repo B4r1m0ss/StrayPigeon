@@ -1,0 +1,15 @@
+{
+  "_comment": "Copy to setup.local.json, chmod 600, fill, then: python3 scripts/setup.py --config setup.local.json. Delete after setup.",
+  "mode": "smtp",
+  "my_email": "alice@example.com",
+  "peer_email": "bob@example.com",
+  "imap_host": "imap.example.com",
+  "smtp_host": "smtp.example.com",
+  "smtp_port": 465,
+  "smtp_starttls": false,
+  "auth_code": "YOUR_AUTH_CODE",
+  "vault": "state/alice-vault.json",
+  "vault_passphrase": "YOUR_VAULT_PASSPHRASE",
+  "invite": "state/invite.txt",
+  "test": true
+}

@@ -1,0 +1,13 @@
+{
+  "_comment": "Copy to setup.bob.local.json, chmod 600, paste the p2p1: code from the initiator into join, then: python3 scripts/setup.py --config setup.bob.local.json. Delete after setup.",
+  "mode": "smtp",
+  "join": "p2p1:PASTE_THE_INVITE_CODE_HERE",
+  "imap_host": "imap.example.org",
+  "smtp_host": "smtp.example.org",
+  "smtp_port": 465,
+  "smtp_starttls": false,
+  "auth_code": "BOB_AUTH_CODE",
+  "vault": "state/bob-vault.json",
+  "vault_passphrase": "YOUR_VAULT_PASSPHRASE",
+  "test": true
+}
