@@ -70,7 +70,7 @@
 Linux / Arch（系统 Python 受 PEP 668 保护，用 venv）：
 
 ```bash
-git clone https://github.com/<your-name>/StrayPigeon.git
+git clone https://github.com/B4r1m0ss/StrayPigeon.git
 cd StrayPigeon
 python3 -m venv --system-site-packages .venv
 .venv/bin/pip install -r requirements-gui.txt
@@ -80,7 +80,7 @@ python3 -m venv --system-site-packages .venv
 Windows：
 
 ```powershell
-git clone https://github.com/<your-name>/StrayPigeon.git
+git clone https://github.com/B4r1m0ss/StrayPigeon.git
 cd StrayPigeon
 py -3 -m pip install -r requirements-gui.txt
 py -3 -m p2p.gui
