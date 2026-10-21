@@ -105,6 +105,15 @@ class _MailPage(QWizardPage):
         self.registerField("smtp_port", self.port)
         self.registerField("smtp_starttls", self.starttls)
         self.smtp.textChanged.connect(self.completeChanged.emit)
+        self.starttls.toggled.connect(self._on_starttls)
+
+    def _on_starttls(self, checked: bool) -> None:
+        # 465 = implicit TLS; 587 = submission with STARTTLS. Only auto-adjust
+        # the common defaults; the user can still type another port.
+        if checked and self.port.value() == 465:
+            self.port.setValue(587)
+        elif not checked and self.port.value() == 587:
+            self.port.setValue(465)
 
     def initializePage(self) -> None:
         email = str(self.field("email") or "")
@@ -156,12 +165,20 @@ class _MailPage(QWizardPage):
         self.status.setText("testing…")
         self._worker = _CheckWorker(identity)
         self._worker.done.connect(self._test_done)
+        self._worker.finished.connect(self._test_finished)
         self._worker.start()
 
     def _test_done(self, ok: bool, message: str) -> None:
         self.status.setText(("OK: " if ok else "FAIL: ") + message)
         self.test_btn.setEnabled(True)
+        # Keep self._worker alive until QThread.finished fires; dropping the
+        # last reference here can abort with "QThread destroyed while running".
+
+    def _test_finished(self) -> None:
+        worker = self._worker
         self._worker = None
+        if worker is not None:
+            worker.deleteLater()
 
 
 class _VaultPage(QWizardPage):
@@ -255,6 +272,11 @@ class IdentityWizard(QWizard):
         self.addPage(_VaultPage())
 
     def accept(self) -> None:
+        if self._test_running():
+            QMessageBox.information(
+                self, "StrayPigeon", "The connection test is still running; please wait."
+            )
+            return
         mail = self.page(1)
         vault = self.page(2)
         identity = getattr(mail, "identity", None)
@@ -277,3 +299,16 @@ class IdentityWizard(QWizard):
         self.passphrase = passphrase
         self.data = data
         super().accept()
+
+    def _test_running(self) -> bool:
+        mail_page = self.page(1)
+        worker = getattr(mail_page, "_worker", None)
+        return worker is not None and worker.isRunning()
+
+    def reject(self) -> None:
+        if self._test_running():
+            QMessageBox.information(
+                self, "StrayPigeon", "The connection test is still running; please wait."
+            )
+            return
+        super().reject()

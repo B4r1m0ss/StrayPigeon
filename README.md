@@ -148,6 +148,9 @@ python3 -m p2p.gui
   - **Clear vault / set up again**：直接删除 vault，无备份，所有 contacts/PSK 丢失，随后可重新建 identity；
   - **Lock vault**：清空内存并回到解锁界面。
 
+> SMTP TLS 选择：**465 = 隐式 TLS（STARTTLS 不勾）**；**587 = STARTTLS（勾选）**。
+> 163 / 126 的 SMTP 用 465，STARTTLS 保持关闭。
+
 两台机器的常用组合：
 
 ```text
