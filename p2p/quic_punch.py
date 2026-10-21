@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import asyncio
 import secrets
+import socket
 from pathlib import Path
 from typing import Callable
 
@@ -120,11 +121,15 @@ class PunchQuicClient(_PunchBase):
         local_port: int,
         candidates: list[Address],
         timeout: float = 15.0,
+        sock: socket.socket | None = None,
     ) -> Address:
         loop = asyncio.get_running_loop()
-        await loop.create_datagram_endpoint(
-            lambda: self, local_addr=("0.0.0.0", local_port)
-        )
+        if sock is not None:
+            await loop.create_datagram_endpoint(lambda: self, sock=sock)
+        else:
+            await loop.create_datagram_endpoint(
+                lambda: self, local_addr=("0.0.0.0", local_port)
+            )
         observed = await self._punch(candidates, timeout=timeout)
         if observed is None:
             raise TimeoutError("UDP punch timed out")
@@ -178,11 +183,15 @@ class PunchQuicServer(_PunchBase):
         port: int,
         candidates: list[Address] | None = None,
         timeout: float = 15.0,
+        sock: socket.socket | None = None,
     ) -> None:
         loop = asyncio.get_running_loop()
-        await loop.create_datagram_endpoint(
-            lambda: self, local_addr=(host, port)
-        )
+        if sock is not None:
+            await loop.create_datagram_endpoint(lambda: self, sock=sock)
+        else:
+            await loop.create_datagram_endpoint(
+                lambda: self, local_addr=(host, port)
+            )
         assert self.transport is not None
         self.quic_server.connection_made(self.transport)
         if candidates:

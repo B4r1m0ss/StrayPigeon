@@ -37,6 +37,7 @@ class Config:
     stun_servers: tuple[str, ...] = DEFAULT_STUN
     stun_timeout: float = 2.0
     replay_window: float = 120.0
+    quic_handoff: bool = False
     contact_id: str = ""
     my_email: str = ""
     peer_email: str = ""

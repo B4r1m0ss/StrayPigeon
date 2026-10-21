@@ -65,6 +65,7 @@ class Session:
         self._stop = threading.Event()
         # GUI embedding: no stdin reads, no CHAT prints; outbox for sends.
         self.gui = False
+        self.handoff = False
         self.event_sink = None
         self.outbox: queue.Queue[str | None] = queue.Queue()
 
@@ -369,6 +370,16 @@ class Session:
                 return 2
 
             self.peer_addr = addr
+            if self.cfg.quic_handoff:
+                self.handoff = True
+                self.log.event("QUIC_HANDOFF", peer=fmt_addr(addr), sid=self.sid)
+                self._emit(
+                    "state",
+                    state="quic_ready",
+                    peer=fmt_addr(addr),
+                    sid=self.sid,
+                )
+                return 0
             self.log.event("CONNECTED", peer=fmt_addr(addr))
             self._emit("state", state="connected", peer=fmt_addr(addr))
             self._chat()
@@ -513,7 +524,7 @@ class Session:
                 self.chan.close()
             except Exception:  # noqa: BLE001
                 pass
-        if self.sock is not None:
+        if self.sock is not None and not self.handoff:
             try:
                 self.sock.close()
             except OSError:
