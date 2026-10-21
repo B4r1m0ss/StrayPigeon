@@ -24,6 +24,20 @@ def normalize_peer(value: str) -> str:
     return str(value).strip().lower()
 
 
+ROLES = ("initiator", "responder")
+
+
+def normalize_role(value: str | None) -> str:
+    role = str(value or "initiator").strip().lower()
+    if role not in ROLES:
+        raise ValueError(f"invalid role: {value!r}")
+    return role
+
+
+def opposite_role(role: str) -> str:
+    return "responder" if normalize_role(role) == "initiator" else "initiator"
+
+
 def is_v2(data: dict) -> bool:
     return isinstance(data.get("identity"), dict) and isinstance(data.get("contacts"), dict)
 
@@ -35,6 +49,9 @@ def migrate_vault(data: dict) -> dict:
     if is_v2(data):
         out = copy.deepcopy(data)
         out.setdefault("version", 2)
+        for contact in (out.get("contacts") or {}).values():
+            if isinstance(contact, dict):
+                contact.setdefault("role", "initiator")
         return out
 
     mode = str(data.get("mode") or "")
@@ -68,6 +85,7 @@ def migrate_vault(data: dict) -> dict:
         "psk_b64": str(data.get("psk_b64") or ""),
         "mode": mode,
         "folder": str(data.get("folder") or "INBOX"),
+        "role": normalize_role(data.get("role")),
         "created_at": data.get("created_at") or 0,
         "last_used_at": 0,
     }
@@ -101,6 +119,7 @@ def upsert_contact(data: dict, contact: dict, force: bool = False) -> str:
     peer = str(contact.get("peer_email") or "").strip()
     if not peer:
         raise ValueError("contact has no peer_email")
+    contact["role"] = normalize_role(contact.get("role"))
     key = normalize_peer(peer)
     contacts = data.setdefault("contacts", {})
     if key in contacts and not force:
@@ -122,16 +141,22 @@ def _require_email(value: str, what: str) -> str:
 
 
 def create_contact(
-    data: dict, peer: str, folder: str | None = None, force: bool = False
+    data: dict,
+    peer: str,
+    folder: str | None = None,
+    force: bool = False,
+    role: str = "initiator",
 ) -> tuple[str, dict, str]:
     """Create a contact + invite for the identity in ``data``.
 
+    The invite carries the creator's role; the joiner stores the opposite.
     Returns ``(contact_key, contact, invite_code)``. The caller persists the
     vault. This is the shared implementation for the CLI and the GUI.
     """
     identity = data.get("identity")
     if not isinstance(identity, dict):
         raise ValueError("vault has no identity; run setup first")
+    role = normalize_role(role)
     mode = str(identity.get("mode") or "")
     my_email = str(identity.get("my_email") or "")
     peer = str(peer).strip()
@@ -147,6 +172,7 @@ def create_contact(
             "my_email": my_email,
             "peer_email": peer,
             "psk_b64": psk_b64,
+            "role": role,
         }
     elif mode == "imap":
         if not peer:
@@ -159,6 +185,7 @@ def create_contact(
             "mailbox": my_email,
             "folder": folder,
             "psk_b64": psk_b64,
+            "role": role,
         }
     else:
         raise ValueError(f"unsupported identity mode: {mode!r}")
@@ -168,6 +195,7 @@ def create_contact(
         "psk_b64": psk_b64,
         "mode": mode,
         "folder": folder,
+        "role": role,
         "created_at": now,
         "last_used_at": 0,
     }
@@ -216,6 +244,7 @@ def join_contact(
         "psk_b64": str(invite["psk_b64"]),
         "mode": mode,
         "folder": folder,
+        "role": opposite_role(invite.get("role") or "initiator"),
         "created_at": int(time.time()),
         "last_used_at": 0,
     }

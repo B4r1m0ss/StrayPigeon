@@ -3,7 +3,7 @@
 > **Email-signaled, end-to-end encrypted P2P chat.**
 > 一只迷途的信鸽，也总能找到同伴。
 
-![tests](https://img.shields.io/badge/tests-47%20passing-brightgreen)
+![tests](https://img.shields.io/badge/tests-51%20passing-brightgreen)
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![license](https://img.shields.io/badge/license-GPL--3.0-green)
 ![platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)
@@ -110,6 +110,8 @@ python3 scripts/setup.py --config setup.identity.example.json
 
 ```bash
 python3 scripts/contact.py new --peer bob@example.com
+# 默认本端 initiator；也可以显式 --role responder
+# 邀请码里会带 role；加入方自动存相反 role
 # 把打印出来的 p2p1: 邀请码带外发给对方
 
 python3 scripts/contact.py join "p2p1:..."
@@ -172,7 +174,7 @@ python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
 
 ## 当前状态
 
-- **47 个单元测试通过**；
+- **51 个单元测试通过**；
 - 同机加密 demo：`PASS`；
 - 真实 163（Windows）↔ 126（Linux）跨提供商 SMTP 加密聊天：`CONNECTED`；
 - GUI MVP：vault 解锁、**Create identity 向导**、vault 修改口令/清除/锁定、contact 列表、New/Join、连接、聊天、Disconnect、punching 进度、Allow UDP 防火墙辅助；Linux offscreen smoke `PASS`；
@@ -232,7 +234,7 @@ scripts/
   allow_firewall.ps1  # Windows UDP 端口放行（UAC）
   pair_test.py        # 两个 vault 非交互测试
   ...
-tests/                # 14 个测试文件，47 个测试
+tests/                # 14 个测试文件，51 个测试
 docs/images/gui.png
 DEVELOPMENT.md        # 开发/实验记录
 LICENSE
@@ -241,7 +243,7 @@ LICENSE
 ## 测试
 
 ```bash
-python3 -m unittest discover -s tests -v   # 47 tests
+python3 -m unittest discover -s tests -v   # 51 tests
 python3 scripts/demo_same_machine.py       # 同机加密 demo
 ```
 

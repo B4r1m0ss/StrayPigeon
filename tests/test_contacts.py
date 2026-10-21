@@ -10,6 +10,7 @@ from p2p.contacts import (
     select_contact,
     upsert_contact,
 )
+from p2p.invite import encode_invite
 
 
 def _flat_smtp() -> dict:
@@ -40,6 +41,7 @@ class ContactsTests(unittest.TestCase):
         self.assertEqual(key, "bob@example.com")
         self.assertEqual(contact["psk_b64"], "cHNr")
         self.assertEqual(contact["mode"], "smtp")
+        self.assertEqual(contact["role"], "initiator")
 
     def test_migrate_flat_imap(self) -> None:
         data = migrate_vault(
@@ -106,7 +108,70 @@ class ContactsTests(unittest.TestCase):
         joined_key, joined = join_contact(bob, code)
         self.assertEqual(joined_key, "alice@example.com")
         self.assertEqual(joined["psk_b64"], contact["psk_b64"])
+        self.assertEqual(contact["role"], "initiator")
+        self.assertEqual(joined["role"], "responder")
         self.assertEqual(len(bob["contacts"]), 1)
+
+    def test_create_responder_invite_becomes_initiator(self) -> None:
+        alice = {
+            "version": 2,
+            "identity": {"my_email": "alice@example.com", "mode": "smtp"},
+            "contacts": {},
+        }
+        _, contact, code = create_contact(alice, "bob@example.com", role="responder")
+        self.assertEqual(contact["role"], "responder")
+
+        bob = {
+            "version": 2,
+            "identity": {"my_email": "bob@example.com", "mode": "smtp"},
+            "contacts": {},
+        }
+        _, joined = join_contact(bob, code)
+        self.assertEqual(joined["role"], "initiator")
+
+    def test_legacy_invite_without_role_defaults(self) -> None:
+        code = encode_invite(
+            {
+                "v": 1,
+                "mode": "smtp",
+                "my_email": "alice@example.com",
+                "peer_email": "bob@example.com",
+                "psk_b64": "cHNr",
+            }
+        )
+        bob = {
+            "version": 2,
+            "identity": {"my_email": "bob@example.com", "mode": "smtp"},
+            "contacts": {},
+        }
+        _, joined = join_contact(bob, code)
+        self.assertEqual(joined["role"], "responder")
+
+    def test_migrate_v2_adds_default_role(self) -> None:
+        raw = {
+            "version": 2,
+            "identity": {"my_email": "alice@example.com", "mode": "smtp"},
+            "contacts": {
+                "bob@example.com": {
+                    "peer_email": "bob@example.com",
+                    "psk_b64": "cHNr",
+                    "mode": "smtp",
+                    "folder": "INBOX",
+                }
+            },
+        }
+        data = migrate_vault(raw)
+        self.assertEqual(data["contacts"]["bob@example.com"]["role"], "initiator")
+        self.assertNotIn("role", raw["contacts"]["bob@example.com"])
+
+    def test_invalid_role_rejected(self) -> None:
+        alice = {
+            "version": 2,
+            "identity": {"my_email": "alice@example.com", "mode": "smtp"},
+            "contacts": {},
+        }
+        with self.assertRaises(ValueError):
+            create_contact(alice, "bob@example.com", role="both")
 
     def test_join_checks_identity_email(self) -> None:
         alice = {
