@@ -335,6 +335,13 @@ class Session:
                 self._emit("error", code="E_SYMMETRIC_NAT")
                 return 5
 
+            self._emit(
+                "state",
+                state="punching",
+                peer=fmt_addr(self.peer_addr),
+                candidates=len(self.peer_candidates),
+                window=self.cfg.punch_window,
+            )
             addr = punch(
                 self.sock,
                 [(c.ip, c.port) for c in self.peer_candidates],

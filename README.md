@@ -137,6 +137,12 @@ python3 -m p2p.gui
 4. 点 **Connect**；
 5. 连上后输入消息，Enter 或 **Send**；**Disconnect** 断开。
 
+- 连接过程会依次显示 `bound → peer ready → punching`；punching 有最多 300 秒的进度条；
+- 点 **Allow UDP** 可以放行本机防火墙的当前 UDP 端口：
+  - **Windows**：弹 UAC，默认只开 `Private/Domain`；勾选后可选 public；
+  - **Linux**：显示 ufw / firewalld / nft 命令，复制到终端执行；
+  - 只开当前 UDP 端口，**不会关闭防火墙**。
+
 两台机器的常用组合：
 
 ```text
@@ -161,7 +167,7 @@ python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
 - **38 个单元测试通过**；
 - 同机加密 demo：`PASS`；
 - 真实 163（Windows）↔ 126（Linux）跨提供商 SMTP 加密聊天：`CONNECTED`；
-- GUI MVP：vault 解锁、contact 列表、New/Join、连接、聊天、Disconnect；Linux offscreen smoke `PASS`；
+- GUI MVP：vault 解锁、contact 列表、New/Join、连接、聊天、Disconnect、punching 进度、Allow UDP 防火墙辅助；Linux offscreen smoke `PASS`；
 - 尚未完成：GUI 的 identity 向导、PyInstaller GUI exe/安装包、托盘/通知、文件传输、自动重连；
 - **未做安全审计**。
 
@@ -182,6 +188,7 @@ python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
 - **NAT 映射会超时**：默认 15 秒 keepalive；如果运营商回收更短，改 `--keepalive 5`。
 - **无消息持久化**：聊天记录只在当前进程里，JSONL 日志不保存消息正文。
 - **无文件传输/语音/多设备**。
+- **Allow UDP 只处理本机防火墙**：路由器、NAT、对称 NAT 不在它范围内；Windows 规则默认只对 Private/Domain 生效。
 - **元数据不保护**：邮件服务商知道谁在何时通信。
 - **GUI 仍是 MVP**：identity 向导、安装包、托盘/通知在路线图上。
 
@@ -209,6 +216,7 @@ scripts/
   setup.py            # 只配置 identity
   contact.py          # new / join / list
   run_vault.py        # CLI 运行
+  allow_firewall.ps1  # Windows UDP 端口放行（UAC）
   pair_test.py        # 两个 vault 非交互测试
   ...
 tests/                # 38 个测试

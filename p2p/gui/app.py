@@ -1,11 +1,15 @@
 from __future__ import annotations
 
+import os
+import shutil
 import sys
+import time
 from pathlib import Path
 
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, QTimer
 from PyQt6.QtWidgets import (
     QApplication,
+    QCheckBox,
     QComboBox,
     QDialog,
     QFileDialog,
@@ -18,6 +22,7 @@ from PyQt6.QtWidgets import (
     QListWidgetItem,
     QMessageBox,
     QPlainTextEdit,
+    QProgressBar,
     QPushButton,
     QSpinBox,
     QSplitter,
@@ -31,6 +36,43 @@ from p2p.runtime_env import apply_vault_env
 from p2p.vault import default_vault_path, load_vault, save_vault
 
 from .worker import SessionWorker
+
+
+class FirewallDialog(QDialog):
+    """Confirm opening one UDP port in the host firewall."""
+
+    def __init__(self, port: int, parent=None) -> None:
+        super().__init__(parent)
+        self.setWindowTitle("StrayPigeon — allow UDP port")
+        self.resize(500, 240)
+        self.allow_public = QCheckBox("Also allow on public networks (less safe)")
+        if os.name != "nt":
+            self.allow_public.setVisible(False)
+        if os.name == "nt":
+            detail = (
+                "Windows will show a UAC prompt. Only this UDP port is opened; "
+                "the firewall is not disabled."
+            )
+        else:
+            detail = (
+                "StrayPigeon cannot change the system firewall without root. "
+                "The next dialog shows the command to run yourself."
+            )
+        text = QLabel(f"Open inbound UDP {port} in the local firewall?\n\n{detail}")
+        text.setWordWrap(True)
+        cancel = QPushButton("Cancel")
+        cancel.clicked.connect(self.reject)
+        allow = QPushButton("Continue")
+        allow.setDefault(True)
+        allow.clicked.connect(self.accept)
+        buttons = QHBoxLayout()
+        buttons.addStretch(1)
+        buttons.addWidget(cancel)
+        buttons.addWidget(allow)
+        layout = QVBoxLayout(self)
+        layout.addWidget(text)
+        layout.addWidget(self.allow_public)
+        layout.addLayout(buttons)
 
 
 class VaultDialog(QDialog):
@@ -138,9 +180,15 @@ class MainWindow(QWidget):
         self.port.setValue(40000)
         self.advertise = QLineEdit("127.0.0.1")
         self.stun = QLineEdit("stun.miwifi.com:3478, stun.cloudflare.com:3478")
+        self.firewall_btn = QPushButton("Allow UDP")
+        self.firewall_btn.setToolTip("Open the local firewall for the UDP port above")
+        self.firewall_btn.clicked.connect(self._allow_firewall)
+        port_row = QHBoxLayout()
+        port_row.addWidget(self.port, 1)
+        port_row.addWidget(self.firewall_btn)
         settings = QFormLayout()
         settings.addRow("Role", self.role)
-        settings.addRow("Port", self.port)
+        settings.addRow("Port", port_row)
         settings.addRow("Advertise", self.advertise)
         settings.addRow("STUN", self.stun)
 
@@ -165,6 +213,16 @@ class MainWindow(QWidget):
 
         self.state_label = QLabel("idle")
         self.state_label.setWordWrap(True)
+        self.punch_bar = QProgressBar()
+        self.punch_bar.setRange(0, 300)
+        self.punch_bar.setValue(0)
+        self.punch_bar.setTextVisible(True)
+        self.punch_bar.setVisible(False)
+        self.punch_timer = QTimer(self)
+        self.punch_timer.setInterval(1000)
+        self.punch_timer.timeout.connect(self._tick_punch)
+        self._punch_start = 0.0
+        self._punch_window = 300.0
         self.chat = QPlainTextEdit()
         self.chat.setReadOnly(True)
         self.chat.setPlaceholderText("Connect to a contact to start chatting.")
@@ -182,6 +240,7 @@ class MainWindow(QWidget):
         right = QWidget()
         right_layout = QVBoxLayout(right)
         right_layout.addWidget(self.state_label)
+        right_layout.addWidget(self.punch_bar)
         right_layout.addWidget(self.chat, 1)
         right_layout.addLayout(message_row)
 
@@ -307,6 +366,7 @@ class MainWindow(QWidget):
             self.port,
             self.advertise,
             self.stun,
+            self.firewall_btn,
         ):
             widget.setEnabled(not locked)
         self.connect_btn.setEnabled(not locked and bool(self.contact_key))
@@ -318,7 +378,13 @@ class MainWindow(QWidget):
     def _on_state(self, payload: dict) -> None:
         state = str(payload.get("state") or "")
         peer = str(payload.get("peer") or "")
-        if state == "connected":
+        if state == "punching":
+            window = float(payload.get("window") or 300.0)
+            self.state_label.setText(f"punching — {peer}（最多 {window:.0f}s）")
+            self._append(f"--- punching UDP to {peer} ... ---")
+            self._start_punch_progress(window)
+        elif state == "connected":
+            self._stop_punch_progress()
             self.connected = True
             self.state_label.setText(f"connected — {peer}")
             self.input.setEnabled(True)
@@ -333,15 +399,37 @@ class MainWindow(QWidget):
         elif state == "bound":
             self.state_label.setText("bound — collecting candidates…")
         elif state == "stopped":
+            self._stop_punch_progress()
             self.state_label.setText("stopped")
         else:
             self.state_label.setText(state or "…")
+
+    def _start_punch_progress(self, window: float) -> None:
+        self._punch_start = time.monotonic()
+        self._punch_window = max(1.0, float(window))
+        self.punch_bar.setRange(0, int(self._punch_window))
+        self.punch_bar.setValue(0)
+        self.punch_bar.setFormat("punching… %p%")
+        self.punch_bar.setVisible(True)
+        self.punch_timer.start()
+
+    def _tick_punch(self) -> None:
+        elapsed = time.monotonic() - self._punch_start
+        self.punch_bar.setValue(min(int(elapsed), int(self._punch_window)))
+        if elapsed >= self._punch_window:
+            self.punch_timer.stop()
+
+    def _stop_punch_progress(self) -> None:
+        self.punch_timer.stop()
+        self.punch_bar.setVisible(False)
+        self.punch_bar.setValue(0)
 
     def _on_message(self, text: str, peer: str) -> None:
         name = self.current_peer or peer
         self._append(f"[{name}] {text}")
 
     def _on_error(self, code: str, detail: str) -> None:
+        self._stop_punch_progress()
         self._append(f"[error] {code} {detail}".rstrip())
         self.state_label.setText(f"error — {code}")
 
@@ -351,6 +439,7 @@ class MainWindow(QWidget):
         if worker is not None:
             worker.deleteLater()
         self.connected = False
+        self._stop_punch_progress()
         self.input.setEnabled(False)
         self.send_btn.setEnabled(False)
         self._lock_controls(False)
@@ -361,6 +450,7 @@ class MainWindow(QWidget):
     def _disconnect(self) -> None:
         if self.worker is None:
             return
+        self._stop_punch_progress()
         self.state_label.setText("disconnecting…")
         self.disconnect_btn.setEnabled(False)
         # Do not block the GUI thread. Session.stop() interrupts the
@@ -382,6 +472,92 @@ class MainWindow(QWidget):
         self.chat.appendPlainText(text)
         bar = self.chat.verticalScrollBar()
         bar.setValue(bar.maximum())
+
+    # ---- firewall helper ----------------------------------------------
+    def _allow_firewall(self) -> None:
+        port = int(self.port.value())
+        dialog = FirewallDialog(port, self)
+        if dialog.exec() != QDialog.DialogCode.Accepted:
+            return
+        if os.name == "nt":
+            self._run_windows_firewall(port, dialog.allow_public.isChecked())
+        else:
+            self._show_linux_firewall(port)
+
+    def _firewall_script(self) -> Path:
+        if getattr(sys, "frozen", False):
+            base = Path(getattr(sys, "_MEIPASS", Path.cwd()))
+        else:
+            base = Path(__file__).resolve().parents[2]
+        return base / "scripts" / "allow_firewall.ps1"
+
+    def _run_windows_firewall(self, port: int, allow_public: bool) -> None:
+        script = self._firewall_script()
+        if not script.exists():
+            QMessageBox.critical(
+                self, "StrayPigeon", f"Firewall helper not found:\n{script}"
+            )
+            return
+        profile = "Any" if allow_public else "Private,Domain"
+        args = (
+            f'-NoProfile -ExecutionPolicy Bypass -File "{script}" '
+            f'-Port {port} -Profile "{profile}"'
+        )
+        try:
+            import ctypes
+
+            rc = ctypes.windll.shell32.ShellExecuteW(
+                None, "runas", "powershell.exe", args, None, 1
+            )
+        except Exception as exc:  # noqa: BLE001
+            QMessageBox.critical(self, "StrayPigeon", f"Cannot start UAC helper: {exc}")
+            return
+        if rc <= 32:
+            QMessageBox.critical(self, "StrayPigeon", "Could not start the elevated helper.")
+            return
+        QMessageBox.information(
+            self,
+            "StrayPigeon",
+            "UAC prompt opened. Approve it to allow UDP port "
+            f"{port} ({profile}).",
+        )
+
+    def _show_linux_firewall(self, port: int) -> None:
+        if shutil.which("ufw"):
+            command = f"sudo ufw allow {port}/udp"
+        elif shutil.which("firewall-cmd"):
+            command = (
+                f"sudo firewall-cmd --add-port={port}/udp --permanent && "
+                "sudo firewall-cmd --reload"
+            )
+        elif shutil.which("nft"):
+            command = (
+                f"sudo nft add rule inet filter input udp dport {port} accept  "
+                "# adjust table/chain if needed"
+            )
+        else:
+            command = (
+                f"# No ufw/firewall-cmd/nft found.\n"
+                f"# Allow inbound UDP {port} in your firewall."
+            )
+        dialog = QDialog(self)
+        dialog.setWindowTitle("StrayPigeon — firewall command")
+        dialog.resize(620, 180)
+        edit = QPlainTextEdit(command)
+        edit.setReadOnly(True)
+        copy = QPushButton("Copy")
+        copy.clicked.connect(lambda: QApplication.clipboard().setText(command))
+        close = QPushButton("Close")
+        close.clicked.connect(dialog.accept)
+        buttons = QHBoxLayout()
+        buttons.addWidget(copy)
+        buttons.addStretch(1)
+        buttons.addWidget(close)
+        layout = QVBoxLayout(dialog)
+        layout.addWidget(QLabel("Run this in a terminal (root required):"))
+        layout.addWidget(edit, 1)
+        layout.addLayout(buttons)
+        dialog.exec()
 
     # ---- contact management -------------------------------------------
     def _save(self) -> bool:
