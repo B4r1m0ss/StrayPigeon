@@ -8,6 +8,7 @@ from PyQt6.QtCore import QObject, pyqtSignal
 from PyQt6.QtWidgets import QApplication
 
 from p2p.gui.multi_session import MultiSessionWindow
+from p2p.signal.mail_router import RoutedSignal
 
 
 class FakeController(QObject):
@@ -41,6 +42,31 @@ class FakeController(QObject):
         self.calls.append(("stop",))
 
 
+class FakeRouter:
+    def __init__(self) -> None:
+        self.on_signal = None
+        self.contacts = {}
+
+    def bind_contact(self, contact_id, psk):
+        self.contacts[contact_id] = psk
+
+    def emit_candidate(self, contact_id: str, ip: str, port: int) -> None:
+        assert self.on_signal is not None
+        self.on_signal(
+            RoutedSignal(
+                uid=1,
+                sid="sid-" + contact_id,
+                seq=1,
+                msg_type="CANDIDATE",
+                contact_id=contact_id,
+                message={
+                    "type": "CANDIDATE",
+                    "candidates": [{"ip": ip, "port": port, "kind": "srflx"}],
+                },
+            )
+        )
+
+
 class MultiSessionWindowTests(unittest.TestCase):
     def setUp(self) -> None:
         self.app = QApplication.instance() or QApplication([])
@@ -70,8 +96,13 @@ class MultiSessionWindowTests(unittest.TestCase):
             },
         }
         self.controller = FakeController()
+        self.router = FakeRouter()
         self.window = MultiSessionWindow(
-            self.data, Path(self._tmp.name) / "vault.json", "pass", controller=self.controller
+            self.data,
+            Path(self._tmp.name) / "vault.json",
+            "pass",
+            controller=self.controller,
+            mail_router=self.router,
         )
         self.window.show()
 
@@ -111,6 +142,19 @@ class MultiSessionWindowTests(unittest.TestCase):
         tab = self.window._tabs["b@example.com"]
         self.assertIn("connected", tab.state.text())
         self.assertIn("[peer] hi there", tab.chat.toPlainText())
+
+    def test_mail_candidate_auto_connects(self) -> None:
+        self.router.emit_candidate("b@example.com", "192.0.2.10", 40123)
+        self.assertIn(
+            ("connect", "b@example.com", "192.0.2.10", 40123),
+            self.controller.calls,
+        )
+        self.assertEqual(
+            self.data["contacts"]["b@example.com"]["peer_host"], "192.0.2.10"
+        )
+        self.assertEqual(
+            self.data["contacts"]["b@example.com"]["peer_port"], 40123
+        )
 
     def test_close_stops_controller(self) -> None:
         self.window.close()

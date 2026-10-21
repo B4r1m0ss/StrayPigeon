@@ -1,8 +1,9 @@
 from __future__ import annotations
 
+import base64
 from pathlib import Path
 
-from PyQt6.QtCore import Qt
+from PyQt6.QtCore import Qt, QThread, pyqtSignal
 from PyQt6.QtWidgets import (
     QFileDialog,
     QFormLayout,
@@ -20,6 +21,8 @@ from PyQt6.QtWidgets import (
     QVBoxLayout,
     QWidget,
 )
+
+from p2p.signal.mail_router import ImapMailbox, MailRouter, RoutedSignal
 
 from .quic_controller import QuicController
 
@@ -63,8 +66,32 @@ class ChatTab(QWidget):
         self.progress.setFormat(f"{Path(file_id).name if file_id else 'file'} %p%")
 
 
+class _RouterThread(QThread):
+    def __init__(self, router: object, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
+        self.router = router
+        self._stop = False
+
+    def run(self) -> None:
+        while not self._stop:
+            try:
+                self.router.poll_once()  # type: ignore[attr-defined]
+            except Exception:  # noqa: BLE001
+                pass
+            for _ in range(20):
+                if self._stop:
+                    return
+                self.msleep(100)
+
+    def stop(self) -> None:
+        self._stop = True
+        self.wait(3000)
+
+
 class MultiSessionWindow(QWidget):
     """Contact list + per-contact chat tabs on top of :class:`QuicController`."""
+
+    routed_signal = pyqtSignal(object)
 
     def __init__(
         self,
@@ -72,12 +99,18 @@ class MultiSessionWindow(QWidget):
         vault_path: str | Path,
         passphrase: str,
         controller: object | None = None,
+        mail_router: object | None = None,
+        auto_connect: bool = True,
         parent: QWidget | None = None,
     ) -> None:
         super().__init__(parent)
         self.data = data
         self.vault_path = Path(vault_path)
         self.passphrase = passphrase
+        self.auto_connect = auto_connect
+        self.mail_router = mail_router
+        self._router_thread: _RouterThread | None = None
+        self._connected: set[str] = set()
         self.setWindowTitle("StrayPigeon — multi-session")
         self.resize(1100, 760)
         self._tabs: dict[str, ChatTab] = {}
@@ -135,7 +168,9 @@ class MultiSessionWindow(QWidget):
         self.connect_btn.clicked.connect(self._connect)
         self.disconnect_btn.clicked.connect(self._disconnect)
         self.max_sessions.valueChanged.connect(self._on_max_changed)
+        self.routed_signal.connect(self._on_routed_signal)
         self._refresh_contacts()
+        self._bind_router()
         self.controller.start_server("0.0.0.0", int(self.local_port.value()))
 
     # ---- UI ------------------------------------------------------------
@@ -179,18 +214,80 @@ class MultiSessionWindow(QWidget):
         if hasattr(self.controller, "max_sessions"):
             self.controller.max_sessions = int(value)
 
-    # ---- actions -------------------------------------------------------
-    def _connect(self) -> None:
-        key = self._current_key()
-        if not key:
+    # ---- mail signal routing ------------------------------------------
+    def _bind_router(self) -> None:
+        if self.mail_router is None:
+            identity = self.data.get("identity") or {}
+            host = str(identity.get("imap_host") or "")
+            user = str(identity.get("my_email") or "")
+            password = str(identity.get("imap_password") or "")
+            if host and user and password:
+                try:
+                    self.mail_router = MailRouter(
+                        ImapMailbox(host, user, password, "INBOX")
+                    )
+                except Exception:  # noqa: BLE001
+                    self.mail_router = None
+        router = self.mail_router
+        if router is None:
             return
-        tab = self._tabs[key]
+        for key, contact in (self.data.get("contacts") or {}).items():
+            try:
+                psk = base64.b64decode(str(contact.get("psk_b64") or ""), validate=True)
+                router.bind_contact(key, psk)  # type: ignore[attr-defined]
+            except Exception:  # noqa: BLE001
+                continue
+        if hasattr(router, "on_signal"):
+            router.on_signal = self.routed_signal.emit  # type: ignore[attr-defined]
+        if hasattr(router, "poll_once"):
+            self._router_thread = _RouterThread(router, self)
+            self._router_thread.start()
+
+    def _on_routed_signal(self, routed: object) -> None:
+        if not isinstance(routed, RoutedSignal):
+            return
+        contact_id = routed.contact_id
+        contact = (self.data.get("contacts") or {}).get(contact_id)
+        if not isinstance(contact, dict):
+            return
+        for candidate in (routed.message or {}).get("candidates") or []:
+            if not isinstance(candidate, dict):
+                continue
+            ip = str(candidate.get("ip") or "")
+            port = candidate.get("port")
+            if ip and port:
+                contact["peer_host"] = ip
+                contact["peer_port"] = int(port)
+                break
+        tab = self._tabs.get(contact_id)
+        if tab is not None:
+            tab.set_state("peer ready")
+        if self.auto_connect and contact_id not in self._connected:
+            self._connect_contact(contact_id)
+
+    # ---- actions -------------------------------------------------------
+    def _connect_contact(self, key: str) -> None:
+        tab = self._tabs.get(key)
+        if tab is None:
+            return
+        contact = (self.data.get("contacts") or {}).get(key, {})
+        host = str(contact.get("peer_host") or self.peer_host.text().strip() or "127.0.0.1")
+        port = int(contact.get("peer_port") or self.peer_port.value())
         if hasattr(self.controller, "max_sessions") and self.controller.max_sessions <= 0:
             QMessageBox.warning(self, "StrayPigeon", "Maximum sessions must be at least 1.")
             return
         tab.set_state("connecting…")
-        self.controller.connect(key, self.peer_host.text().strip(), self.peer_port.value())
+        self.controller.connect(key, host, port)
         self.disconnect_btn.setEnabled(True)
+
+    def _connect(self) -> None:
+        key = self._current_key()
+        if not key:
+            return
+        contact = (self.data.get("contacts") or {}).get(key, {})
+        contact["peer_host"] = self.peer_host.text().strip()
+        contact["peer_port"] = int(self.peer_port.value())
+        self._connect_contact(key)
 
     def _send(self, key: str) -> None:
         tab = self._tabs.get(key)
@@ -225,6 +322,10 @@ class MultiSessionWindow(QWidget):
         return self._tabs.get(session_id) or self.tab_widget.currentWidget()
 
     def _on_state(self, session_id: str, state: str) -> None:
+        if state == "connected":
+            self._connected.add(session_id)
+        elif state in ("closed", "error"):
+            self._connected.discard(session_id)
         tab = self._tab_for(session_id)
         if tab is not None:
             tab.set_state(state)
@@ -248,6 +349,9 @@ class MultiSessionWindow(QWidget):
             tab.set_state("error")
 
     def closeEvent(self, event) -> None:  # noqa: N802
+        if self._router_thread is not None:
+            self._router_thread.stop()
+            self._router_thread = None
         try:
             self.controller.stop()
         except Exception:  # noqa: BLE001
