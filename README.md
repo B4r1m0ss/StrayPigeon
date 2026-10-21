@@ -3,7 +3,7 @@
 > **Email-signaled, end-to-end encrypted P2P chat.**
 > 一只迷途的信鸽，也总能找到同伴。
 
-![tests](https://img.shields.io/badge/tests-38%20passing-brightgreen)
+![tests](https://img.shields.io/badge/tests-47%20passing-brightgreen)
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![license](https://img.shields.io/badge/license-GPL--3.0-green)
 ![platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)
@@ -131,17 +131,22 @@ python3 -m p2p.gui
 # Windows: py -3 -m p2p.gui
 ```
 
-1. 解锁 vault；
-2. 在左侧选择 contact；没有就点 **New contact** / **Join invite**；
-3. 设置 role、port、advertise、STUN；
-4. 点 **Connect**；
-5. 连上后输入消息，Enter 或 **Send**；**Disconnect** 断开。
+1. 首次启动点 **Create identity…**，进入 Setup 向导（也可以先用 `scripts/setup.py`）；向导只创建 identity，不问 peer；
+2. 解锁 vault；
+3. 在左侧选择 contact；没有就点 **New contact** / **Join invite**；
+4. 设置 role、port、advertise、STUN；
+5. 点 **Connect**；
+6. 连上后输入消息，Enter 或 **Send**；**Disconnect** 断开。
 
 - 连接过程会依次显示 `bound → peer ready → punching`；punching 有最多 300 秒的进度条；
 - 点 **Allow UDP** 可以放行本机防火墙的当前 UDP 端口：
   - **Windows**：弹 UAC，默认只开 `Private/Domain`；勾选后可选 public；
   - **Linux**：显示 ufw / firewalld / nft 命令，复制到终端执行；
   - 只开当前 UDP 端口，**不会关闭防火墙**。
+- 点 **Vault…**：
+  - **Change passphrase**：验证旧口令后重新加密，identity/contacts 保留；
+  - **Clear vault / set up again**：直接删除 vault，无备份，所有 contacts/PSK 丢失，随后可重新建 identity；
+  - **Lock vault**：清空内存并回到解锁界面。
 
 两台机器的常用组合：
 
@@ -164,11 +169,11 @@ python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
 
 ## 当前状态
 
-- **38 个单元测试通过**；
+- **47 个单元测试通过**；
 - 同机加密 demo：`PASS`；
 - 真实 163（Windows）↔ 126（Linux）跨提供商 SMTP 加密聊天：`CONNECTED`；
-- GUI MVP：vault 解锁、contact 列表、New/Join、连接、聊天、Disconnect、punching 进度、Allow UDP 防火墙辅助；Linux offscreen smoke `PASS`；
-- 尚未完成：GUI 的 identity 向导、PyInstaller GUI exe/安装包、托盘/通知、文件传输、自动重连；
+- GUI MVP：vault 解锁、**Create identity 向导**、vault 修改口令/清除/锁定、contact 列表、New/Join、连接、聊天、Disconnect、punching 进度、Allow UDP 防火墙辅助；Linux offscreen smoke `PASS`；
+- 尚未完成：PyInstaller GUI exe/安装包、托盘/通知、文件传输、自动重连；
 - **未做安全审计**。
 
 ## 安全模型
@@ -190,7 +195,9 @@ python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
 - **无文件传输/语音/多设备**。
 - **Allow UDP 只处理本机防火墙**：路由器、NAT、对称 NAT 不在它范围内；Windows 规则默认只对 Private/Domain 生效。
 - **元数据不保护**：邮件服务商知道谁在何时通信。
-- **GUI 仍是 MVP**：identity 向导、安装包、托盘/通知在路线图上。
+- **vault 清除/重置不可恢复**：不备份；清除会删除 identity、全部 contacts 和 PSK，旧口令立即失效；SSD/日志文件系统上的“安全擦除”只能尽力而为。
+- **忘记 vault 口令只能清除后重建**：口令不保存，无法恢复；对方需要重新收邀请。
+- **GUI 仍是 MVP**：安装包、托盘/通知在路线图上。
 
 ## 项目结构
 
@@ -203,10 +210,13 @@ p2p/
   punch.py            # P2P1 探测/回包
   contacts.py         # identity/contact 迁移与创建/加入
   invite.py           # 邀请码编解码
+  onboarding.py       # identity 构建、连接检查、vault 创建/重置
   runtime_env.py      # vault → 进程环境
-  vault.py            # scrypt + ChaCha20-Poly1305
+  vault.py            # scrypt + ChaCha20-Poly1305、change/clear
   gui/
     app.py            # PyQt6 主窗口
+    setup_wizard.py   # identity 向导（无 peer）
+    vault_manager.py  # 修改口令/清除/锁定
     worker.py         # Session → Qt signals
   signal/
     file.py           # 共享目录
@@ -219,7 +229,7 @@ scripts/
   allow_firewall.ps1  # Windows UDP 端口放行（UAC）
   pair_test.py        # 两个 vault 非交互测试
   ...
-tests/                # 38 个测试
+tests/                # 14 个测试文件，47 个测试
 docs/images/gui.png
 DEVELOPMENT.md        # 开发/实验记录
 LICENSE
@@ -228,7 +238,7 @@ LICENSE
 ## 测试
 
 ```bash
-python3 -m unittest discover -s tests -v   # 38 tests
+python3 -m unittest discover -s tests -v   # 47 tests
 python3 scripts/demo_same_machine.py       # 同机加密 demo
 ```
 

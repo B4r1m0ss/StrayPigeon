@@ -117,3 +117,56 @@ def load_vault(path: str | Path, passphrase: str) -> dict[str, Any]:
     except Exception as exc:  # noqa: BLE001
         raise ValueError("wrong passphrase or corrupted vault") from exc
     return json.loads(plain)
+
+
+def change_passphrase(
+    path: str | Path, old_passphrase: str, new_passphrase: str
+) -> Path:
+    """Re-encrypt the vault under a new passphrase, keeping its payload.
+
+    The old file is left untouched until a new temp vault has been written and
+    successfully re-read with the new passphrase. No backup is kept.
+    """
+    path = Path(path).expanduser()
+    if len(new_passphrase) < MIN_PASSPHRASE:
+        raise ValueError(f"passphrase must be at least {MIN_PASSPHRASE} characters")
+    data = load_vault(path, old_passphrase)
+    tmp = path.with_name(path.name + ".new")
+    try:
+        save_vault(tmp, new_passphrase, data)
+        if load_vault(tmp, new_passphrase) != data:
+            raise ValueError("vault verification failed after re-encryption")
+        os.replace(tmp, path)
+        if os.name == "posix":
+            try:
+                os.chmod(path, 0o600)
+            except OSError:
+                pass
+    finally:
+        if tmp.exists():
+            try:
+                tmp.unlink()
+            except OSError:
+                pass
+    return path
+
+
+def clear_vault(path: str | Path) -> Path:
+    """Delete the vault, overwriting its bytes first where possible.
+
+    No backup is kept. On SSDs/journaling filesystems this is best-effort, not
+    a guaranteed physical erase.
+    """
+    path = Path(path).expanduser()
+    if not path.exists():
+        return path
+    try:
+        size = path.stat().st_size
+        with path.open("r+b") as fh:
+            fh.write(secrets.token_bytes(size))
+            fh.flush()
+            os.fsync(fh.fileno())
+    except OSError:
+        pass
+    path.unlink()
+    return path

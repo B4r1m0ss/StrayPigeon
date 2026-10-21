@@ -33,8 +33,16 @@ from PyQt6.QtWidgets import (
 from p2p.config import DEFAULT_STUN, Config
 from p2p.contacts import create_contact, join_contact, list_contacts, migrate_vault
 from p2p.runtime_env import apply_vault_env
-from p2p.vault import default_vault_path, load_vault, save_vault
+from p2p.vault import (
+    change_passphrase,
+    clear_vault,
+    default_vault_path,
+    load_vault,
+    save_vault,
+)
 
+from .setup_wizard import IdentityWizard
+from .vault_manager import ChangePassphraseDialog, VaultManagerDialog
 from .worker import SessionWorker
 
 
@@ -103,6 +111,8 @@ class VaultDialog(QDialog):
         unlock = QPushButton("Unlock")
         unlock.setDefault(True)
         unlock.clicked.connect(self._unlock)
+        create_btn = QPushButton("Create identity…")
+        create_btn.clicked.connect(self._create_identity)
         quit_btn = QPushButton("Quit")
         quit_btn.clicked.connect(self.reject)
 
@@ -110,6 +120,7 @@ class VaultDialog(QDialog):
         form.addRow("Vault", path_row)
         form.addRow("Passphrase", self.pass_edit)
         buttons = QHBoxLayout()
+        buttons.addWidget(create_btn)
         buttons.addStretch(1)
         buttons.addWidget(quit_btn)
         buttons.addWidget(unlock)
@@ -127,7 +138,7 @@ class VaultDialog(QDialog):
         path = Path(self.path_edit.text()).expanduser()
         passphrase = self.pass_edit.text()
         if not path.exists():
-            self.status.setText(f"No vault at {path}. Run scripts/setup.py first.")
+            self.status.setText(f"No vault at {path}. Create a new identity or run setup.py.")
             return
         try:
             raw = load_vault(path, passphrase)
@@ -142,6 +153,18 @@ class VaultDialog(QDialog):
         self.data = data
         self.accept()
 
+    def _create_identity(self) -> None:
+        path = Path(self.path_edit.text()).expanduser()
+        wizard = IdentityWizard(self, path=path)
+        if wizard.exec() != QDialog.DialogCode.Accepted:
+            return
+        if wizard.vault_path is None or wizard.data is None:
+            return
+        self.vault_path = wizard.vault_path
+        self.passphrase = wizard.passphrase
+        self.data = wizard.data
+        self.accept()
+
 
 class MainWindow(QWidget):
     def __init__(self, data: dict, vault_path: Path, passphrase: str) -> None:
@@ -151,6 +174,7 @@ class MainWindow(QWidget):
         self.passphrase = passphrase
         self.worker: SessionWorker | None = None
         self.connected = False
+        self.reopen_vault = False
         self.contact_key: str | None = None
         self.current_peer = ""
         self.setWindowTitle("StrayPigeon")
@@ -161,6 +185,12 @@ class MainWindow(QWidget):
             f"<b>{identity.get('my_email', '')}</b><br>{identity.get('mode', '')}"
         )
         self.identity_label.setWordWrap(True)
+        self.vault_btn = QPushButton("Vault…")
+        self.vault_btn.setToolTip("Change passphrase, clear the vault, or lock it")
+        self.vault_btn.clicked.connect(self._manage_vault)
+        identity_row = QHBoxLayout()
+        identity_row.addWidget(self.identity_label, 1)
+        identity_row.addWidget(self.vault_btn)
 
         self.contact_list = QListWidget()
         self.contact_list.currentItemChanged.connect(self._on_contact_changed)
@@ -203,7 +233,7 @@ class MainWindow(QWidget):
 
         left = QWidget()
         left_layout = QVBoxLayout(left)
-        left_layout.addWidget(self.identity_label)
+        left_layout.addLayout(identity_row)
         left_layout.addWidget(QLabel("Contacts"))
         left_layout.addWidget(self.contact_list, 1)
         left_layout.addLayout(contact_buttons)
@@ -367,6 +397,7 @@ class MainWindow(QWidget):
             self.advertise,
             self.stun,
             self.firewall_btn,
+            self.vault_btn,
         ):
             widget.setEnabled(not locked)
         self.connect_btn.setEnabled(not locked and bool(self.contact_key))
@@ -472,6 +503,68 @@ class MainWindow(QWidget):
         self.chat.appendPlainText(text)
         bar = self.chat.verticalScrollBar()
         bar.setValue(bar.maximum())
+
+    # ---- vault management ---------------------------------------------
+    def _manage_vault(self) -> None:
+        if self.worker is not None:
+            QMessageBox.information(
+                self, "StrayPigeon", "Disconnect before managing the vault."
+            )
+            return
+        dialog = VaultManagerDialog(self.vault_path, self)
+        if dialog.exec() != QDialog.DialogCode.Accepted:
+            return
+        if dialog.action == "change":
+            self._change_passphrase()
+        elif dialog.action == "clear":
+            self._clear_vault()
+        elif dialog.action == "lock":
+            self.reopen_vault = True
+            self.close()
+
+    def _change_passphrase(self) -> None:
+        dialog = ChangePassphraseDialog(self)
+        if dialog.exec() != QDialog.DialogCode.Accepted:
+            return
+        old, new = dialog.values()
+        try:
+            change_passphrase(self.vault_path, old, new)
+        except Exception as exc:  # noqa: BLE001
+            QMessageBox.critical(self, "StrayPigeon", f"Cannot change passphrase: {exc}")
+            return
+        self.passphrase = new
+        QMessageBox.information(
+            self,
+            "StrayPigeon",
+            "Vault passphrase changed. The old passphrase no longer works.",
+        )
+
+    def _clear_vault(self) -> None:
+        answer = QMessageBox.warning(
+            self,
+            "StrayPigeon",
+            "Delete the local vault?\n\n"
+            "This removes your identity and ALL contacts/PSKs. "
+            "The peer side is not notified, and no backup is made.\n\n"
+            "Continue?",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No,
+        )
+        if answer != QMessageBox.StandardButton.Yes:
+            return
+        try:
+            clear_vault(self.vault_path)
+        except Exception as exc:  # noqa: BLE001
+            QMessageBox.critical(self, "StrayPigeon", f"Cannot clear vault: {exc}")
+            return
+        self.reopen_vault = True
+        self.close()
+
+    def closeEvent(self, event) -> None:  # noqa: N802
+        if self.worker is not None:
+            self.worker.stop()
+            self.worker.wait(2000)
+        event.accept()
 
     # ---- firewall helper ----------------------------------------------
     def _allow_firewall(self) -> None:
@@ -652,20 +745,17 @@ class MainWindow(QWidget):
         layout.addLayout(buttons)
         dialog.exec()
 
-    def closeEvent(self, event) -> None:  # noqa: N802
-        if self.worker is not None:
-            self.worker.stop()
-            self.worker.wait(2000)
-        event.accept()
-
 
 def main(argv: list[str] | None = None) -> int:
     args = list(sys.argv[1:] if argv is None else argv)
     app = QApplication([sys.argv[0], *args])
     app.setApplicationName("StrayPigeon")
-    vault = VaultDialog()
-    if vault.exec() != QDialog.DialogCode.Accepted:
-        return 0
-    window = MainWindow(vault.data, vault.vault_path, vault.passphrase)
-    window.show()
-    return app.exec()
+    while True:
+        vault = VaultDialog()
+        if vault.exec() != QDialog.DialogCode.Accepted:
+            return 0
+        window = MainWindow(vault.data, vault.vault_path, vault.passphrase)
+        window.show()
+        app.exec()
+        if not window.reopen_vault:
+            return 0

@@ -25,20 +25,24 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-# Reuse the small interactive helpers from the legacy setup script. The
-# identity/contact split will move these into a core module in a later pass.
+# Reuse the small interactive helpers from the legacy setup script; the
+# identity/vault logic itself now lives in p2p.onboarding.
 from setup_legacy import (  # noqa: E402
     ask,
     ask_bool,
     ask_secret,
-    default_imap_host,
-    default_smtp_host,
     load_config,
     resolve,
     warn_secret_file,
 )
-from p2p.mailcheck import check_imap, check_smtp  # noqa: E402
-from p2p.vault import MIN_PASSPHRASE, default_vault_path, save_vault  # noqa: E402
+from p2p.onboarding import (  # noqa: E402
+    build_identity,
+    check_identity,
+    create_identity_vault,
+    default_imap_host,
+    default_smtp_host,
+)
+from p2p.vault import MIN_PASSPHRASE, default_vault_path  # noqa: E402
 
 
 def main() -> int:
@@ -106,20 +110,6 @@ def main() -> int:
     do_test = (not args.no_test) and bool(cfg.get("test", True))
     if not do_test:
         print("[warn] IMAP/SMTP check skipped")
-    else:
-        print("[*] testing IMAP login / ID ...")
-        try:
-            check_imap(imap_host, my_email, account, folder_base="p2p-setup-check")
-            print("[ok] IMAP works")
-        except Exception as exc:  # noqa: BLE001
-            raise SystemExit(f"[FAIL] IMAP check failed: {type(exc).__name__}: {exc}") from exc
-        if mode == "smtp":
-            print("[*] testing SMTP login ...")
-            try:
-                check_smtp(smtp_host, smtp_port, my_email, account, starttls)
-                print("[ok] SMTP works")
-            except Exception as exc:  # noqa: BLE001
-                raise SystemExit(f"[FAIL] SMTP check failed: {type(exc).__name__}: {exc}") from exc
 
     passphrase = cfg.get("vault_passphrase") or os.environ.get("P2P_VAULT_PASSPHRASE")
     if passphrase:
@@ -144,24 +134,33 @@ def main() -> int:
         or cfg.get("replay_window")
         or (600.0 if mode == "smtp" else 300.0)
     )
-    identity = {
-        "my_email": my_email,
-        "mode": mode,
-        "imap_host": imap_host,
-        "imap_password": account,
-        "signal_timeout": signal_timeout,
-        "replay_window": replay_window,
-    }
-    if mode == "smtp":
-        identity.update(
-            {
-                "smtp_host": smtp_host,
-                "smtp_port": smtp_port,
-                "smtp_starttls": starttls,
-            }
+    try:
+        identity = build_identity(
+            mode=mode,
+            my_email=my_email,
+            auth_code=account,
+            imap_host=imap_host,
+            smtp_host=smtp_host,
+            smtp_port=smtp_port,
+            smtp_starttls=starttls,
+            signal_timeout=signal_timeout,
+            replay_window=replay_window,
         )
-    data = {"version": 2, "identity": identity, "contacts": {}}
-    save_vault(vault_path, passphrase, data)
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
+
+    if do_test:
+        print("[*] testing IMAP / SMTP ...")
+        try:
+            check_identity(identity, folder_base="p2p-setup-check")
+            print("[ok] mailbox works")
+        except Exception as exc:  # noqa: BLE001
+            raise SystemExit(f"[FAIL] connection check failed: {type(exc).__name__}: {exc}") from exc
+
+    try:
+        create_identity_vault(vault_path, passphrase, identity, force=args.force)
+    except ValueError as exc:
+        raise SystemExit(str(exc)) from exc
     print(f"[ok] encrypted identity vault: {vault_path}")
     print("[ok] no peer is stored at this stage.")
     print("[next] create a conversation:")
