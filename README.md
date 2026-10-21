@@ -36,6 +36,7 @@
 |---|---|---|
 | 入口 | 旧主窗口 `python -m p2p.gui` | 主窗口里的 **Multi-session…** |
 | 传输 | STUN + UDP 打洞 | aioquic，单 UDP 端口 |
+| NAT 穿透 | STUN + UDP 打洞 | **未实现**：当前只支持直接可达的 host:port |
 | 并发 | 单会话 | 最多 16 个会话 |
 | 加密 | X25519 + HKDF + ChaCha20-Poly1305 | QUIC TLS（当前 `CERT_NONE`，待证书指纹固定） |
 | 文件 | 无 | 分块、`.part`、续传、SHA-256、进度 |
@@ -95,6 +96,8 @@ A ── SMTP/IMAP: 候选 + 公钥（PSK 封装） ──▶ B
 - `MailRouter` 负责单 IMAP、sid 路由、未绑定 PSK 探测、163 回退；
 - GUI 收到 CANDIDATE 后更新 contact 的 peer host/port，并自动 `QuicController.connect()`；
 - 文件走 QUIC stream，不走邮件。
+
+> **重要：QUIC 本身不解决 NAT 穿透。** 当前 QUIC 路径没有 STUN、没有 UDP 打洞、也没有从新窗口发送 CANDIDATE；`QuicController` 只是 `serve` + `connect` 到一个已知 host:port。它目前只适用于同一 LAN、公网 IP、端口映射等可直接到达的场景；家庭 NAT 后不能保证连通。
 
 ## 快速开始
 
@@ -220,7 +223,7 @@ python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
 - 系统 Python 没装 aioquic 时：77 tests，9 skipped；
 - **Legacy 路径**：同机加密 demo `PASS`；之前真实 163（Windows）↔ 126（Linux）跨提供商 SMTP 加密聊天 `CONNECTED`（pre-QUIC）；
 - **QUIC 路径**：16 会话、16 × 1 MB 文件、4 MB 单文件、断点续传、SHA-256、MailRouter、Qt controller、多会话窗口 offscreen 测试通过；
-- **QUIC 真实 163/126 端到端：尚未验收**；
+- **QUIC 真实 163/126 端到端：尚未验收**；且当前缺 NAT 穿透/候选发送；
 - **尚未完成**：真实 163/126 QUIC 验收、证书指纹固定、100 GB 级文件实测、PyInstaller GUI exe/安装包、托盘/通知、自动重连；
 - **未做安全审计**。
 
@@ -236,6 +239,7 @@ python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
 
 ## 已知限制
 
+- **QUIC 路径没有 NAT 穿透**：没有 STUN、没有 UDP 打洞、没有从新窗口发送 CANDIDATE；只能直连已知 host:port（LAN/公网/端口映射）。家庭 NAT 后不能保证连通。
 - **QUIC 路径未真实双端验收**：真实 163/126 的 MailRouter、自动 connect、role/重复连接、防火墙和文件速度都还没确认。
 - **QUIC TLS 证书未固定**：当前 `CERT_NONE`，存在 MITM 风险；生产前必须实现 fingerprint pinning。
 - **role/auto-connect 风险**：双方都启动 QUIC server 时可能各自 connect，形成重复连接；真实测试前建议只让一边 auto-connect。
