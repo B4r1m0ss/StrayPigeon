@@ -3,7 +3,7 @@
 > **Email-signaled, end-to-end encrypted P2P chat.**
 > 一只迷途的信鸽，也总能找到同伴。
 
-![tests](https://img.shields.io/badge/tests-69%20passing-brightgreen)
+![tests](https://img.shields.io/badge/tests-71%20passing-brightgreen)
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![license](https://img.shields.io/badge/license-GPL--3.0-green)
 ![platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)
@@ -174,7 +174,7 @@ python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
 
 ## 当前状态
 
-- **69 个单元测试通过**；
+- **71 个单元测试通过**；
 - 同机加密 demo：`PASS`；
 - 真实 163（Windows）↔ 126（Linux）跨提供商 SMTP 加密聊天：`CONNECTED`；
 - GUI MVP：vault 解锁、**Create identity 向导**、vault 修改口令/清除/锁定、contact 列表、per-contact role/local_port、New/Join、连接、聊天、Disconnect、punching 进度、Allow UDP 防火墙辅助；Linux offscreen smoke `PASS`；
@@ -182,6 +182,7 @@ python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
 - QUIC chat/session：`QuicSessionManager` 单 UDP 端口、16 会话上限、per-session stream 聊天测试通过；
 - 文件传输层：4 MB 文件流式落盘、SHA-256 校验、断点续传测试通过；
 - MailRouter：单 IMAP poller、sid → contact 路由、未绑定 sid 的 PSK 探测、163 ALL 回退、16 个绑定 sid 测试通过；
+- QUIC Qt controller：一键 connect、QUIC chat、文件进度/完成 offscreen 测试通过；
 - 尚未完成：文件传输 GUI、16 会话/大文件压测、PyInstaller GUI exe/安装包、托盘/通知、自动重连；
 - **未做安全审计**。
 
@@ -226,6 +227,7 @@ p2p/
     app.py            # PyQt6 主窗口
     setup_wizard.py   # identity 向导（无 peer）
     vault_manager.py  # 修改口令/清除/锁定
+    quic_controller.py # Qt ↔ asyncio/QUIC 桥
     worker.py         # Session → Qt signals
   signal/
     file.py           # 共享目录
@@ -239,7 +241,7 @@ scripts/
   allow_firewall.ps1  # Windows UDP 端口放行（UAC）
   pair_test.py        # 两个 vault 非交互测试
   ...
-tests/                # 19 个测试文件，69 个测试
+tests/                # 20 个测试文件，71 个测试
 docs/images/gui.png
 DEVELOPMENT.md        # 开发/实验记录
 LICENSE
@@ -248,7 +250,7 @@ LICENSE
 ## 测试
 
 ```bash
-.venv/bin/python -m unittest discover -s tests -v   # 69 tests (needs aioquic)
+.venv/bin/python -m unittest discover -s tests -v   # 71 tests (needs aioquic)
 # Windows: py -3 -m unittest discover -s tests -v
 python3 scripts/demo_same_machine.py       # 同机加密 demo
 ```
