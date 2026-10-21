@@ -1,2 +1,4 @@
 -r requirements.txt
 PyQt6>=6.6
+aioquic>=1.0
+qasync>=0.27

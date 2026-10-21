@@ -3,7 +3,7 @@
 > **Email-signaled, end-to-end encrypted P2P chat.**
 > 一只迷途的信鸽，也总能找到同伴。
 
-![tests](https://img.shields.io/badge/tests-58%20passing-brightgreen)
+![tests](https://img.shields.io/badge/tests-60%20passing-brightgreen)
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![license](https://img.shields.io/badge/license-GPL--3.0-green)
 ![platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)
@@ -174,10 +174,11 @@ python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
 
 ## 当前状态
 
-- **58 个单元测试通过**；
+- **60 个单元测试通过**；
 - 同机加密 demo：`PASS`；
 - 真实 163（Windows）↔ 126（Linux）跨提供商 SMTP 加密聊天：`CONNECTED`；
 - GUI MVP：vault 解锁、**Create identity 向导**、vault 修改口令/清除/锁定、contact 列表、per-contact role/local_port、New/Join、连接、聊天、Disconnect、punching 进度、Allow UDP 防火墙辅助；Linux offscreen smoke `PASS`；
+- QUIC spike：aioquic 单 UDP 端口、16 个并发连接、256 KB stream 回环测试通过；
 - 尚未完成：PyInstaller GUI exe/安装包、托盘/通知、文件传输、自动重连；
 - **未做安全审计**。
 
@@ -234,7 +235,7 @@ scripts/
   allow_firewall.ps1  # Windows UDP 端口放行（UAC）
   pair_test.py        # 两个 vault 非交互测试
   ...
-tests/                # 15 个测试文件，58 个测试
+tests/                # 16 个测试文件，60 个测试
 docs/images/gui.png
 DEVELOPMENT.md        # 开发/实验记录
 LICENSE
@@ -243,7 +244,8 @@ LICENSE
 ## 测试
 
 ```bash
-python3 -m unittest discover -s tests -v   # 58 tests
+.venv/bin/python -m unittest discover -s tests -v   # 60 tests (needs aioquic)
+# Windows: py -3 -m unittest discover -s tests -v
 python3 scripts/demo_same_machine.py       # 同机加密 demo
 ```
 
