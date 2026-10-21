@@ -62,8 +62,11 @@ class _IdentityPage(QWizardPage):
         form.addRow("Mode", self.mode)
         form.addRow("Email", self.email)
         form.addRow(note)
-        self.registerField("mode*", self.mode, "currentText")
+        self.registerField("mode", self.mode, "currentText")
         self.registerField("email*", self.email)
+
+    def isComplete(self) -> bool:
+        return bool(self.email.text().strip())
 
 
 class _MailPage(QWizardPage):
