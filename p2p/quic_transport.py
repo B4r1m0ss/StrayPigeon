@@ -76,8 +76,11 @@ class QuicChatProtocol(QuicConnectionProtocol):
             self._notify_closed()
 
     def send_message(self, text: str) -> None:
+        self.send_bytes(text.encode("utf-8"))
+
+    def send_bytes(self, data: bytes) -> None:
         stream_id = self._quic.get_next_available_stream_id()
-        self._quic.send_stream_data(stream_id, text.encode("utf-8"), end_stream=True)
+        self._quic.send_stream_data(stream_id, data, end_stream=True)
         self.transmit()
 
 
@@ -98,6 +101,9 @@ class QuicChatSession:
 
     async def send(self, text: str) -> None:
         self.protocol.send_message(text)
+
+    async def send_bytes(self, data: bytes) -> None:
+        self.protocol.send_bytes(data)
 
     async def close(self) -> None:
         self._manager._sessions.pop(self.session_id, None)
@@ -127,6 +133,9 @@ class QuicSessionManager:
     @property
     def active_sessions(self) -> int:
         return len(self._sessions)
+
+    def get_session(self, session_id: str) -> QuicChatSession | None:
+        return self._sessions.get(session_id)
 
     async def start_server(
         self, host: str, port: int, configuration: QuicConfiguration
