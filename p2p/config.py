@@ -13,8 +13,9 @@ class Config:
     """Runtime configuration.
 
     SECURITY: no secret is accepted on the command line and no secret is
-    hardcoded. The PSK, IMAP password, etc. are read from environment
-    variables (see .env.example). This object never prints them.
+    hardcoded. For multi-session GUI use, build a per-contact config with
+    :meth:`from_vault`; CLI compatibility still allows environment fallback.
+    This object never prints secrets.
     """
 
     name: str
@@ -36,7 +37,81 @@ class Config:
     stun_servers: tuple[str, ...] = DEFAULT_STUN
     stun_timeout: float = 2.0
     replay_window: float = 120.0
+    contact_id: str = ""
+    my_email: str = ""
+    peer_email: str = ""
+    imap_host: str = ""
+    imap_user: str = ""
+    imap_password: str = field(default="", repr=False)
+    smtp_host: str = ""
+    smtp_port: int = 465
+    smtp_starttls: bool = False
+    folder: str = "INBOX"
     _psk: bytes | None = field(default=None, repr=False)
+
+    @classmethod
+    def from_vault(
+        cls,
+        data: dict,
+        contact_id: str | None = None,
+        *,
+        port: int | None = None,
+        role: str | None = None,
+        host: str = "0.0.0.0",
+        advertise_host: str = "127.0.0.1",
+        log_dir: str = "./state/logs",
+        stun_servers: tuple[str, ...] = DEFAULT_STUN,
+        keepalive: float = 15.0,
+        punch_window: float = 300.0,
+        signal_timeout: float | None = None,
+        replay_window: float | None = None,
+    ) -> "Config":
+        """Build per-contact config with no process-wide environment reads."""
+        from .contacts import normalize_role, select_contact
+
+        key, contact = select_contact(data, contact_id)
+        identity = data.get("identity")
+        if not isinstance(identity, dict):
+            raise ValueError("vault has no identity")
+        mode = str(identity.get("mode") or "")
+        if contact.get("mode") and str(contact["mode"]) != mode:
+            raise ValueError(f"contact mode {contact['mode']!r} != identity mode {mode!r}")
+        psk_raw = base64.b64decode(str(contact.get("psk_b64") or ""), validate=True)
+        if len(psk_raw) != 32:
+            raise ValueError("contact PSK must decode to exactly 32 bytes")
+        selected_port = int(port or contact.get("local_port") or 40000)
+        if not 1 <= selected_port <= 65535:
+            raise ValueError("port must be between 1 and 65535")
+        selected_role = normalize_role(role or contact.get("role"))
+        default_timeout = 600.0 if mode == "smtp" else 300.0
+        cfg = cls(
+            name=str(identity.get("my_email") or ""),
+            peer=str(contact.get("peer_email") or ""),
+            port=selected_port,
+            role=selected_role,
+            signal_mode=mode,
+            log_dir=log_dir,
+            host=host,
+            advertise_host=advertise_host,
+            keepalive=keepalive,
+            punch_window=punch_window,
+            signal_timeout=float(signal_timeout or identity.get("signal_timeout") or default_timeout),
+            stun_servers=stun_servers,
+            replay_window=float(replay_window or identity.get("replay_window") or default_timeout),
+            contact_id=key,
+            my_email=str(identity.get("my_email") or ""),
+            peer_email=str(contact.get("peer_email") or ""),
+            imap_host=str(identity.get("imap_host") or ""),
+            imap_user=str(identity.get("my_email") or ""),
+            imap_password=str(identity.get("imap_password") or ""),
+            folder=str(contact.get("folder") or "INBOX"),
+        )
+        if mode == "smtp":
+            cfg.smtp_host = str(identity.get("smtp_host") or "")
+            cfg.smtp_port = int(identity.get("smtp_port") or 465)
+            cfg.smtp_starttls = bool(identity.get("smtp_starttls"))
+        cfg._psk = psk_raw
+        return cfg
 
     @classmethod
     def from_args(cls, argv: list[str] | None = None) -> "Config":
@@ -94,7 +169,7 @@ class Config:
         )
 
     def psk_bytes(self) -> bytes | None:
-        """PSK from the environment only. Never from source or argv."""
+        """Return the explicit PSK, or fall back to P2P_PSK_B64 for CLI use."""
         if self._psk is not None:
             return self._psk
         raw_b64 = os.environ.get("P2P_PSK_B64", "").strip()

@@ -56,6 +56,7 @@ def _new(args, path: Path) -> int:
         folder=args.folder,
         force=args.force,
         role=args.role,
+        local_port=args.port,
     )
     save_vault(path, passphrase, data)
     print(f"[ok] contact saved: {key}")
@@ -78,7 +79,7 @@ def _join(args, path: Path) -> int:
         raise ValueError("invite code is required")
     data, passphrase = _load(path)
     key, contact = join_contact(
-        data, text, peer_label=args.peer, force=args.force
+        data, text, peer_label=args.peer, force=args.force, local_port=args.port
     )
     save_vault(path, passphrase, data)
     print(f"[ok] contact saved: {key}")
@@ -96,11 +97,12 @@ def _list(args, path: Path) -> int:
     if not items:
         print("[info] no contacts; use: contact.py new --peer ...")
         return 0
-    print(f"{'CONTACT':32} {'MODE':6} {'ROLE':10} {'FOLDER':24} PEER")
+    print(f"{'CONTACT':32} {'MODE':6} {'ROLE':10} {'PORT':6} {'FOLDER':24} PEER")
     for key, contact in items:
         print(
             f"{key:32} {str(contact.get('mode', '')):6} "
             f"{str(contact.get('role', 'initiator')):10} "
+            f"{int(contact.get('local_port') or 40000):6} "
             f"{str(contact.get('folder', '')):24} {contact.get('peer_email', '')}"
         )
     return 0
@@ -120,12 +122,18 @@ def main() -> int:
         default="initiator",
         help="this side's role; the joiner gets the opposite role",
     )
+    p_new.add_argument(
+        "--port", type=int, default=40000, help="local UDP port for this contact"
+    )
     p_new.add_argument("--force", action="store_true", help="replace an existing contact")
     p_new.set_defaults(func=_new)
 
     p_join = sub.add_parser("join", help="join an invite and save the contact")
     p_join.add_argument("invite", nargs="?", default=None)
     p_join.add_argument("--peer", default=None, help="contact label in IMAP mode")
+    p_join.add_argument(
+        "--port", type=int, default=40000, help="local UDP port for this contact"
+    )
     p_join.add_argument("--force", action="store_true", help="replace an existing contact")
     p_join.set_defaults(func=_join)
 

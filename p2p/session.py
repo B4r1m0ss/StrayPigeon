@@ -100,38 +100,47 @@ class Session:
         if self.cfg.signal_mode == "file":
             return FileChannel(self.cfg.shared_dir, self.cfg.name, self.cfg.peer)
         if self.cfg.signal_mode == "imap":
-            host = os.environ.get("P2P_IMAP_HOST", "").strip()
-            user = os.environ.get("P2P_IMAP_USER", "").strip()
-            password = os.environ.get("P2P_IMAP_PASSWORD", "")
-            folder = os.environ.get("P2P_IMAP_FOLDER", "p2p-demo").strip()
+            use_cfg = bool(self.cfg.imap_host)
+            host = (self.cfg.imap_host if use_cfg else os.environ.get("P2P_IMAP_HOST", "")).strip()
+            user = (self.cfg.imap_user if use_cfg else os.environ.get("P2P_IMAP_USER", "")).strip()
+            password = self.cfg.imap_password if use_cfg else os.environ.get("P2P_IMAP_PASSWORD", "")
+            folder = (self.cfg.folder if use_cfg else os.environ.get("P2P_IMAP_FOLDER", "p2p-demo")).strip()
             if not (host and user and password):
-                raise SystemExit("IMAP mode needs P2P_IMAP_HOST / P2P_IMAP_USER / P2P_IMAP_PASSWORD")
+                raise SystemExit("IMAP mode needs IMAP host/user/password")
             from .signal.imap_store import ImapStoreChannel
 
             return ImapStoreChannel(host, user, password, folder)
         if self.cfg.signal_mode == "smtp":
-            smtp_host = os.environ.get("P2P_SMTP_HOST", "").strip()
-            smtp_port_raw = os.environ.get("P2P_SMTP_PORT", "465").strip() or "465"
-            my_email = os.environ.get("P2P_MY_EMAIL", "").strip()
-            peer_email = os.environ.get("P2P_PEER_EMAIL", "").strip()
-            imap_host = os.environ.get("P2P_IMAP_HOST", "").strip()
-            user = os.environ.get("P2P_IMAP_USER", "").strip()
-            password = os.environ.get("P2P_IMAP_PASSWORD", "")
-            folder = os.environ.get("P2P_SMTP_FOLDER", "INBOX").strip() or "INBOX"
+            use_cfg = bool(self.cfg.smtp_host)
+            smtp_host = (self.cfg.smtp_host if use_cfg else os.environ.get("P2P_SMTP_HOST", "")).strip()
+            smtp_port_raw = (
+                str(self.cfg.smtp_port)
+                if use_cfg
+                else (os.environ.get("P2P_SMTP_PORT", "465").strip() or "465")
+            )
+            my_email = (self.cfg.my_email if use_cfg else os.environ.get("P2P_MY_EMAIL", "")).strip()
+            peer_email = (self.cfg.peer_email if use_cfg else os.environ.get("P2P_PEER_EMAIL", "")).strip()
+            imap_host = (self.cfg.imap_host if use_cfg else os.environ.get("P2P_IMAP_HOST", "")).strip()
+            user = (self.cfg.imap_user if use_cfg else os.environ.get("P2P_IMAP_USER", "")).strip()
+            password = self.cfg.imap_password if use_cfg else os.environ.get("P2P_IMAP_PASSWORD", "")
+            folder = (self.cfg.folder if use_cfg else os.environ.get("P2P_SMTP_FOLDER", "INBOX")).strip() or "INBOX"
             if not (smtp_host and my_email and peer_email and imap_host and user and password):
                 raise SystemExit(
-                    "SMTP mode needs P2P_SMTP_HOST / P2P_MY_EMAIL / P2P_PEER_EMAIL / "
-                    "P2P_IMAP_HOST / P2P_IMAP_USER / P2P_IMAP_PASSWORD"
+                    "SMTP mode needs SMTP host / my email / peer email / "
+                    "IMAP host / IMAP user / IMAP password"
                 )
             try:
                 smtp_port = int(smtp_port_raw)
             except ValueError as exc:
-                raise SystemExit("P2P_SMTP_PORT must be an integer") from exc
-            starttls = os.environ.get("P2P_SMTP_STARTTLS", "0").lower() in (
-                "1",
-                "true",
-                "yes",
-            )
+                raise SystemExit("SMTP port must be an integer") from exc
+            if use_cfg:
+                starttls = self.cfg.smtp_starttls
+            else:
+                starttls = os.environ.get("P2P_SMTP_STARTTLS", "0").lower() in (
+                    "1",
+                    "true",
+                    "yes",
+                )
             from .signal.smtp_mail import SmtpMailChannel
 
             return SmtpMailChannel(

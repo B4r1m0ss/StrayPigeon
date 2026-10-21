@@ -52,6 +52,7 @@ def migrate_vault(data: dict) -> dict:
         for contact in (out.get("contacts") or {}).values():
             if isinstance(contact, dict):
                 contact.setdefault("role", "initiator")
+                contact.setdefault("local_port", 40000)
         return out
 
     mode = str(data.get("mode") or "")
@@ -86,6 +87,7 @@ def migrate_vault(data: dict) -> dict:
         "mode": mode,
         "folder": str(data.get("folder") or "INBOX"),
         "role": normalize_role(data.get("role")),
+        "local_port": int(data.get("local_port") or 40000),
         "created_at": data.get("created_at") or 0,
         "last_used_at": 0,
     }
@@ -120,6 +122,9 @@ def upsert_contact(data: dict, contact: dict, force: bool = False) -> str:
     if not peer:
         raise ValueError("contact has no peer_email")
     contact["role"] = normalize_role(contact.get("role"))
+    contact["local_port"] = int(contact.get("local_port") or 40000)
+    if not 1 <= contact["local_port"] <= 65535:
+        raise ValueError("local_port must be between 1 and 65535")
     key = normalize_peer(peer)
     contacts = data.setdefault("contacts", {})
     if key in contacts and not force:
@@ -146,10 +151,12 @@ def create_contact(
     folder: str | None = None,
     force: bool = False,
     role: str = "initiator",
+    local_port: int = 40000,
 ) -> tuple[str, dict, str]:
     """Create a contact + invite for the identity in ``data``.
 
     The invite carries the creator's role; the joiner stores the opposite.
+    ``local_port`` is local to this side and is NOT sent in the invite.
     Returns ``(contact_key, contact, invite_code)``. The caller persists the
     vault. This is the shared implementation for the CLI and the GUI.
     """
@@ -157,6 +164,9 @@ def create_contact(
     if not isinstance(identity, dict):
         raise ValueError("vault has no identity; run setup first")
     role = normalize_role(role)
+    local_port = int(local_port)
+    if not 1 <= local_port <= 65535:
+        raise ValueError("local_port must be between 1 and 65535")
     mode = str(identity.get("mode") or "")
     my_email = str(identity.get("my_email") or "")
     peer = str(peer).strip()
@@ -196,6 +206,7 @@ def create_contact(
         "mode": mode,
         "folder": folder,
         "role": role,
+        "local_port": local_port,
         "created_at": now,
         "last_used_at": 0,
     }
@@ -208,11 +219,15 @@ def join_contact(
     text: str,
     peer_label: str | None = None,
     force: bool = False,
+    local_port: int = 40000,
 ) -> tuple[str, dict]:
     """Join an invite and add its contact to ``data`` (caller persists)."""
     identity = data.get("identity")
     if not isinstance(identity, dict):
         raise ValueError("vault has no identity; run setup first")
+    local_port = int(local_port)
+    if not 1 <= local_port <= 65535:
+        raise ValueError("local_port must be between 1 and 65535")
     invite = parse_invite(text)
     mode = str(identity.get("mode") or "")
     my_email = str(identity.get("my_email") or "")
@@ -245,6 +260,7 @@ def join_contact(
         "mode": mode,
         "folder": folder,
         "role": opposite_role(invite.get("role") or "initiator"),
+        "local_port": local_port,
         "created_at": int(time.time()),
         "last_used_at": 0,
     }

@@ -32,7 +32,6 @@ from PyQt6.QtWidgets import (
 
 from p2p.config import DEFAULT_STUN, Config
 from p2p.contacts import create_contact, join_contact, list_contacts, migrate_vault
-from p2p.runtime_env import apply_vault_env
 from p2p.vault import (
     change_passphrase,
     clear_vault,
@@ -333,33 +332,35 @@ class MainWindow(QWidget):
         self.contact_key = str(current.data(Qt.ItemDataRole.UserRole) or "")
         contact = (self.data.get("contacts") or {}).get(self.contact_key, {})
         self.current_peer = str(contact.get("peer_email") or "")
+        self.role.setCurrentText(str(contact.get("role") or "initiator"))
+        self.port.setValue(int(contact.get("local_port") or 40000))
         self.chat.clear()
         self.state_label.setText(f"idle — {self.current_peer}")
         self.connect_btn.setEnabled(True)
 
     # ---- connection ----------------------------------------------------
     def _build_config(self, key: str) -> Config:
-        identity = self.data["identity"]
         contact = (self.data.get("contacts") or {}).get(key)
         if not isinstance(contact, dict):
             raise ValueError(f"contact not found: {key}")
-        signal = apply_vault_env(self.data, key)
         stun = tuple(s.strip() for s in self.stun.text().split(",") if s.strip())
         if not stun:
             stun = DEFAULT_STUN
-        return Config(
-            name=str(identity.get("my_email") or ""),
-            peer=str(contact.get("peer_email") or ("peer" if signal == "imap" else "")),
-            port=int(self.port.value()),
-            role=self.role.currentText(),
-            signal_mode=signal,
+        role = self.role.currentText() or str(contact.get("role") or "initiator")
+        port = int(self.port.value())
+        # Persist the per-contact choices so the next Connect is one click.
+        contact["role"] = role
+        contact["local_port"] = port
+        return Config.from_vault(
+            self.data,
+            key,
+            port=port,
+            role=role,
             advertise_host=self.advertise.text().strip() or "127.0.0.1",
             stun_servers=stun,
+            log_dir=str(Path.cwd() / "state" / "logs"),
             punch_window=300.0,
             keepalive=15.0,
-            signal_timeout=float(identity.get("signal_timeout") or 600.0),
-            replay_window=float(identity.get("replay_window") or 600.0),
-            log_dir=str(Path.cwd() / "state" / "logs"),
         )
 
     def _connect(self) -> None:
@@ -371,6 +372,8 @@ class MainWindow(QWidget):
             return
         try:
             cfg = self._build_config(key)
+            if not self._save():
+                return
             self.worker = SessionWorker(cfg)
         except BaseException as exc:  # noqa: BLE001
             self.worker = None

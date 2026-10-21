@@ -173,6 +173,35 @@ class ContactsTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             create_contact(alice, "bob@example.com", role="both")
 
+    def test_contact_local_port_and_invite_role(self) -> None:
+        alice = {
+            "version": 2,
+            "identity": {"my_email": "alice@example.com", "mode": "smtp"},
+            "contacts": {},
+        }
+        _, contact, code = create_contact(
+            alice, "bob@example.com", role="responder", local_port=40101
+        )
+        self.assertEqual(contact["role"], "responder")
+        self.assertEqual(contact["local_port"], 40101)
+        bob = {
+            "version": 2,
+            "identity": {"my_email": "bob@example.com", "mode": "smtp"},
+            "contacts": {},
+        }
+        _, joined = join_contact(bob, code, local_port=40202)
+        self.assertEqual(joined["role"], "initiator")
+        self.assertEqual(joined["local_port"], 40202)
+
+    def test_invalid_local_port_rejected(self) -> None:
+        alice = {
+            "version": 2,
+            "identity": {"my_email": "alice@example.com", "mode": "smtp"},
+            "contacts": {},
+        }
+        with self.assertRaises(ValueError):
+            create_contact(alice, "bob@example.com", local_port=0)
+
     def test_join_checks_identity_email(self) -> None:
         alice = {
             "version": 2,
