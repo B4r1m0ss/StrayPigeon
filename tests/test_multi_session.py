@@ -1,0 +1,121 @@
+from __future__ import annotations
+
+import tempfile
+import unittest
+from pathlib import Path
+
+from PyQt6.QtCore import QObject, pyqtSignal
+from PyQt6.QtWidgets import QApplication
+
+from p2p.gui.multi_session import MultiSessionWindow
+
+
+class FakeController(QObject):
+    state_changed = pyqtSignal(str, str)
+    message_received = pyqtSignal(str, str)
+    file_progress = pyqtSignal(str, str, int, int)
+    error = pyqtSignal(str, str)
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.calls: list[tuple] = []
+        self.max_sessions = 16
+
+    def start_server(self, host: str, port: int) -> None:
+        self.calls.append(("server", host, port))
+
+    def connect(self, session_id: str, host: str, port: int) -> None:
+        self.calls.append(("connect", session_id, host, port))
+        self.state_changed.emit(session_id, "connecting")
+
+    def send(self, session_id: str, text: str) -> None:
+        self.calls.append(("send", session_id, text))
+
+    def send_file(self, session_id: str, path: str) -> None:
+        self.calls.append(("file", session_id, path))
+
+    def disconnect(self, session_id: str) -> None:
+        self.calls.append(("disconnect", session_id))
+
+    def stop(self) -> None:
+        self.calls.append(("stop",))
+
+
+class MultiSessionWindowTests(unittest.TestCase):
+    def setUp(self) -> None:
+        self.app = QApplication.instance() or QApplication([])
+        self._tmp = tempfile.TemporaryDirectory()
+        self.data = {
+            "version": 2,
+            "identity": {"my_email": "a@example.com", "mode": "smtp"},
+            "contacts": {
+                "b@example.com": {
+                    "peer_email": "b@example.com",
+                    "psk_b64": "x",
+                    "mode": "smtp",
+                    "role": "initiator",
+                    "local_port": 40000,
+                    "peer_host": "127.0.0.1",
+                    "peer_port": 40001,
+                },
+                "c@example.com": {
+                    "peer_email": "c@example.com",
+                    "psk_b64": "y",
+                    "mode": "smtp",
+                    "role": "responder",
+                    "local_port": 40002,
+                    "peer_host": "127.0.0.1",
+                    "peer_port": 40003,
+                },
+            },
+        }
+        self.controller = FakeController()
+        self.window = MultiSessionWindow(
+            self.data, Path(self._tmp.name) / "vault.json", "pass", controller=self.controller
+        )
+        self.window.show()
+
+    def tearDown(self) -> None:
+        self.window.close()
+        self._tmp.cleanup()
+
+    def test_tabs_and_one_click_connect(self) -> None:
+        self.assertEqual(self.window.tab_widget.count(), 2)
+        self.assertEqual(self.window.contact_list.count(), 2)
+        self.assertEqual(self.window.max_sessions.value(), 16)
+        self.controller.calls.clear()
+        self.window.contact_list.setCurrentRow(0)
+        self.window._connect()
+        self.assertIn(
+            ("connect", "b@example.com", "127.0.0.1", 40001), self.controller.calls
+        )
+        self.assertEqual(self.window._tabs["b@example.com"].state.text(), "connecting")
+
+    def test_send_chat_and_file_progress(self) -> None:
+        self.window.contact_list.setCurrentRow(0)
+        tab = self.window._tabs["b@example.com"]
+        tab.input.setText("hello")
+        self.window._send("b@example.com")
+        self.assertIn(("send", "b@example.com", "hello"), self.controller.calls)
+        self.assertIn("[me] hello", tab.chat.toPlainText())
+
+        self.controller.send_file("b@example.com", "/tmp/x.bin")
+        self.assertIn(("file", "b@example.com", "/tmp/x.bin"), self.controller.calls)
+        self.controller.file_progress.emit("b@example.com", "x.bin", 2, 4)
+        self.assertTrue(tab.progress.isVisible())
+        self.assertEqual(tab.progress.value(), 2)
+
+    def test_incoming_message_and_state_routing(self) -> None:
+        self.controller.state_changed.emit("b@example.com", "connected")
+        self.controller.message_received.emit("b@example.com", "hi there")
+        tab = self.window._tabs["b@example.com"]
+        self.assertIn("connected", tab.state.text())
+        self.assertIn("[peer] hi there", tab.chat.toPlainText())
+
+    def test_close_stops_controller(self) -> None:
+        self.window.close()
+        self.assertIn(("stop",), self.controller.calls)
+
+
+if __name__ == "__main__":
+    unittest.main()

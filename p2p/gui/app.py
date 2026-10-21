@@ -42,6 +42,7 @@ from p2p.vault import (
 
 from .setup_wizard import IdentityWizard
 from .vault_manager import ChangePassphraseDialog, VaultManagerDialog
+from .multi_session import MultiSessionWindow
 from .worker import SessionWorker
 
 
@@ -174,6 +175,7 @@ class MainWindow(QWidget):
         self.worker: SessionWorker | None = None
         self.connected = False
         self.reopen_vault = False
+        self.multi_window = None
         self.contact_key: str | None = None
         self.current_peer = ""
         self.setWindowTitle("StrayPigeon")
@@ -187,8 +189,12 @@ class MainWindow(QWidget):
         self.vault_btn = QPushButton("Vault…")
         self.vault_btn.setToolTip("Change passphrase, clear the vault, or lock it")
         self.vault_btn.clicked.connect(self._manage_vault)
+        self.multi_btn = QPushButton("Multi-session…")
+        self.multi_btn.setToolTip("Open the QUIC multi-contact window")
+        self.multi_btn.clicked.connect(self._open_multi)
         identity_row = QHBoxLayout()
         identity_row.addWidget(self.identity_label, 1)
+        identity_row.addWidget(self.multi_btn)
         identity_row.addWidget(self.vault_btn)
 
         self.contact_list = QListWidget()
@@ -401,6 +407,7 @@ class MainWindow(QWidget):
             self.stun,
             self.firewall_btn,
             self.vault_btn,
+            self.multi_btn,
         ):
             widget.setEnabled(not locked)
         self.connect_btn.setEnabled(not locked and bool(self.contact_key))
@@ -508,6 +515,25 @@ class MainWindow(QWidget):
         bar.setValue(bar.maximum())
 
     # ---- vault management ---------------------------------------------
+    def _open_multi(self) -> None:
+        if self.multi_window is not None and self.multi_window.isVisible():
+            self.multi_window.raise_()
+            self.multi_window.activateWindow()
+            return
+        try:
+            self.multi_window = MultiSessionWindow(
+                self.data, self.vault_path, self.passphrase, parent=self
+            )
+        except Exception as exc:  # noqa: BLE001
+            QMessageBox.critical(
+                self,
+                "StrayPigeon",
+                f"Cannot open multi-session window: {exc}\n"
+                "Install aioquic/qasync with requirements-gui.txt.",
+            )
+            return
+        self.multi_window.show()
+
     def _manage_vault(self) -> None:
         if self.worker is not None:
             QMessageBox.information(
