@@ -136,6 +136,9 @@ class QuicController(QObject):
                 await punch.start(  # type: ignore[attr-defined]
                     "0.0.0.0", 0, candidates=candidates, timeout=20.0, sock=sock
                 )
+                # The server is listening immediately, but QUIC is not
+                # connected until the initiator's handshake arrives.
+                await punch.wait_connected(timeout=20.0)  # type: ignore[attr-defined]
             else:
                 if self._client_config is None:
                     self._client_config = client_configuration()

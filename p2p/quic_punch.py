@@ -166,6 +166,7 @@ class PunchQuicServer(_PunchBase):
         on_message: Callable[[str, bytes], None] | None = None,
     ) -> None:
         super().__init__(configuration, sid, lease_id, psk, on_message)
+        self._connected_event = asyncio.Event()
         self.quic_server = QuicServer(
             configuration=configuration,
             create_protocol=lambda *args, **kwargs: QuicChatProtocol(
@@ -173,6 +174,7 @@ class PunchQuicServer(_PunchBase):
                 on_message=lambda _protocol, data: (
                     self.on_message("server", data) if self.on_message else None
                 ),
+                on_connected=lambda _protocol: self._connected_event.set(),
                 **kwargs,
             ),
         )
@@ -206,6 +208,9 @@ class PunchQuicServer(_PunchBase):
         if self._handle_punch(data, addr):
             return
         self.quic_server.datagram_received(data, addr)
+
+    async def wait_connected(self, timeout: float = 20.0) -> None:
+        await asyncio.wait_for(self._connected_event.wait(), timeout)
 
     def protocols(self) -> list[QuicChatProtocol]:
         seen: set[int] = set()
