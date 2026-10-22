@@ -8,18 +8,23 @@
 ![license](https://img.shields.io/badge/license-GPL--3.0-green)
 ![platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)
 
-StrayPigeon 单一主窗口（Session 信令 + QUIC 数据面）：
+StrayPigeon 单一主窗口（邮箱信令 + UDP 打洞 + QUIC 数据面）：
 
 ![StrayPigeon GUI](docs/images/gui.png)
 
-**StrayPigeon** 是一个完全开源的点对点聊天应用。它用你已有的邮箱（SMTP/IMAP）做信令，不依赖自建信令服务器。现在只有一个 GUI：**SingleWindow**。
+**StrayPigeon** 是一个完全开源的点对点聊天应用。它用你已有的邮箱（SMTP/IMAP）做信令，不依赖自建信令服务器；连接建立后，聊天和文件直接走 QUIC。
 
 - **信令/打洞**：legacy `Session`，SMTP/IMAP + STUN + P2P1 UDP punch；
-- **数据面**：aioquic QUIC，单 UDP 端口、最多 16 个会话、文件传输、MailRouter；
-- **入口**：`python -m p2p.gui` → `SingleWindow`；没有旧主窗口/新 Multi-session 两个入口。
+- **数据面**：aioquic QUIC，单 UDP 端口、最多 16 个会话、文件传输；
+- **入口**：`python -m p2p.gui` → `SingleWindow`，只有一个 GUI。
 
-> 注意：这是一个研究/毕业设计原型，**尚未经过安全审计**。  
-> **QUIC 路径目前仍是实验性**：本地/offscreen 测试通过，但真实 163/126 端到端尚未验收；TLS 证书校验当前为 `CERT_NONE`，证书指纹固定（fingerprint pinning）还没实现，不能当作生产级端到端认证。
+## 当前状态
+
+- **真实 163 ↔ 126 手工验收通过**：跨提供商 SMTP 信令、STUN/打洞、QUIC 连接、文字聊天、双向文件、连续文件、QUIC 心跳；
+- **85 个单元测试通过**；系统 Python 没装 aioquic 时：85 tests，12 skipped；
+- **QUIC 直接建立在 legacy Session 打洞后的同一个 UDP socket 上**，不再二次 P2P1；
+- **QUIC PING 每 15 秒**，`idle_timeout=600s`；
+- **尚未做安全审计**；QUIC TLS 当前是 `CERT_NONE`，证书指纹固定（fingerprint pinning）还没实现，不能当作生产级端到端认证。
 
 ## 为什么叫 StrayPigeon
 
@@ -27,74 +32,74 @@ StrayPigeon 单一主窗口（Session 信令 + QUIC 数据面）：
 
 项目原名 `email-p2p`。代码里的 vault 目录仍保留 `email-p2p`，是为了兼容已有数据。
 
-## 数据路径
+## 它是怎么工作的
 
-| | GUI（默认） | CLI/兼容 |
-|---|---|---|
-| 入口 | `SingleWindow` | `scripts/run_vault.py` |
-| 信令/打洞 | Legacy `Session`: SMTP/IMAP + STUN + P2P1 | 同左 |
-| 数据面 | QUIC over the same punched UDP socket | Legacy `Session` UDP AEAD |
-| 并发 | 最多 16 个会话 | 单会话 |
-| 加密 | QUIC TLS（当前 `CERT_NONE`，指纹固定待做） | X25519 + HKDF + ChaCha20-Poly1305 |
-| 文件 | 分块、`.part`、续传、SHA-256、进度 | 无 |
-| NAT | Session punch → handoff → QUIC；GUI 已接入；真实 163/126 未验收 | STUN + punch；之前 163/126 `CONNECTED` |
-| 实网状态 | **真实 163/126 尚未验收** | 之前 163/126 `CONNECTED`（pre-QUIC） |
+```text
+┌──────────────┐        SMTP/IMAP        ┌──────────────┐
+│  机器 A       │  p2p1/<sid>/<seq>      │  机器 B       │
+│  Session     │ ◀────────────────────▶ │  Session     │
+└──────┬───────┘   候选 / PSK 封装       └──────┬───────┘
+       │ STUN + P2P1 punch                      │
+       ▼                                        ▼
+┌─────────────────────────────────────────────────────┐
+│        同一个 UDP socket / NAT 五元组                │
+│   QUIC client  ◀──── QUIC/TLS ────▶  QUIC server    │
+│   chat stream / file stream / PING                  │
+└─────────────────────────────────────────────────────┘
+```
+
+### 1. 邮箱信令
+
+双方各自有 identity（自己的邮箱），每个 conversation 对应一个 contact。  
+邀请码 `p2p1:<Base32>` 带外发送，里面包含本次对话的 PSK、role 和双方邮箱；**邀请码不经过邮件**。
+
+### 2. STUN + P2P1 打洞
+
+legacy `Session`：
+
+```text
+bind 同一个 UDP 端口
+→ STUN 收集 srflx 候选
+→ 邮箱交换 CANDIDATE
+→ 双方互发 P2P1 探测包
+→ punch 返回对方 observed peer_addr
+```
+
+### 3. handoff：同一个 socket 交给 QUIC
+
+```text
+Session 打洞成功
+→ 不关闭 socket
+→ 把 sock + peer_addr + sid + psk + role 交给 QuicController
+→ initiator: QuicConnection.connect(peer_addr)
+→ responder: QuicServer 直接挂在这个 sock 上
+→ 第一包就是 QUIC Initial
+```
+
+**不会在 QUIC 层再打一次 P2P1。**  
+这是本项目最重要的一点：NAT 映射绑定在本地 UDP 端口上，换 socket 或重新打洞都会破坏它。
+
+### 4. QUIC 数据面
+
+- QUIC/TLS 1.3 握手，通常 1 个 RTT；
+- 文字消息走独立 stream；
+- 文件分块走 stream；
+- QUIC PING 每 15 秒发送一次，保持 NAT 映射和 idle timer；
+- 连接意外关闭时，GUI 会显示 `closed`，不会假装还连着。
 
 ## 特性
 
-- **邮箱即信令**：不需要额外的信令服务器；SMTP 或 IMAP 都能送候选。
-- **Contact 实例**：每个对话一个 contact，拥有独立 PSK、role、local_port；邀请码里自动携带 role，加入方保存相反 role。
-- **多联系人**：一个 identity 可以保存多个 contact；GUI 里点选后连接。
-- **QUIC 多会话**：单 UDP 监听端口、最多 16 个并发会话、第 17 个拒绝；并发上限 1–16 可调。
-- **大文件传输**：1–4 MiB 分块，接收端写 `.part`，`.part.json` 支持续传，完成后 SHA-256 校验再原子改名。
-- **MailRouter**：每个 identity 一个 IMAP poller，按 `p2p1/<sid>/<seq>` 路由；未绑定 sid 用各 contact PSK 探测；163 风格 `SEARCH ALL` 回退。
+- **邮箱即信令**：不需要额外信令服务器；SMTP 或 IMAP 都能送候选。
+- **Contact 实例**：每个对话一个 contact，独立 PSK、role、local_port；邀请码自动携带 role，加入方保存相反 role。
+- **多联系人**：一个 identity 可以有多个 contact；左侧列表 + 每个 contact 一个 tab。
+- **QUIC 多会话**：单 UDP 监听端口、最多 16 个并发会话；并发上限 1–16 可调。
+- **文件传输**：1–4 MiB 分块、`.part`、`.part.json` 续传、SHA-256 校验、原子改名、进度条；initiator/responder 两个方向都支持；同一个 tab 串行发送，上一份完成后再发下一份。
+- **QUIC 心跳**：15 秒 PING；空闲阈值 600 秒。
+- **连接反馈**：`Connecting…` 按钮、tab 内不确定进度条、`[conn]` 阶段日志、左侧状态栏。
 - **加密 vault**：scrypt + ChaCha20-Poly1305，保存邮箱授权码和 PSK；口令不落盘。
-- **GUI + CLI**：PyQt6 桌面端；命令行仍可用于脚本/服务器环境。
+- **GUI + CLI**：PyQt6 桌面端；命令行可用于脚本/服务器环境。
+- **删除 contact**：同时删除 contact、PSK 和 vault 中对应条目；不可恢复，不通知对方。
 - **跨平台**：Windows / Linux。
-- **默认不限速**；消息不持久化、不做离线补发（设计选择）。
-
-## 什么是 `p2p1`
-
-有两个不同的东西：
-
-1. **邀请码**：`p2p1:<Base32>`，包含双方邮箱、本次对话 PSK、role；用于 New contact / Join invite。**它不进邮件**，仍然复制粘贴、带外发送。
-2. **信令邮件主题**：`p2p1/<sid>/<seq>`，邮件正文是 PSK 加密后的 AEAD envelope。邮件服务商能看到主题、sid/seq、双方地址和时间，但看不到 PSK/邀请码；MailRouter 只读取这些信令邮件，不发送邀请码。
-
-## 它是怎么工作的
-
-### Legacy 路径
-
-```text
-A ── SMTP/IMAP: 候选 + 公钥（PSK 封装） ──▶ B
-      STUN → 公网映射 / NAT 分类
-      UDP 打洞 + keepalive
-      X25519 → HKDF → ChaCha20-Poly1305
-```
-
-1. 双方各自配置身份，不交换 peer；
-2. 发起方生成邀请码，带外发给对方；
-3. 双方通过邮箱交换候选、NAT 类型和临时公钥；
-4. STUN + UDP 打洞直连；
-5. X25519 协商会话密钥，聊天帧 AEAD 加密；
-6. 15 秒 keepalive 维持 NAT 映射。
-
-### QUIC 路径
-
-```text
-邀请码 p2p1:...  ──复制粘贴/带外──▶  对方 Join
-       │
-       ├─ MailRouter 轮询 p2p1/<sid>/<seq>
-       ├─ CANDIDATE → peer host/port → GUI 自动 connect
-       └─ QUIC 单 UDP 端口：chat streams + file streams
-```
-
-- 邀请码仍然是带外复制粘贴；
-- 信令邮件沿用原有的 `p2p1/<sid>/<seq>` 主题；
-- `MailRouter` 负责单 IMAP、sid 路由、未绑定 PSK 探测、163 回退；
-- GUI 收到 CANDIDATE 后更新 contact 的 peer host/port，并自动 `QuicController.connect()`；
-- 文件走 QUIC stream，不走邮件。
-
-> **重要：QUIC 本身不解决 NAT 穿透。** 已经实现并测试了“共享同一个 UDP socket：P2P1 打洞 + QUIC”，并已接到 `SessionWorker` → `QuicController.start_handoff` → `MultiSessionWindow`。真实 163/126 的 NAT/防火墙/邮件路径尚未验收；新窗口仍没有发送 CANDIDATE 的独立逻辑（邮箱信令由 legacy `Session` 完成）。
 
 ## 快速开始
 
@@ -104,7 +109,7 @@ A ── SMTP/IMAP: 候选 + 公钥（PSK 封装） ──▶ B
 - 两个支持 IMAP/SMTP 的邮箱（推荐不同提供商，例如 126 ↔ 163）
 - 各自的邮箱授权码/应用专用密码（不是登录密码）
 - 能访问 UDP 外网；对称 NAT（APDM）目前没有中继兜底
-- QUIC 路径需要 `aioquic` 和 `qasync`（已包含在 `requirements-gui.txt`）
+- QUIC 需要 `aioquic`（已包含在 `requirements-gui.txt`）
 
 ### 1. 安装
 
@@ -133,7 +138,7 @@ py -3 -m p2p.gui
 python3 -m pip install -r requirements.txt
 ```
 
-### 2. 创建身份（不包含 peer）
+### 2. 创建身份
 
 ```bash
 python3 scripts/setup.py --mode smtp
@@ -141,12 +146,13 @@ python3 scripts/setup.py --mode smtp
 
 只填写**你自己的**邮箱、IMAP/SMTP 主机、授权码和 vault 口令。这一步不会询问对话对象。
 
+GUI 首次启动也可以点 **Create identity…**，走同样的向导。
+
 ### 3. 创建/加入对话
 
 ```bash
 python3 scripts/contact.py new --peer bob@example.com
-# 默认本端 initiator；也可以显式 --role responder
-# 邀请码里会带 role；加入方自动存相反 role
+# 默认本端 initiator；邀请码里带 role
 # 把打印出来的 p2p1: 邀请码带外发给对方
 
 python3 scripts/contact.py join "p2p1:..."
@@ -155,74 +161,112 @@ python3 scripts/contact.py list
 
 一个 identity 可以有多个 contact；每个 contact 有自己的 PSK、role、local_port。
 
-### 4. GUI
+## GUI
 
 ```bash
 python3 -m p2p.gui
 # Windows: py -3 -m p2p.gui
 ```
 
-#### 4.1 SingleWindow（唯一主窗口）
+### 界面
 
-```bash
-python3 -m p2p.gui
-# Windows: py -3 -m p2p.gui
-```
+- 左侧：identity、**Vault…**、contact 列表、**New contact / Join invite / Delete contact**、Max sessions、Local UDP port、Peer host/port、**Connect / Disconnect**、**Allow UDP**、状态栏；
+- 右侧：每个 contact 一个 tab；**Send**、**Send file…**、文件进度、连接状态。
 
-1. 首次启动点 **Create identity…**，进入 Setup 向导；向导只创建 identity，不问 peer；
+### 连接流程
+
+1. 首次启动点 **Create identity…**；
 2. 解锁 vault；
-3. 左侧选择 contact；没有就点 **New contact** / **Join invite**；
+3. 选 contact；没有就 **New contact**（生成 initiator + 邀请码）或 **Join invite**（自动存 responder）；
 4. 点 **Connect**；
-5. 连上后输入消息，Enter 或 **Send**；**Send file…** 发文件；**Disconnect** 断开。
-
-- `New contact` 自动生成 initiator contact 和邀请码；`Join invite` 自动取相反 role；
-- 连接过程显示 `signaling / punching…` → `punching / QUIC handoff…` → `connected`；
-- 连接内部是：`SessionWorker(quic_handoff=True)` → legacy `Session` 做 SMTP/IMAP 信令 + STUN + P2P1 punch → `QuicController.start_handoff()` → `PunchQuicClient/Server` 在**同一个 UDP socket** 上完成 QUIC 握手；
-- **连接反馈**：Connect 后按钮变为 `Connecting…`，tab 显示不确定进度条，并逐行写 `[conn]` 阶段日志（bound / peer candidates / punching / QUIC handshake / connected）；左侧状态栏同步显示当前 contact；
-- **handoff 后不再二次 P2P1**：legacy Session 打洞成功后直接把同一个 socket 和 `peer_addr` 交给 QUIC；
-- **QUIC 心跳**：建立连接后每 15 秒发送一次 QUIC PING，保持 NAT 映射/空闲计时器；`idle_timeout=600s`；
-- **启动时不会自动连接**：MailRouter 只更新候选，必须手动点 Connect；
-- Connect 期间 **Connect** 按钮禁用；worker 结束后自动恢复；避免重复点击误报“already connecting”。
-- **Delete contact**：删除 contact、PSK 和 vault 里的对应条目；会先停止该 contact 的 worker/QUIC 会话，不可恢复，不通知对方；
-- **Vault…**：修改口令、清除/重置、锁定；
-- **Allow UDP**：放行本机当前 UDP 端口（Windows UAC；Linux 显示 ufw/firewalld/nft 命令）；
-- **Max sessions**、**Local UDP port**、**Peer host / Peer port**；MailRouter 收到 CANDIDATE 时会自动填充并连接；
-- 文件进度显示在 tab 里，接收端落在 `state/received/`。
-
-> **SingleWindow 的 `advertise_host` 目前固定为 `127.0.0.1`**；STUN 仍会收集 srflx 候选。跨 LAN/公网的真实测试前，需要把本机 LAN IP 暴露出来；这一步还没做。  
-> SMTP TLS：**465 = 隐式 TLS（STARTTLS 不勾）**；**587 = STARTTLS（勾选）**。163 / 126 的 SMTP 用 465，STARTTLS 保持关闭。
-
-真实验收时建议：
+5. 状态依次显示：
 
 ```text
-机器 A: New contact（initiator），local port 40000
-机器 B: Join invite（responder），local port 40000
+[conn] starting signaling / STUN / UDP punch…
+[conn] local UDP socket bound
+[conn] peer candidates received
+[conn] UDP punching…
+[conn] punch done; handing off to QUIC
+[conn] starting QUIC handshake on the punched socket…
+[conn] connected
+```
+
+6. 输入消息，Enter / **Send**；**Send file…** 发文件；**Disconnect** 断开。
+
+### 注意
+
+- **启动时不会自动连接**：MailRouter 只更新候选，必须手动点 Connect；
+- Connect 期间 **Connect** 按钮禁用，结束后自动恢复；
+- 连接期间可以点 **Disconnect** 中止信令/打洞；
+- **Delete contact** 会停止该 contact 的 worker/QUIC 会话，并删除 vault 中对应条目；
+- **Vault…** 支持修改口令、清除/重置、锁定；
+- **Allow UDP** 放行本机当前 UDP 端口（Windows UAC；Linux 显示 ufw/firewalld/nft 命令）；
+- 接收文件在**启动 GUI 时的工作目录**下的 `state/received/`；传输中是 `.part`，完成后 SHA-256 校验再改名。
+
+### SMTP TLS
+
+- **465 = 隐式 TLS（STARTTLS 不勾）**；
+- **587 = STARTTLS（勾选）**。
+
+163 / 126 的 SMTP 用 465，STARTTLS 保持关闭。
+
+### 实网建议
+
+```text
+机器 A（Windows/163）: New contact（initiator），local port 40000
+机器 B（Linux/126）:   Join invite（responder），local port 40000
 STUN: stun.miwifi.com:3478, stun.cloudflare.com:3478
 ```
 
-> **旧入口已移除**：旧的单会话 `MainWindow` 和 **Multi-session…** 按钮不再是产品入口；`MultiSessionWindow` 只作为 `SingleWindow` 的基类保留。旧 `MainWindow` 类仍在 `app.py` 中但已不再使用，后续清理。
+- 两边都要点 **Connect**；
+- 两边都要允许本机 UDP 端口（至少 Private/Domain）；
+- `advertise_host` 当前固定 `127.0.0.1`，跨机器主要靠 STUN srflx；LAN 纯 host 候选需要后续把本机 LAN IP 暴露出来。
 
-### 5. CLI
+## CLI
 
 ```bash
 python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
   --contact bob@example.com --role initiator --port 40000
 ```
 
-只有一个 contact 时可以省略 `--contact`。Windows 的 vault 路径是 `%APPDATA%\email-p2p\vault.json`。
+只有一个 contact 时可以省略 `--contact`。Windows 的 vault 路径是：
 
-## 当前状态
+```text
+%APPDATA%\email-p2p\vault.json
+```
 
-- **85 个单元测试通过**；
-- 系统 Python 没装 aioquic 时：85 tests，12 skipped；
-- **Legacy 数据面（CLI/兼容）**：同机加密 demo `PASS`；之前真实 163（Windows）↔ 126（Linux）跨提供商 SMTP 加密聊天 `CONNECTED`（pre-QUIC）；
-- **QUIC 数据面**：16 会话、16 × 1 MB 文件、4 MB 单文件、断点续传、SHA-256、MailRouter、Qt controller、SingleWindow offscreen 测试通过；
-- **QUIC 真实 163/126 端到端：尚未验收**；
-- 共享 socket punch+QUIC spike：P2P1 打洞后在同一 UDP socket 上完成 QUIC chat，本地测试通过；
-- **全链路 handoff 测试**：Session 信令（FileChannel）→ STUN/punch → 同一 UDP socket → QUIC chat，测试通过；SMTP 复用同一 Session 信令路径但未在该测试中实测；
-- **GUI/controller handoff**：SingleWindow → SessionWorker → QuicController.start_handoff → PunchQuicClient/Server；6 个 multi-session + 1 个 single-window offscreen 测试通过；
-- **尚未完成**：真实 163/126 QUIC 验收、证书指纹固定、100 GB 级文件实测、PyInstaller GUI exe/安装包、托盘/通知、自动重连；
-- **未做安全审计**。
+CLI 仍然使用 legacy Session 的 UDP AEAD 数据面；GUI 使用 QUIC。
+
+## 什么是 `p2p1`
+
+有两个不同的东西：
+
+1. **邀请码**：`p2p1:<Base32>`，包含双方邮箱、本次对话 PSK、role；用于 New contact / Join invite。**它不进邮件**，仍然复制粘贴、带外发送。
+2. **信令邮件主题**：`p2p1/<sid>/<seq>`，邮件正文是 PSK 加密后的 AEAD envelope。邮件服务商能看到主题、sid/seq、双方地址和时间，但看不到 PSK/邀请码；MailRouter 只读取这些信令邮件。
+
+## 实网验收
+
+已手工验证：
+
+```text
+163（Windows） ↔ 126（Linux）
+跨提供商 SMTP 信令
+STUN + P2P1 punch
+QUIC over the same punched UDP socket
+文字聊天
+文件双向传输
+连续多文件
+QUIC PING 心跳 / 空闲后再聊天
+```
+
+单元/offscreen 测试还覆盖：
+
+- 16 会话单端口、16 × 1 MB 并发文件；
+- 4 MB 单文件、断点续传、SHA-256；
+- handoff 后文件双向、连续多文件；
+- 连接失败/关闭、超时阶段、worker 生命周期；
+- SingleWindow 的 vault/contact/firewall shell；
+- 85 tests，系统 Python 无 aioquic 时 12 skipped。
 
 ## 安全模型
 
@@ -230,39 +274,34 @@ python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
 - **邀请码**：含双方邮箱/共享邮箱、PSK、role、checksum；不是身份口令，但拿到邀请码的人可以加入该对话。
 - **vault**：邮箱授权码和 PSK 用 `scrypt(n=2^15, r=8, p=1)` + `ChaCha20-Poly1305` 加密；口令不保存。
 - **Legacy 数据面**：X25519 临时密钥 → HKDF → ChaCha20-Poly1305；序号防重放；心跳不携带聊天内容。
-- **QUIC 数据面**：QUIC TLS 加密；**当前客户端 `CERT_NONE`，没有证书指纹固定**，所以只能算“实验性加密通道”，不能算生产级端到端认证。后续需要把服务器证书 fingerprint 写入邀请码/contact 并强制校验。
+- **QUIC 数据面**：QUIC/TLS 加密；**当前客户端 `CERT_NONE`，没有证书指纹固定**，所以只能算实验性加密通道，不能算生产级端到端认证。后续需要把服务器证书 fingerprint 写入邀请码/contact 并强制校验。
 - **信令**：IMAP 993 / SMTP 465 走 TLS；邮件服务商能看到 `p2p1/<sid>/<seq>` 元数据，但看不到 PSK/聊天内容；邀请码不经过邮件。
-- **没有中继**：没有 TURN/relay；双方都是对称 NAT 时 Legacy 路径会返回 `E_SYMMETRIC_NAT`。
+- **没有中继**：没有 TURN/relay；双方都是对称 NAT 时可能打洞失败。
 
 ## 已知限制
 
-- **真实 163/126 未验收**：GUI/controller 已接入 Session→punch→QUIC handoff，但只在 FileChannel/fake router/loc 测试中验证；真实 SMTP/IMAP、防火墙、NAT 和 16 会话尚未实网测试。
-- **QUIC 路径未真实双端验收**：真实 163/126 的 MailRouter、自动 connect、role/重复连接、防火墙和文件速度都还没确认。
 - **QUIC TLS 证书未固定**：当前 `CERT_NONE`，存在 MITM 风险；生产前必须实现 fingerprint pinning。
-- **role/auto-connect 风险**：双方都启动 QUIC server 时可能各自 connect，形成重复连接；真实测试前建议只让一边 auto-connect。
-- **MailRouter 真实 IMAP 未验收**：fake router 测试通过；真实 163 IMAP 搜索回退、签名/文件夹、轮询频率需要实网验证。
-- **大文件未实测**：目前 4 MB 单文件、16 × 1 MB 并发；100 GB/几百 GB 未测；`.part.json` 每 chunk 写一次，超大文件需要优化。
-- **`Max sessions` 只部分生效**：窗口设置主要影响新 client manager；已启动的 server manager 仍用创建时上限。
-- **Legacy UDP 路径无重传**：旧路径丢包就是丢消息；新 QUIC 路径有可靠性，但尚未生产验收。
-- **无消息持久化/离线补发**：聊天记录只在当前进程内；断线后新消息，旧消息不补发。
-- **GUI 文件传输走 QUIC**，handoff 后的 initiator/responder 两个方向都支持；Legacy CLI 无文件。
-- **无多设备/语音/群聊**。
-- **Allow UDP 只处理本机防火墙**：路由器/NAT/对称 NAT 不在范围内；Windows 规则默认只对 Private/Domain 生效。
-- **GUI 仍是 MVP**：`SingleWindow` 是唯一入口；旧 `MainWindow` 类还在 `app.py` 中但不再使用，后续删除；安装包、托盘/通知在路线图上。
+- **没有 TURN/relay 兜底**：对称 NAT/CGNAT 下可能无法直连。
+- **`advertise_host` 固定 127.0.0.1**：跨机器主要依赖 STUN srflx；LAN 纯 host 候选需要后续加 GUI 字段。
+- **大文件未做 100 GB 级实测**：目前 4 MB 单文件、16 × 1 MB 并发；`.part.json` 每 chunk 写一次，超大文件需要优化。
+- **消息不持久化、不离线补发**：聊天记录只在当前进程内；断线后旧消息不补发。
+- **无多设备同步、语音、群聊**。
+- **GUI 仍是 MVP**：`SingleWindow` 是唯一入口；旧 `MainWindow` 类还在 `app.py` 中但不再使用，后续删除；没有安装包、托盘/通知。
+- **Allow UDP 只处理本机防火墙**：路由器/NAT 不在范围内；Windows 规则默认只对 Private/Domain 生效。
+- **没有做安全审计**。
 
 ## 项目结构
 
 ```text
 p2p/
-  session.py           # Legacy STUN/UDP 会话
+  session.py           # Legacy STUN/UDP 会话；quic_handoff 可交出 socket
   config.py            # Config + Config.from_vault（per-contact，无全局 env）
   keyexchange.py       # X25519 + HKDF + AEAD
   stun.py              # 最小 STUN 客户端
   punch.py             # P2P1 探测/回包
-  quic_transport.py    # QUIC protocol + 16-session manager
+  quic_transport.py    # QUIC protocol + 16-session manager + PING keepalive
   quic_file.py         # 分块/续传/SHA-256/进度
-  quic_punch.py        # 同一 UDP socket：P2P1 打洞 + QUIC
-  session.py           # Legacy signaling/punch；quic_handoff 可交出 socket
+  quic_punch.py        # handoff socket 的 QUIC client/server（可选独立打洞）
   contacts.py          # identity/contact 迁移、role、invite
   invite.py            # p2p1 邀请码编解码
   onboarding.py        # identity 构建、连接检查、vault 创建/重置
@@ -299,6 +338,7 @@ LICENSE
 # 需要 aioquic；没有时 QUIC 测试会 skip
 .venv/bin/python -m unittest discover -s tests -v   # 85 tests
 # Windows: py -3 -m unittest discover -s tests -v
+
 python3 scripts/demo_same_machine.py                # Legacy 同机加密 demo
 
 # GUI offscreen
@@ -307,7 +347,7 @@ QT_QPA_PLATFORM=offscreen python3 -m p2p.gui
 
 ## 文档
 
-- [DEVELOPMENT.md](DEVELOPMENT.md)：开发记录、实验过程、旧流程和更多细节；
+- [DEVELOPMENT.md](DEVELOPMENT.md)：开发记录、实验过程和更多细节；
 - [docs/images/gui.png](docs/images/gui.png)：SingleWindow 预览；
 - [setup.identity.example.json](setup.identity.example.json)：非交互 identity 示例。
 
