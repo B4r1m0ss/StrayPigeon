@@ -16,6 +16,7 @@ class SessionWorker(QThread):
 
     def __init__(self, cfg: Config):
         super().__init__()
+        self.cfg = cfg
         self.session = Session(cfg)
         self.session.gui = True
         self.session.event_sink = self._on_event

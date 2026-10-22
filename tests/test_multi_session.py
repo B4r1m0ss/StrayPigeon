@@ -210,6 +210,7 @@ class MultiSessionWindowTests(unittest.TestCase):
         self.assertIn("[peer] hi there", tab.chat.toPlainText())
 
     def test_mail_candidate_auto_connects(self) -> None:
+        self.window.auto_connect = True
         self.router.emit_candidate("b@example.com", "192.0.2.10", 40123)
         self.assertTrue(self.worker.started)
         self.assertEqual(self.window.connect_btn.text(), "Connecting…")

@@ -111,7 +111,7 @@ class MultiSessionWindow(QWidget):
         passphrase: str,
         controller: object | None = None,
         mail_router: object | None = None,
-        auto_connect: bool = True,
+        auto_connect: bool = False,
         worker_factory: object | None = None,
         parent: QWidget | None = None,
     ) -> None:
@@ -453,6 +453,12 @@ class MultiSessionWindow(QWidget):
         return self._tabs.get(session_id) or self.tab_widget.currentWidget()
 
     def _on_state(self, session_id: str, state: str) -> None:
+        try:
+            self._apply_state(session_id, state)
+        except Exception as exc:  # noqa: BLE001
+            self._on_error(session_id, f"state handler: {type(exc).__name__}: {exc}")
+
+    def _apply_state(self, session_id: str, state: str) -> None:
         if state == "connected":
             self._connected.add(session_id)
             self._handoff_keys.discard(session_id)
@@ -475,16 +481,22 @@ class MultiSessionWindow(QWidget):
                 tab.append(f"[conn] {state}")
 
     def _on_message(self, session_id: str, text: str) -> None:
-        tab = self._tab_for(session_id)
-        if tab is not None:
-            tab.append(f"[peer] {text}")
+        try:
+            tab = self._tab_for(session_id)
+            if tab is not None:
+                tab.append(f"[peer] {text}")
+        except Exception as exc:  # noqa: BLE001
+            self._on_error(session_id, f"message handler: {type(exc).__name__}: {exc}")
 
     def _on_file_progress(
         self, session_id: str, file_id: str, done: int, total: int
     ) -> None:
-        tab = self._tab_for(session_id)
-        if tab is not None:
-            tab.set_progress(file_id, done, total)
+        try:
+            tab = self._tab_for(session_id)
+            if tab is not None:
+                tab.set_progress(file_id, done, total)
+        except Exception as exc:  # noqa: BLE001
+            self._on_error(session_id, f"file progress handler: {type(exc).__name__}: {exc}")
 
     def _on_error(self, session_id: str, text: str) -> None:
         tab = self._tab_for(session_id)

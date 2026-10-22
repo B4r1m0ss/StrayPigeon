@@ -3,7 +3,7 @@
 > **Email-signaled, end-to-end encrypted P2P chat.**
 > 一只迷途的信鸽，也总能找到同伴。
 
-![tests](https://img.shields.io/badge/tests-83%20passing-brightgreen)
+![tests](https://img.shields.io/badge/tests-84%20passing-brightgreen)
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![license](https://img.shields.io/badge/license-GPL--3.0-green)
 ![platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)
@@ -179,6 +179,7 @@ python3 -m p2p.gui
 - 连接过程显示 `signaling / punching…` → `punching / QUIC handoff…` → `connected`；
 - 连接内部是：`SessionWorker(quic_handoff=True)` → legacy `Session` 做 SMTP/IMAP 信令 + STUN + P2P1 punch → `QuicController.start_handoff()` → `PunchQuicClient/Server` 在**同一个 UDP socket** 上完成 QUIC 握手；
 - **连接反馈**：Connect 后按钮变为 `Connecting…`，tab 显示不确定进度条，并逐行写 `[conn]` 阶段日志（bound / peer candidates / punching / QUIC handshake / connected）；左侧状态栏同步显示当前 contact；
+- **启动时不会自动连接**：MailRouter 只更新候选，必须手动点 Connect；
 - Connect 期间 **Connect** 按钮禁用；worker 结束后自动恢复；避免重复点击误报“already connecting”。
 - **Delete contact**：删除 contact、PSK 和 vault 里的对应条目；会先停止该 contact 的 worker/QUIC 会话，不可恢复，不通知对方；
 - **Vault…**：修改口令、清除/重置、锁定；
@@ -210,8 +211,8 @@ python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
 
 ## 当前状态
 
-- **83 个单元测试通过**；
-- 系统 Python 没装 aioquic 时：83 tests，11 skipped；
+- **84 个单元测试通过**；
+- 系统 Python 没装 aioquic 时：84 tests，11 skipped；
 - **Legacy 数据面（CLI/兼容）**：同机加密 demo `PASS`；之前真实 163（Windows）↔ 126（Linux）跨提供商 SMTP 加密聊天 `CONNECTED`（pre-QUIC）；
 - **QUIC 数据面**：16 会话、16 × 1 MB 文件、4 MB 单文件、断点续传、SHA-256、MailRouter、Qt controller、SingleWindow offscreen 测试通过；
 - **QUIC 真实 163/126 端到端：尚未验收**；
@@ -284,7 +285,7 @@ scripts/
   run_vault.py         # Legacy CLI
   allow_firewall.ps1   # Windows UDP 端口放行（UAC）
   pair_test.py         # 两个 vault 非交互测试
-tests/                 # 26 个测试文件，83 个测试
+tests/                 # 27 个测试文件，84 个测试
 docs/images/gui.png
 DEVELOPMENT.md
 LICENSE
@@ -294,7 +295,7 @@ LICENSE
 
 ```bash
 # 需要 aioquic；没有时 QUIC 测试会 skip
-.venv/bin/python -m unittest discover -s tests -v   # 83 tests
+.venv/bin/python -m unittest discover -s tests -v   # 84 tests
 # Windows: py -3 -m unittest discover -s tests -v
 python3 scripts/demo_same_machine.py                # Legacy 同机加密 demo
 
