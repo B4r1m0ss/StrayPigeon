@@ -135,13 +135,19 @@ class PunchQuicClient(_PunchBase):
             await loop.create_datagram_endpoint(
                 lambda: self, local_addr=("0.0.0.0", local_port)
             )
-        observed = await self._punch(candidates, timeout=timeout)
+        try:
+            observed = await self._punch(candidates, timeout=timeout)
+        except asyncio.TimeoutError as exc:
+            raise TimeoutError("client P2P1 punch timed out") from exc
         if observed is None:
-            raise TimeoutError("UDP punch timed out")
+            raise TimeoutError("client P2P1 punch timed out")
         assert self.transport is not None
         self.protocol.connection_made(self.transport)
         self.protocol.connect(observed)
-        await asyncio.wait_for(self.protocol.wait_connected(), timeout)
+        try:
+            await asyncio.wait_for(self.protocol.wait_connected(), timeout)
+        except asyncio.TimeoutError as exc:
+            raise TimeoutError("client QUIC handshake timed out") from exc
         return observed
 
     def datagram_received(self, data: bytes, addr: Address) -> None:
@@ -220,7 +226,10 @@ class PunchQuicServer(_PunchBase):
         self.quic_server.datagram_received(data, addr)
 
     async def wait_connected(self, timeout: float = 20.0) -> None:
-        await asyncio.wait_for(self._connected_event.wait(), timeout)
+        try:
+            await asyncio.wait_for(self._connected_event.wait(), timeout)
+        except asyncio.TimeoutError as exc:
+            raise TimeoutError("server QUIC handshake timed out") from exc
 
     def protocols(self) -> list[QuicChatProtocol]:
         seen: set[int] = set()
