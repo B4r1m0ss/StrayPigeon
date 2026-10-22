@@ -133,6 +133,7 @@ class QuicController(QObject):
                     secrets.token_hex(8),
                     bytes(psk),
                     on_message=lambda _sid, data: self._on_message(session_id, data),
+                    on_closed=lambda sid=session_id: self.state_changed.emit(sid, "closed"),
                 )
                 await punch.start(  # type: ignore[attr-defined]
                     "0.0.0.0", 0, candidates=candidates, timeout=20.0, sock=sock
@@ -149,6 +150,7 @@ class QuicController(QObject):
                     secrets.token_hex(8),
                     bytes(psk),
                     on_message=lambda _sid, data: self._on_message(session_id, data),
+                    on_closed=lambda sid=session_id: self.state_changed.emit(sid, "closed"),
                 )
                 await punch.start(  # type: ignore[attr-defined]
                     0, candidates, timeout=20.0, sock=sock

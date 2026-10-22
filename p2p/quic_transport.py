@@ -279,17 +279,22 @@ def make_self_signed_cert(
     return cert_path, key_path
 
 
-def client_configuration() -> QuicConfiguration:
+def client_configuration(idle_timeout: float = 600.0) -> QuicConfiguration:
     """Local spike/client config; real peers pin the server cert fingerprint."""
     return QuicConfiguration(
         is_client=True,
         alpn_protocols=[ALPN],
         server_name="localhost",
         verify_mode=ssl.CERT_NONE,
+        idle_timeout=idle_timeout,
     )
 
 
-def server_configuration(cert_path: str | Path, key_path: str | Path) -> QuicConfiguration:
-    cfg = QuicConfiguration(is_client=False, alpn_protocols=[ALPN])
+def server_configuration(
+    cert_path: str | Path, key_path: str | Path, idle_timeout: float = 600.0
+) -> QuicConfiguration:
+    cfg = QuicConfiguration(
+        is_client=False, alpn_protocols=[ALPN], idle_timeout=idle_timeout
+    )
     cfg.load_cert_chain(str(cert_path), str(key_path))
     return cfg

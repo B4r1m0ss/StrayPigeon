@@ -106,13 +106,18 @@ class PunchQuicClient(_PunchBase):
         lease_id: str,
         psk: bytes,
         on_message: Callable[[str, bytes], None] | None = None,
+        on_closed: Callable[[], None] | None = None,
     ) -> None:
         super().__init__(configuration, sid, lease_id, psk, on_message)
+        self.on_closed = on_closed
         self.quic = QuicConnection(configuration=configuration)
         self.protocol = QuicChatProtocol(
             self.quic,
             on_message=lambda _protocol, data: (
                 self.on_message("client", data) if self.on_message else None
+            ),
+            on_closed=lambda _protocol: (
+                self.on_closed() if self.on_closed is not None else None
             ),
         )
 
@@ -164,8 +169,10 @@ class PunchQuicServer(_PunchBase):
         lease_id: str,
         psk: bytes,
         on_message: Callable[[str, bytes], None] | None = None,
+        on_closed: Callable[[], None] | None = None,
     ) -> None:
         super().__init__(configuration, sid, lease_id, psk, on_message)
+        self.on_closed = on_closed
         self._connected_event = asyncio.Event()
         self.quic_server = QuicServer(
             configuration=configuration,
@@ -175,6 +182,9 @@ class PunchQuicServer(_PunchBase):
                     self.on_message("server", data) if self.on_message else None
                 ),
                 on_connected=lambda _protocol: self._connected_event.set(),
+                on_closed=lambda _protocol: (
+                    self.on_closed() if self.on_closed is not None else None
+                ),
                 **kwargs,
             ),
         )
