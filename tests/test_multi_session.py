@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import base64
 import tempfile
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 from PyQt6.QtCore import QObject, pyqtSignal
@@ -38,8 +40,30 @@ class FakeController(QObject):
     def disconnect(self, session_id: str) -> None:
         self.calls.append(("disconnect", session_id))
 
+    def start_handoff(self, session_id: str, handoff: dict) -> None:
+        self.calls.append(("handoff", session_id, handoff.get("sid")))
+
     def stop(self) -> None:
         self.calls.append(("stop",))
+
+
+class FakeWorker(QObject):
+    state = pyqtSignal(dict)
+    error = pyqtSignal(str, str)
+    handoff_ready = pyqtSignal(dict)
+    finished = pyqtSignal()
+
+    def __init__(self, cfg=None) -> None:
+        super().__init__()
+        self.cfg = cfg
+        self.started = False
+        self.stopped = False
+
+    def start(self) -> None:
+        self.started = True
+
+    def stop(self) -> None:
+        self.stopped = True
 
 
 class FakeRouter:
@@ -70,14 +94,17 @@ class FakeRouter:
 class MultiSessionWindowTests(unittest.TestCase):
     def setUp(self) -> None:
         self.app = QApplication.instance() or QApplication([])
+        self._message_patch = patch("p2p.gui.multi_session.QMessageBox.critical")
+        self._message_patch.start()
+        self.addCleanup(self._message_patch.stop)
         self._tmp = tempfile.TemporaryDirectory()
         self.data = {
             "version": 2,
-            "identity": {"my_email": "a@example.com", "mode": "smtp"},
+            "identity": {"my_email": "a@example.com", "mode": "smtp", "imap_host": "imap.example.com", "imap_password": "secret", "smtp_host": "smtp.example.com", "smtp_port": 465, "smtp_starttls": False},
             "contacts": {
                 "b@example.com": {
                     "peer_email": "b@example.com",
-                    "psk_b64": "x",
+                    "psk_b64": base64.b64encode(b"b" * 32).decode("ascii"),
                     "mode": "smtp",
                     "role": "initiator",
                     "local_port": 40000,
@@ -86,7 +113,7 @@ class MultiSessionWindowTests(unittest.TestCase):
                 },
                 "c@example.com": {
                     "peer_email": "c@example.com",
-                    "psk_b64": "y",
+                    "psk_b64": base64.b64encode(b"c" * 32).decode("ascii"),
                     "mode": "smtp",
                     "role": "responder",
                     "local_port": 40002,
@@ -97,12 +124,14 @@ class MultiSessionWindowTests(unittest.TestCase):
         }
         self.controller = FakeController()
         self.router = FakeRouter()
+        self.worker = FakeWorker()
         self.window = MultiSessionWindow(
             self.data,
             Path(self._tmp.name) / "vault.json",
             "pass",
             controller=self.controller,
             mail_router=self.router,
+            worker_factory=lambda cfg: self.worker,
         )
         self.window.show()
 
@@ -117,10 +146,19 @@ class MultiSessionWindowTests(unittest.TestCase):
         self.controller.calls.clear()
         self.window.contact_list.setCurrentRow(0)
         self.window._connect()
-        self.assertIn(
-            ("connect", "b@example.com", "127.0.0.1", 40001), self.controller.calls
+        self.assertTrue(self.worker.started)
+        self.window._on_handoff(
+            "b@example.com",
+            {
+                "socket": None,
+                "peer_addr": ("127.0.0.1", 40001),
+                "peer_candidates": [("127.0.0.1", 40001)],
+                "sid": "sid-test",
+                "psk": b"x" * 32,
+                "role": "initiator",
+            },
         )
-        self.assertEqual(self.window._tabs["b@example.com"].state.text(), "connecting")
+        self.assertIn(("handoff", "b@example.com", "sid-test"), self.controller.calls)
 
     def test_send_chat_and_file_progress(self) -> None:
         self.window.contact_list.setCurrentRow(0)
@@ -145,10 +183,19 @@ class MultiSessionWindowTests(unittest.TestCase):
 
     def test_mail_candidate_auto_connects(self) -> None:
         self.router.emit_candidate("b@example.com", "192.0.2.10", 40123)
-        self.assertIn(
-            ("connect", "b@example.com", "192.0.2.10", 40123),
-            self.controller.calls,
+        self.assertTrue(self.worker.started)
+        self.window._on_handoff(
+            "b@example.com",
+            {
+                "socket": None,
+                "peer_addr": ("127.0.0.1", 40001),
+                "peer_candidates": [("127.0.0.1", 40001)],
+                "sid": "sid-test",
+                "psk": b"x" * 32,
+                "role": "initiator",
+            },
         )
+        self.assertIn(("handoff", "b@example.com", "sid-test"), self.controller.calls)
         self.assertEqual(
             self.data["contacts"]["b@example.com"]["peer_host"], "192.0.2.10"
         )

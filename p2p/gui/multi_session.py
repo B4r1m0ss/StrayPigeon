@@ -22,9 +22,11 @@ from PyQt6.QtWidgets import (
     QWidget,
 )
 
+from p2p.config import Config
 from p2p.signal.mail_router import ImapMailbox, MailRouter, RoutedSignal
 
 from .quic_controller import QuicController
+from .worker import SessionWorker
 
 
 class ChatTab(QWidget):
@@ -101,6 +103,7 @@ class MultiSessionWindow(QWidget):
         controller: object | None = None,
         mail_router: object | None = None,
         auto_connect: bool = True,
+        worker_factory: object | None = None,
         parent: QWidget | None = None,
     ) -> None:
         super().__init__(parent)
@@ -109,6 +112,8 @@ class MultiSessionWindow(QWidget):
         self.passphrase = passphrase
         self.auto_connect = auto_connect
         self.mail_router = mail_router
+        self.worker_factory = worker_factory
+        self._workers: dict[str, object] = {}
         self._router_thread: _RouterThread | None = None
         self._connected: set[str] = set()
         self.setWindowTitle("StrayPigeon — multi-session")
@@ -171,7 +176,6 @@ class MultiSessionWindow(QWidget):
         self.routed_signal.connect(self._on_routed_signal)
         self._refresh_contacts()
         self._bind_router()
-        self.controller.start_server("0.0.0.0", int(self.local_port.value()))
 
     # ---- UI ------------------------------------------------------------
     def _refresh_contacts(self) -> None:
@@ -268,25 +272,59 @@ class MultiSessionWindow(QWidget):
     # ---- actions -------------------------------------------------------
     def _connect_contact(self, key: str) -> None:
         tab = self._tabs.get(key)
-        if tab is None:
+        contact = (self.data.get("contacts") or {}).get(key)
+        if tab is None or not isinstance(contact, dict):
             return
-        contact = (self.data.get("contacts") or {}).get(key, {})
-        host = str(contact.get("peer_host") or self.peer_host.text().strip() or "127.0.0.1")
-        port = int(contact.get("peer_port") or self.peer_port.value())
+        if key in self._workers:
+            return
         if hasattr(self.controller, "max_sessions") and self.controller.max_sessions <= 0:
             QMessageBox.warning(self, "StrayPigeon", "Maximum sessions must be at least 1.")
             return
-        tab.set_state("connecting…")
-        self.controller.connect(key, host, port)
+        role = str(contact.get("role") or "initiator")
+        port = int(contact.get("local_port") or self.local_port.value())
+        try:
+            cfg = Config.from_vault(
+                self.data,
+                key,
+                port=port,
+                role=role,
+                advertise_host=self.advertise_host_text(),
+                log_dir=str(Path.cwd() / "state" / "logs"),
+                quic_handoff=True,
+            )
+        except Exception as exc:  # noqa: BLE001
+            QMessageBox.critical(self, "StrayPigeon", f"Cannot start signaling: {exc}")
+            return
+        worker = self.worker_factory(cfg) if self.worker_factory is not None else SessionWorker(cfg)
+        self._workers[key] = worker
+        worker.state.connect(lambda payload, k=key: self._on_worker_state(k, payload))
+        worker.error.connect(lambda code, detail, k=key: self._on_error(k, f"{code} {detail}"))
+        worker.handoff_ready.connect(lambda handoff, k=key: self._on_handoff(k, handoff))
+        worker.finished.connect(lambda k=key: self._workers.pop(k, None))
+        tab.set_state("signaling / punching…")
+        worker.start()
         self.disconnect_btn.setEnabled(True)
+
+    def advertise_host_text(self) -> str:
+        # The old per-contact advertise host field is not in this window yet;
+        # 127.0.0.1 is the safe default for loopback/LAN tests.
+        return "127.0.0.1"
+
+    def _on_worker_state(self, key: str, payload: dict) -> None:
+        tab = self._tabs.get(key)
+        if tab is not None:
+            tab.set_state(str(payload.get("state") or "…"))
+
+    def _on_handoff(self, key: str, handoff: dict) -> None:
+        tab = self._tabs.get(key)
+        if tab is not None:
+            tab.set_state("punching / QUIC handoff…")
+        self.controller.start_handoff(key, handoff)
 
     def _connect(self) -> None:
         key = self._current_key()
         if not key:
             return
-        contact = (self.data.get("contacts") or {}).get(key, {})
-        contact["peer_host"] = self.peer_host.text().strip()
-        contact["peer_port"] = int(self.peer_port.value())
         self._connect_contact(key)
 
     def _send(self, key: str) -> None:
@@ -349,6 +387,12 @@ class MultiSessionWindow(QWidget):
             tab.set_state("error")
 
     def closeEvent(self, event) -> None:  # noqa: N802
+        for worker in list(self._workers.values()):
+            try:
+                worker.stop()  # type: ignore[attr-defined]
+            except Exception:  # noqa: BLE001
+                pass
+        self._workers.clear()
         if self._router_thread is not None:
             self._router_thread.stop()
             self._router_thread = None

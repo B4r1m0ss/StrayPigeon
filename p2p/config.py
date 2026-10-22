@@ -66,6 +66,7 @@ class Config:
         punch_window: float = 300.0,
         signal_timeout: float | None = None,
         replay_window: float | None = None,
+        quic_handoff: bool = False,
     ) -> "Config":
         """Build per-contact config with no process-wide environment reads."""
         from .contacts import normalize_role, select_contact
@@ -99,6 +100,7 @@ class Config:
             signal_timeout=float(signal_timeout or identity.get("signal_timeout") or default_timeout),
             stun_servers=stun_servers,
             replay_window=float(replay_window or identity.get("replay_window") or default_timeout),
+            quic_handoff=quic_handoff,
             contact_id=key,
             my_email=str(identity.get("my_email") or ""),
             peer_email=str(contact.get("peer_email") or ""),

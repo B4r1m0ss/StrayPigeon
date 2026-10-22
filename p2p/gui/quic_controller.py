@@ -8,6 +8,7 @@ widgets and never persists messages.
 from __future__ import annotations
 
 import asyncio
+import secrets
 import threading
 from pathlib import Path
 
@@ -15,6 +16,7 @@ from PyQt6.QtCore import QObject, QThread, pyqtSignal
 
 try:  # optional QUIC extra
     from p2p.quic_file import FileReceiver, FileSender, decode_frame
+    from p2p.quic_punch import PunchQuicClient, PunchQuicServer
     from p2p.quic_transport import (
         QuicChatSession,
         QuicSessionManager,
@@ -86,6 +88,7 @@ class QuicController(QObject):
         self._senders: dict[str, FileSender] = {}
         self._client_config = None
         self._server_config = None
+        self._punch_sessions: dict[str, object] = {}
 
     # ---- setup / server ------------------------------------------------
     def start_server(self, host: str, port: int) -> None:
@@ -102,6 +105,54 @@ class QuicController(QObject):
         )
         await self._server_manager.start_server(host, port, self._server_config)
         self.state_changed.emit("", "server")
+
+    # ---- handed-off punched socket ------------------------------------
+    def start_handoff(self, session_id: str, handoff: dict) -> None:
+        self._thread.submit(self._async_handoff(session_id, dict(handoff)))
+
+    async def _async_handoff(self, session_id: str, handoff: dict) -> None:
+        sock = handoff.get("socket")
+        sid = str(handoff.get("sid") or "")
+        psk = handoff.get("psk")
+        role = str(handoff.get("role") or "initiator")
+        candidates = list(handoff.get("peer_candidates") or [])
+        if sock is None or not sid or not isinstance(psk, (bytes, bytearray)):
+            self.error.emit(session_id, "invalid handoff")
+            return
+        try:
+            if role == "responder":
+                if self._server_config is None:
+                    cert, key = make_self_signed_cert(self.cert_dir)
+                    self._server_config = server_configuration(cert, key)
+                punch: object = PunchQuicServer(
+                    self._server_config,
+                    sid,
+                    secrets.token_hex(8),
+                    bytes(psk),
+                    on_message=lambda _sid, data: self._on_message(session_id, data),
+                )
+                await punch.start(  # type: ignore[attr-defined]
+                    "0.0.0.0", 0, candidates=candidates, timeout=20.0, sock=sock
+                )
+            else:
+                if self._client_config is None:
+                    self._client_config = client_configuration()
+                punch = PunchQuicClient(
+                    self._client_config,
+                    sid,
+                    secrets.token_hex(8),
+                    bytes(psk),
+                    on_message=lambda _sid, data: self._on_message(session_id, data),
+                )
+                await punch.start(  # type: ignore[attr-defined]
+                    0, candidates, timeout=20.0, sock=sock
+                )
+        except Exception as exc:  # noqa: BLE001
+            self.error.emit(session_id, f"handoff: {type(exc).__name__}: {exc}")
+            self.state_changed.emit(session_id, "error")
+            return
+        self._punch_sessions[session_id] = punch
+        self.state_changed.emit(session_id, "connected")
 
     # ---- client --------------------------------------------------------
     def connect(self, session_id: str, host: str, port: int) -> None:
@@ -128,6 +179,17 @@ class QuicController(QObject):
         self.state_changed.emit(session_id, "connected")
 
     def send(self, session_id: str, text: str) -> None:
+        punch = self._punch_sessions.get(session_id)
+        if punch is not None:
+            if isinstance(punch, PunchQuicClient):
+                self._thread.loop.call_soon_threadsafe(
+                    punch.protocol.send_message, text  # type: ignore[attr-defined]
+                )
+            else:
+                self._thread.loop.call_soon_threadsafe(
+                    punch.send_message, text  # type: ignore[attr-defined]
+                )
+            return
         session = self._sessions.get(session_id)
         if session is None:
             self.error.emit(session_id, "not connected")
@@ -135,6 +197,11 @@ class QuicController(QObject):
         self._thread.submit(session.send(text))
 
     def send_file(self, session_id: str, path: str) -> None:
+        punch = self._punch_sessions.get(session_id)
+        if isinstance(punch, PunchQuicClient):
+            session = QuicChatSession(session_id, punch.protocol, None, self)
+            self._thread.submit(self._async_send_file(session_id, session, path))
+            return
         session = self._sessions.get(session_id)
         if session is None:
             self.error.emit(session_id, "not connected")
@@ -159,6 +226,11 @@ class QuicController(QObject):
             self._senders.pop(session_id, None)
 
     def disconnect(self, session_id: str) -> None:
+        punch = self._punch_sessions.pop(session_id, None)
+        if punch is not None:
+            self._thread.submit(punch.close())  # type: ignore[attr-defined]
+            self.state_changed.emit(session_id, "closed")
+            return
         session = self._sessions.pop(session_id, None)
         if session is not None:
             self._thread.submit(session.close())
@@ -200,6 +272,9 @@ class QuicController(QObject):
     def stop(self) -> None:
         futures = []
         try:
+            for punch in list(self._punch_sessions.values()):
+                futures.append(self._thread.submit(punch.close()))  # type: ignore[attr-defined]
+            self._punch_sessions.clear()
             if self._client_manager is not None:
                 futures.append(self._thread.submit(self._client_manager.close()))
             if self._server_manager is not None:

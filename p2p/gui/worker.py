@@ -12,6 +12,7 @@ class SessionWorker(QThread):
     state = pyqtSignal(dict)
     message = pyqtSignal(str, str)  # text, peer address
     error = pyqtSignal(str, str)  # code, detail
+    handoff_ready = pyqtSignal(dict)
 
     def __init__(self, cfg: Config):
         super().__init__()
@@ -40,4 +41,23 @@ class SessionWorker(QThread):
         except BaseException as exc:  # noqa: BLE001
             self.error.emit("E_GUI", f"{type(exc).__name__}: {exc}")
         finally:
+            if (
+                self.session.handoff
+                and self.session.sock is not None
+                and self.session.peer_addr is not None
+                and self.session.sid
+                and self.session.psk is not None
+            ):
+                self.handoff_ready.emit(
+                    {
+                        "socket": self.session.sock,
+                        "peer_addr": self.session.peer_addr,
+                        "peer_candidates": [
+                            (c.ip, c.port) for c in self.session.peer_candidates
+                        ],
+                        "sid": self.session.sid,
+                        "psk": self.session.psk,
+                        "role": self.cfg.role,
+                    }
+                )
             self.state.emit({"state": "stopped", "code": code})
