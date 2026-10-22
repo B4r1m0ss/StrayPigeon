@@ -194,7 +194,7 @@ class SingleWindow(MultiSessionWindow):
 
     # ---- vault ---------------------------------------------------------
     def _manage_vault(self) -> None:
-        if self._workers:
+        if self._workers or self._connected:
             QMessageBox.information(self, "StrayPigeon", "Disconnect first.")
             return
         dialog = VaultManagerDialog(self.vault_path, self)

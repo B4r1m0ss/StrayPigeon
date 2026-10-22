@@ -174,6 +174,18 @@ class MultiSessionWindowTests(unittest.TestCase):
         self.assertTrue(tab.progress.isVisible())
         self.assertEqual(tab.progress.value(), 2)
 
+    def test_disconnect_stops_worker_and_releases_vault_guard(self) -> None:
+        self.window.contact_list.setCurrentRow(0)
+        self.window._connect()
+        self.assertTrue(self.worker.started)
+        self.assertIn("b@example.com", self.window._workers)
+        self.window._disconnect()
+        self.assertTrue(self.worker.stopped)
+        self.assertNotIn("b@example.com", self.window._workers)
+        self.assertIn(("disconnect", "b@example.com"), self.controller.calls)
+        self.assertTrue(self.window.connect_btn.isEnabled())
+        self.assertFalse(self.window.disconnect_btn.isEnabled())
+
     def test_incoming_message_and_state_routing(self) -> None:
         self.controller.state_changed.emit("b@example.com", "connected")
         self.controller.message_received.emit("b@example.com", "hi there")

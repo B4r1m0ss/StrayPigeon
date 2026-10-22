@@ -275,8 +275,12 @@ class MultiSessionWindow(QWidget):
         tab = self._tabs.get(key)
         contact = (self.data.get("contacts") or {}).get(key)
         if tab is None or not isinstance(contact, dict):
+            QMessageBox.information(self, "StrayPigeon", "Select a contact first.")
             return
         if key in self._workers:
+            QMessageBox.information(
+                self, "StrayPigeon", "This contact is already connecting. Use Disconnect first."
+            )
             return
         if hasattr(self.controller, "max_sessions") and self.controller.max_sessions <= 0:
             QMessageBox.warning(self, "StrayPigeon", "Maximum sessions must be at least 1.")
@@ -325,6 +329,7 @@ class MultiSessionWindow(QWidget):
     def _connect(self) -> None:
         key = self._current_key()
         if not key:
+            QMessageBox.information(self, "StrayPigeon", "Select a contact first.")
             return
         self._connect_contact(key)
 
@@ -352,9 +357,26 @@ class MultiSessionWindow(QWidget):
         key = self._current_key()
         if not key:
             return
+        worker = self._workers.pop(key, None)
+        if worker is not None:
+            try:
+                worker.stop()  # type: ignore[attr-defined]
+            except Exception:  # noqa: BLE001
+                pass
+            # Give the blocking Session a moment to leave punch/signaling;
+            # the tab is released regardless, so Vault is reachable again.
+            if hasattr(worker, "wait"):
+                try:
+                    worker.wait(3000)  # type: ignore[attr-defined]
+                except Exception:  # noqa: BLE001
+                    pass
         self.controller.disconnect(key)
-        self._tabs[key].set_state("disconnected")
+        self._connected.discard(key)
+        tab = self._tabs.get(key)
+        if tab is not None:
+            tab.set_state("disconnected")
         self.disconnect_btn.setEnabled(False)
+        self.connect_btn.setEnabled(True)
 
     # ---- controller signals -------------------------------------------
     def _tab_for(self, session_id: str) -> ChatTab | None:
@@ -386,6 +408,7 @@ class MultiSessionWindow(QWidget):
         if tab is not None:
             tab.append(f"[error] {text}")
             tab.set_state("error")
+        QMessageBox.warning(self, "StrayPigeon", text)
 
     def closeEvent(self, event) -> None:  # noqa: N802
         for worker in list(self._workers.values()):
