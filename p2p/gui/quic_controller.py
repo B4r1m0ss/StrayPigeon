@@ -83,7 +83,9 @@ class QuicController(QObject):
         self._thread.wait_ready()
         self._client_manager: QuicSessionManager | None = None
         self._server_manager: QuicSessionManager | None = None
-        self._receiver: FileReceiver | None = None
+        self._receiver: FileReceiver | None = FileReceiver(
+            self.target_dir, on_progress=self._on_file_progress
+        )
         self._sessions: dict[str, QuicChatSession] = {}
         self._senders: dict[str, FileSender] = {}
         self._client_config = None
@@ -152,6 +154,10 @@ class QuicController(QObject):
             self.state_changed.emit(session_id, "error")
             return
         self._punch_sessions[session_id] = punch
+        if isinstance(punch, PunchQuicClient):
+            self._sessions[session_id] = QuicChatSession(
+                session_id, punch.protocol, None, self
+            )
         self.state_changed.emit(session_id, "connected")
 
     # ---- client --------------------------------------------------------
@@ -196,13 +202,36 @@ class QuicController(QObject):
             return
         self._thread.submit(session.send(text))
 
+    def _handoff_session(self, session_id: str) -> QuicChatSession | None:
+        session = self._sessions.get(session_id)
+        if session is not None:
+            return session
+        punch = self._punch_sessions.get(session_id)
+        protocol = None
+        if isinstance(punch, PunchQuicClient):
+            protocol = punch.protocol
+        elif isinstance(punch, PunchQuicServer):
+            protocols = punch.protocols()
+            if protocols:
+                protocol = protocols[0]
+        if protocol is None:
+            return None
+        session = QuicChatSession(session_id, protocol, None, self)
+        self._sessions[session_id] = session
+        return session
+
     def send_file(self, session_id: str, path: str) -> None:
         punch = self._punch_sessions.get(session_id)
-        if isinstance(punch, PunchQuicClient):
-            session = QuicChatSession(session_id, punch.protocol, None, self)
+        if isinstance(punch, (PunchQuicClient, PunchQuicServer)):
+            session = self._handoff_session(session_id)
+            if session is None:
+                self.error.emit(session_id, "not connected")
+                return
             self._thread.submit(self._async_send_file(session_id, session, path))
             return
         session = self._sessions.get(session_id)
+        if session is None and self._server_manager is not None:
+            session = self._server_manager.get_session(session_id)
         if session is None:
             self.error.emit(session_id, "not connected")
             return
@@ -247,13 +276,13 @@ class QuicController(QObject):
             except Exception:  # noqa: BLE001
                 kind = ""
             if kind.startswith("file_"):
-                session = self._sessions.get(session_id)
+                session = self._handoff_session(session_id)
                 if session is None and self._server_manager is not None:
                     session = self._server_manager.get_session(session_id)
                 if session is None:
                     self.error.emit(session_id, "file frame for unknown session")
                     return
-                if sender is not None:
+                if kind in ("file_accept", "file_done", "file_error") and sender is not None:
                     sender.on_frame(session, data)
                 elif receiver is not None:
                     receiver.on_frame(session, data)

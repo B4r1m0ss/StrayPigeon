@@ -3,7 +3,7 @@
 > **Email-signaled, end-to-end encrypted P2P chat.**
 > 一只迷途的信鸽，也总能找到同伴。
 
-![tests](https://img.shields.io/badge/tests-84%20passing-brightgreen)
+![tests](https://img.shields.io/badge/tests-85%20passing-brightgreen)
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![license](https://img.shields.io/badge/license-GPL--3.0-green)
 ![platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)
@@ -211,8 +211,8 @@ python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
 
 ## 当前状态
 
-- **84 个单元测试通过**；
-- 系统 Python 没装 aioquic 时：84 tests，11 skipped；
+- **85 个单元测试通过**；
+- 系统 Python 没装 aioquic 时：85 tests，11 skipped；
 - **Legacy 数据面（CLI/兼容）**：同机加密 demo `PASS`；之前真实 163（Windows）↔ 126（Linux）跨提供商 SMTP 加密聊天 `CONNECTED`（pre-QUIC）；
 - **QUIC 数据面**：16 会话、16 × 1 MB 文件、4 MB 单文件、断点续传、SHA-256、MailRouter、Qt controller、SingleWindow offscreen 测试通过；
 - **QUIC 真实 163/126 端到端：尚未验收**；
@@ -243,7 +243,7 @@ python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
 - **`Max sessions` 只部分生效**：窗口设置主要影响新 client manager；已启动的 server manager 仍用创建时上限。
 - **Legacy UDP 路径无重传**：旧路径丢包就是丢消息；新 QUIC 路径有可靠性，但尚未生产验收。
 - **无消息持久化/离线补发**：聊天记录只在当前进程内；断线后新消息，旧消息不补发。
-- **GUI 文件传输走 QUIC**；Legacy CLI 无文件。
+- **GUI 文件传输走 QUIC**，handoff 后的 initiator/responder 两个方向都支持；Legacy CLI 无文件。
 - **无多设备/语音/群聊**。
 - **Allow UDP 只处理本机防火墙**：路由器/NAT/对称 NAT 不在范围内；Windows 规则默认只对 Private/Domain 生效。
 - **GUI 仍是 MVP**：`SingleWindow` 是唯一入口；旧 `MainWindow` 类还在 `app.py` 中但不再使用，后续删除；安装包、托盘/通知在路线图上。
@@ -285,7 +285,7 @@ scripts/
   run_vault.py         # Legacy CLI
   allow_firewall.ps1   # Windows UDP 端口放行（UAC）
   pair_test.py         # 两个 vault 非交互测试
-tests/                 # 27 个测试文件，84 个测试
+tests/                 # 28 个测试文件，85 个测试
 docs/images/gui.png
 DEVELOPMENT.md
 LICENSE
@@ -295,7 +295,7 @@ LICENSE
 
 ```bash
 # 需要 aioquic；没有时 QUIC 测试会 skip
-.venv/bin/python -m unittest discover -s tests -v   # 84 tests
+.venv/bin/python -m unittest discover -s tests -v   # 85 tests
 # Windows: py -3 -m unittest discover -s tests -v
 python3 scripts/demo_same_machine.py                # Legacy 同机加密 demo
 

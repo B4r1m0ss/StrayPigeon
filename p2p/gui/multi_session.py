@@ -70,6 +70,11 @@ class ChatTab(QWidget):
     def set_connecting(self, active: bool) -> None:
         self.conn_progress.setVisible(active)
 
+    def reset_progress(self) -> None:
+        self.progress.setVisible(False)
+        self.progress.setRange(0, 1)
+        self.progress.setValue(0)
+
     def set_progress(self, file_id: str, done: int, total: int) -> None:
         self.progress.setVisible(True)
         self.progress.setRange(0, max(1, total))
@@ -504,6 +509,7 @@ class MultiSessionWindow(QWidget):
             tab.append(f"[error] {text}")
             tab.set_state("error")
             tab.set_connecting(False)
+            tab.reset_progress()
         self.connect_btn.setText("Connect")
         self.status_label.setText(f"{session_id}: error")
         QMessageBox.warning(self, "StrayPigeon", text)

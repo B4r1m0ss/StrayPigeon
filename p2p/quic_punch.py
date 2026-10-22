@@ -207,12 +207,18 @@ class PunchQuicServer(_PunchBase):
             return
         self.quic_server.datagram_received(data, addr)
 
-    def send_message(self, text: str) -> None:
+    def protocols(self) -> list[QuicChatProtocol]:
         seen: set[int] = set()
+        result: list[QuicChatProtocol] = []
         for protocol in self.quic_server._protocols.values():
             if id(protocol) in seen:
                 continue
             seen.add(id(protocol))
+            result.append(protocol)
+        return result
+
+    def send_message(self, text: str) -> None:
+        for protocol in self.protocols():
             protocol.send_message(text)
 
     async def close(self) -> None:
