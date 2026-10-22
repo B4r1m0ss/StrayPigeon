@@ -12,13 +12,14 @@ class SessionWorker(QThread):
     state = pyqtSignal(dict)
     message = pyqtSignal(str, str)  # text, peer address
     error = pyqtSignal(str, str)  # code, detail
-    handoff_ready = pyqtSignal(dict)
+    handoff_ready = pyqtSignal()
 
     def __init__(self, cfg: Config):
         super().__init__()
         self.session = Session(cfg)
         self.session.gui = True
         self.session.event_sink = self._on_event
+        self._handoff_payload: dict | None = None
 
     def _on_event(self, kind: str, payload: dict) -> None:
         if kind == "state":
@@ -27,6 +28,10 @@ class SessionWorker(QThread):
             self.message.emit(str(payload.get("text", "")), str(payload.get("peer", "")))
         elif kind == "error":
             self.error.emit(str(payload.get("code", "E")), str(payload.get("detail", "")))
+
+    def take_handoff(self) -> dict | None:
+        payload, self._handoff_payload = self._handoff_payload, None
+        return payload
 
     def send(self, text: str) -> None:
         self.session.outbox.put(text)
@@ -48,16 +53,15 @@ class SessionWorker(QThread):
                 and self.session.sid
                 and self.session.psk is not None
             ):
-                self.handoff_ready.emit(
-                    {
-                        "socket": self.session.sock,
-                        "peer_addr": self.session.peer_addr,
-                        "peer_candidates": [
-                            (c.ip, c.port) for c in self.session.peer_candidates
-                        ],
-                        "sid": self.session.sid,
-                        "psk": self.session.psk,
-                        "role": self.cfg.role,
-                    }
-                )
+                self._handoff_payload = {
+                    "socket": self.session.sock,
+                    "peer_addr": self.session.peer_addr,
+                    "peer_candidates": [
+                        (c.ip, c.port) for c in self.session.peer_candidates
+                    ],
+                    "sid": self.session.sid,
+                    "psk": self.session.psk,
+                    "role": self.cfg.role,
+                }
+                self.handoff_ready.emit()
             self.state.emit({"state": "stopped", "code": code})

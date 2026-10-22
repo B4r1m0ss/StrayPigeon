@@ -50,7 +50,7 @@ class FakeController(QObject):
 class FakeWorker(QObject):
     state = pyqtSignal(dict)
     error = pyqtSignal(str, str)
-    handoff_ready = pyqtSignal(dict)
+    handoff_ready = pyqtSignal()
     finished = pyqtSignal()
 
     def __init__(self, cfg=None) -> None:
@@ -58,9 +58,21 @@ class FakeWorker(QObject):
         self.cfg = cfg
         self.started = False
         self.stopped = False
+        self.handoff_payload = {
+            "socket": None,
+            "peer_addr": ("127.0.0.1", 40001),
+            "peer_candidates": [("127.0.0.1", 40001)],
+            "sid": "sid-test",
+            "psk": b"x" * 32,
+            "role": "initiator",
+        }
 
     def start(self) -> None:
         self.started = True
+
+    def take_handoff(self):
+        payload, self.handoff_payload = self.handoff_payload, None
+        return payload
 
     def stop(self) -> None:
         self.stopped = True
@@ -153,17 +165,7 @@ class MultiSessionWindowTests(unittest.TestCase):
         self.assertTrue(tab.conn_progress.isVisible())
         self.worker.state.emit({"state": "bound"})
         self.assertIn("[conn] local UDP socket bound", tab.chat.toPlainText())
-        self.window._on_handoff(
-            "b@example.com",
-            {
-                "socket": None,
-                "peer_addr": ("127.0.0.1", 40001),
-                "peer_candidates": [("127.0.0.1", 40001)],
-                "sid": "sid-test",
-                "psk": b"x" * 32,
-                "role": "initiator",
-            },
-        )
+        self.window._on_handoff("b@example.com")
         self.assertIn(("handoff", "b@example.com", "sid-test"), self.controller.calls)
 
     def test_send_chat_and_file_progress(self) -> None:
@@ -216,17 +218,7 @@ class MultiSessionWindowTests(unittest.TestCase):
         self.assertTrue(tab.conn_progress.isVisible())
         self.worker.state.emit({"state": "bound"})
         self.assertIn("[conn] local UDP socket bound", tab.chat.toPlainText())
-        self.window._on_handoff(
-            "b@example.com",
-            {
-                "socket": None,
-                "peer_addr": ("127.0.0.1", 40001),
-                "peer_candidates": [("127.0.0.1", 40001)],
-                "sid": "sid-test",
-                "psk": b"x" * 32,
-                "role": "initiator",
-            },
-        )
+        self.window._on_handoff("b@example.com")
         self.assertIn(("handoff", "b@example.com", "sid-test"), self.controller.calls)
         self.assertEqual(
             self.data["contacts"]["b@example.com"]["peer_host"], "192.0.2.10"

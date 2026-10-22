@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import faulthandler
 import os
 import shutil
 import sys
@@ -777,6 +778,7 @@ class MainWindow(QWidget):
 
 
 def main(argv: list[str] | None = None) -> int:
+    faulthandler.enable()
     args = list(sys.argv[1:] if argv is None else argv)
     app = QApplication([sys.argv[0], *args])
     app.setApplicationName("StrayPigeon")

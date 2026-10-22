@@ -317,7 +317,7 @@ class MultiSessionWindow(QWidget):
         self._workers[key] = worker
         worker.state.connect(lambda payload, k=key: self._on_worker_state(k, payload))
         worker.error.connect(lambda code, detail, k=key: self._on_error(k, f"{code} {detail}"))
-        worker.handoff_ready.connect(lambda handoff, k=key: self._on_handoff(k, handoff))
+        worker.handoff_ready.connect(lambda k=key: self._on_handoff(k))
         worker.finished.connect(lambda k=key: self._on_worker_finished(k))
         tab.set_state("starting signaling…")
         tab.set_connecting(True)
@@ -370,7 +370,12 @@ class MultiSessionWindow(QWidget):
             if key not in self._connected:
                 self.disconnect_btn.setEnabled(False)
 
-    def _on_handoff(self, key: str, handoff: dict) -> None:
+    def _on_handoff(self, key: str) -> None:
+        worker = self._workers.get(key)
+        handoff = worker.take_handoff() if worker is not None and hasattr(worker, "take_handoff") else None
+        if handoff is None:
+            self._on_error(key, "handoff payload missing")
+            return
         self._handoff_keys.add(key)
         tab = self._tabs.get(key)
         if tab is not None:
@@ -380,7 +385,12 @@ class MultiSessionWindow(QWidget):
         self.status_label.setText(f"{key}: QUIC handshake…")
         self.connect_btn.setEnabled(False)
         self.disconnect_btn.setEnabled(True)
-        self.controller.start_handoff(key, handoff)
+        try:
+            self.controller.start_handoff(key, handoff)
+        except Exception as exc:  # noqa: BLE001
+            self._on_error(
+                key, f"handoff failed: {type(exc).__name__}: {exc}"
+            )
 
     def _connect(self) -> None:
         key = self._current_key()
