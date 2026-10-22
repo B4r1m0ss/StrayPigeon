@@ -114,6 +114,7 @@ class MultiSessionWindow(QWidget):
         self.mail_router = mail_router
         self.worker_factory = worker_factory
         self._workers: dict[str, object] = {}
+        self._handoff_keys: set[str] = set()
         self._router_thread: _RouterThread | None = None
         self._connected: set[str] = set()
         self.setWindowTitle("StrayPigeon — multi-session")
@@ -305,10 +306,11 @@ class MultiSessionWindow(QWidget):
         worker.state.connect(lambda payload, k=key: self._on_worker_state(k, payload))
         worker.error.connect(lambda code, detail, k=key: self._on_error(k, f"{code} {detail}"))
         worker.handoff_ready.connect(lambda handoff, k=key: self._on_handoff(k, handoff))
-        worker.finished.connect(lambda k=key: self._workers.pop(k, None))
+        worker.finished.connect(lambda k=key: self._on_worker_finished(k))
         tab.set_state("signaling / punching…")
-        worker.start()
+        self.connect_btn.setEnabled(False)
         self.disconnect_btn.setEnabled(True)
+        worker.start()
 
     def advertise_host_text(self) -> str:
         # The old per-contact advertise host field is not in this window yet;
@@ -316,14 +318,30 @@ class MultiSessionWindow(QWidget):
         return "127.0.0.1"
 
     def _on_worker_state(self, key: str, payload: dict) -> None:
+        state = str(payload.get("state") or "…")
         tab = self._tabs.get(key)
         if tab is not None:
-            tab.set_state(str(payload.get("state") or "…"))
+            tab.set_state(state)
+        if state in ("bound", "peer_ready", "punching"):
+            self.connect_btn.setEnabled(False)
+            self.disconnect_btn.setEnabled(True)
+
+    def _on_worker_finished(self, key: str) -> None:
+        self._workers.pop(key, None)
+        if key in self._handoff_keys:
+            return
+        if not self._workers:
+            self.connect_btn.setEnabled(self.contact_list.count() > 0)
+            if key not in self._connected:
+                self.disconnect_btn.setEnabled(False)
 
     def _on_handoff(self, key: str, handoff: dict) -> None:
+        self._handoff_keys.add(key)
         tab = self._tabs.get(key)
         if tab is not None:
             tab.set_state("punching / QUIC handoff…")
+        self.connect_btn.setEnabled(False)
+        self.disconnect_btn.setEnabled(True)
         self.controller.start_handoff(key, handoff)
 
     def _connect(self) -> None:
@@ -372,6 +390,7 @@ class MultiSessionWindow(QWidget):
                     pass
         self.controller.disconnect(key)
         self._connected.discard(key)
+        self._handoff_keys.discard(key)
         tab = self._tabs.get(key)
         if tab is not None:
             tab.set_state("disconnected")
@@ -385,8 +404,14 @@ class MultiSessionWindow(QWidget):
     def _on_state(self, session_id: str, state: str) -> None:
         if state == "connected":
             self._connected.add(session_id)
+            self._handoff_keys.discard(session_id)
+            self.connect_btn.setEnabled(False)
+            self.disconnect_btn.setEnabled(True)
         elif state in ("closed", "error"):
             self._connected.discard(session_id)
+            self._handoff_keys.discard(session_id)
+            self.connect_btn.setEnabled(self.contact_list.count() > 0)
+            self.disconnect_btn.setEnabled(False)
         tab = self._tab_for(session_id)
         if tab is not None:
             tab.set_state(state)

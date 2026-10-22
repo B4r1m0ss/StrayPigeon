@@ -186,6 +186,14 @@ class MultiSessionWindowTests(unittest.TestCase):
         self.assertTrue(self.window.connect_btn.isEnabled())
         self.assertFalse(self.window.disconnect_btn.isEnabled())
 
+    def test_worker_finished_releases_connect(self) -> None:
+        self.window.contact_list.setCurrentRow(0)
+        self.window._connect()
+        self.assertFalse(self.window.connect_btn.isEnabled())
+        self.worker.finished.emit()
+        self.assertNotIn("b@example.com", self.window._workers)
+        self.assertTrue(self.window.connect_btn.isEnabled())
+
     def test_incoming_message_and_state_routing(self) -> None:
         self.controller.state_changed.emit("b@example.com", "connected")
         self.controller.message_received.emit("b@example.com", "hi there")
