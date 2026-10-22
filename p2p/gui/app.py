@@ -43,6 +43,7 @@ from p2p.vault import (
 from .setup_wizard import IdentityWizard
 from .vault_manager import ChangePassphraseDialog, VaultManagerDialog
 from .multi_session import MultiSessionWindow
+from .single_window import SingleWindow
 from .worker import SessionWorker
 
 
@@ -783,7 +784,7 @@ def main(argv: list[str] | None = None) -> int:
         vault = VaultDialog()
         if vault.exec() != QDialog.DialogCode.Accepted:
             return 0
-        window = MainWindow(vault.data, vault.vault_path, vault.passphrase)
+        window = SingleWindow(vault.data, vault.vault_path, vault.passphrase)
         window.show()
         app.exec()
         if not window.reopen_vault:

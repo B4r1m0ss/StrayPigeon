@@ -3,23 +3,20 @@
 > **Email-signaled, end-to-end encrypted P2P chat.**
 > 一只迷途的信鸽，也总能找到同伴。
 
-![tests](https://img.shields.io/badge/tests-79%20passing-brightgreen)
+![tests](https://img.shields.io/badge/tests-80%20passing-brightgreen)
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![license](https://img.shields.io/badge/license-GPL--3.0-green)
 ![platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)
 
-旧单会话窗口（STUN/UDP 路径）：
+StrayPigeon 单一主窗口（Session 信令 + QUIC 数据面）：
 
 ![StrayPigeon GUI](docs/images/gui.png)
 
-新的多会话窗口（QUIC 路径，实验性）：
+**StrayPigeon** 是一个完全开源的点对点聊天应用。它用你已有的邮箱（SMTP/IMAP）做信令，不依赖自建信令服务器。现在只有一个 GUI：**SingleWindow**。
 
-![StrayPigeon multi-session](docs/images/multi-session.png)
-
-**StrayPigeon** 是一个完全开源的点对点聊天应用。它用你已有的邮箱（SMTP/IMAP）做信令，不依赖自建信令服务器；数据面有两条路径：
-
-- **Legacy 路径**：STUN + UDP 打洞，X25519 + HKDF + ChaCha20-Poly1305；旧主窗口使用；
-- **QUIC 路径（实验性）**：aioquic、单 UDP 端口、最多 16 个会话、文件传输、MailRouter；新的 **Multi-session** 窗口使用。
+- **信令/打洞**：legacy `Session`，SMTP/IMAP + STUN + P2P1 UDP punch；
+- **数据面**：aioquic QUIC，单 UDP 端口、最多 16 个会话、文件传输、MailRouter；
+- **入口**：`python -m p2p.gui` → `SingleWindow`；没有旧主窗口/新 Multi-session 两个入口。
 
 > 注意：这是一个研究/毕业设计原型，**尚未经过安全审计**。  
 > **QUIC 路径目前仍是实验性**：本地/offscreen 测试通过，但真实 163/126 端到端尚未验收；TLS 证书校验当前为 `CERT_NONE`，证书指纹固定（fingerprint pinning）还没实现，不能当作生产级端到端认证。
@@ -30,18 +27,18 @@
 
 项目原名 `email-p2p`。代码里的 vault 目录仍保留 `email-p2p`，是为了兼容已有数据。
 
-## 两条数据路径
+## 数据路径
 
-| | Legacy 路径 | QUIC 路径（实验性） |
+| | GUI（默认） | CLI/兼容 |
 |---|---|---|
-| 入口 | 旧主窗口 `python -m p2p.gui` | 主窗口里的 **Multi-session…** |
-| 传输 | STUN + UDP 打洞 | aioquic，单 UDP 端口 |
-| NAT 穿透 | STUN + UDP 打洞 | **Session signaling→punch→same-socket QUIC；GUI/controller 已接入 handoff；真实 163/126 未验收** |
-| 并发 | 单会话 | 最多 16 个会话 |
-| 加密 | X25519 + HKDF + ChaCha20-Poly1305 | QUIC TLS（当前 `CERT_NONE`，待证书指纹固定） |
-| 文件 | 无 | 分块、`.part`、续传、SHA-256、进度 |
-| 信令 | 旧 `Session` 直接收发 | 单 IMAP `MailRouter` + GUI 自动 connect |
-| 实网状态 | 之前 163/126 `CONNECTED` | **真实 163/126 尚未验收** |
+| 入口 | `SingleWindow` | `scripts/run_vault.py` |
+| 信令/打洞 | Legacy `Session`: SMTP/IMAP + STUN + P2P1 | 同左 |
+| 数据面 | QUIC over the same punched UDP socket | Legacy `Session` UDP AEAD |
+| 并发 | 最多 16 个会话 | 单会话 |
+| 加密 | QUIC TLS（当前 `CERT_NONE`，指纹固定待做） | X25519 + HKDF + ChaCha20-Poly1305 |
+| 文件 | 分块、`.part`、续传、SHA-256、进度 | 无 |
+| NAT | Session punch → handoff → QUIC；GUI 已接入；真实 163/126 未验收 | STUN + punch；之前 163/126 `CONNECTED` |
+| 实网状态 | **真实 163/126 尚未验收** | 之前 163/126 `CONNECTED`（pre-QUIC） |
 
 ## 特性
 
@@ -165,48 +162,39 @@ python3 -m p2p.gui
 # Windows: py -3 -m p2p.gui
 ```
 
-#### 4.1 旧主窗口 / Legacy 路径
+#### 4.1 SingleWindow（唯一主窗口）
+
+```bash
+python3 -m p2p.gui
+# Windows: py -3 -m p2p.gui
+```
 
 1. 首次启动点 **Create identity…**，进入 Setup 向导；向导只创建 identity，不问 peer；
 2. 解锁 vault；
-3. 在左侧选择 contact；没有就点 **New contact** / **Join invite**；
-4. 设置 role、port、advertise、STUN；
-5. 点 **Connect**；
-6. 连上后输入消息，Enter 或 **Send**；**Disconnect** 断开。
+3. 左侧选择 contact；没有就点 **New contact** / **Join invite**；
+4. 点 **Connect**；
+5. 连上后输入消息，Enter 或 **Send**；**Send file…** 发文件；**Disconnect** 断开。
 
-- 连接过程显示 `bound → peer ready → punching`，punching 有最多 300 秒进度条；
-- **Allow UDP** 放行本机当前 UDP 端口（Windows UAC；Linux 显示 ufw/firewalld/nft 命令）；
-- **Vault…** 支持修改口令、清除/重置、锁定。
+- `New contact` 自动生成 initiator contact 和邀请码；`Join invite` 自动取相反 role；
+- 连接过程显示 `signaling / punching…` → `punching / QUIC handoff…` → `connected`；
+- 连接内部是：`SessionWorker(quic_handoff=True)` → legacy `Session` 做 SMTP/IMAP 信令 + STUN + P2P1 punch → `QuicController.start_handoff()` → `PunchQuicClient/Server` 在**同一个 UDP socket** 上完成 QUIC 握手；
+- **Vault…**：修改口令、清除/重置、锁定；
+- **Allow UDP**：放行本机当前 UDP 端口（Windows UAC；Linux 显示 ufw/firewalld/nft 命令）；
+- **Max sessions**、**Local UDP port**、**Peer host / Peer port**；MailRouter 收到 CANDIDATE 时会自动填充并连接；
+- 文件进度显示在 tab 里，接收端落在 `state/received/`。
 
-> SMTP TLS：**465 = 隐式 TLS（STARTTLS 不勾）**；**587 = STARTTLS（勾选）**。  
-> 163 / 126 的 SMTP 用 465，STARTTLS 保持关闭。
+> **SingleWindow 的 `advertise_host` 目前固定为 `127.0.0.1`**；STUN 仍会收集 srflx 候选。跨 LAN/公网的真实测试前，需要把本机 LAN IP 暴露出来；这一步还没做。  
+> SMTP TLS：**465 = 隐式 TLS（STARTTLS 不勾）**；**587 = STARTTLS（勾选）**。163 / 126 的 SMTP 用 465，STARTTLS 保持关闭。
 
-两台机器的常用组合：
+真实验收时建议：
 
 ```text
-机器 A（发起方）: role=initiator, port=40000, advertise=127.0.0.1
-机器 B（响应方）: role=responder, port=40000, advertise=127.0.0.1
+机器 A: New contact（initiator），local port 40000
+机器 B: Join invite（responder），local port 40000
 STUN: stun.miwifi.com:3478, stun.cloudflare.com:3478
 ```
 
-同一局域网可以把 `advertise` 换成各自的 LAN IP。
-
-#### 4.2 Multi-session… / QUIC 路径（实验性）
-
-主窗口点 **Multi-session…** 打开新窗口：
-
-- 左侧 contact 列表，右侧每个 contact 一个 tab；
-- **Max sessions**：1–16；
-- **Local UDP port**：QUIC 监听端口；
-- **Peer host / Peer port**：手动连接地址（MailRouter 收到 CANDIDATE 时会自动填充并连接）；
-- **Connect / Disconnect**、**Send**、**Send file…**；
-- 文件显示进度条；接收端文件落在 `state/received/`。
-
-注意：
-
-- 目前 `MultiSessionWindow` 默认 **auto_connect=True**；双方都启动 QUIC server 时，role/重复连接还没有真实双端验收；
-- 建议真实测试时先只让一边 auto-connect，确认只有一条 QUIC 连接；
-- 真实 MailRouter + IMAP 自动连接目前只通过 fake router 测试，真实 163/126 未验收。
+> **旧入口已移除**：旧的单会话 `MainWindow` 和 **Multi-session…** 按钮不再是产品入口；`MultiSessionWindow` 只作为 `SingleWindow` 的基类保留。旧 `MainWindow` 类仍在 `app.py` 中但已不再使用，后续清理。
 
 ### 5. CLI
 
@@ -219,15 +207,14 @@ python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
 
 ## 当前状态
 
-- **79 个单元测试通过**；
-- 系统 Python 没装 aioquic 时：79 tests，11 skipped；
-- **Legacy 路径**：同机加密 demo `PASS`；之前真实 163（Windows）↔ 126（Linux）跨提供商 SMTP 加密聊天 `CONNECTED`（pre-QUIC）；
-- **QUIC 路径**：16 会话、16 × 1 MB 文件、4 MB 单文件、断点续传、SHA-256、MailRouter、Qt controller、多会话窗口 offscreen 测试通过；
+- **80 个单元测试通过**；
+- 系统 Python 没装 aioquic 时：80 tests，11 skipped；
+- **Legacy 数据面（CLI/兼容）**：同机加密 demo `PASS`；之前真实 163（Windows）↔ 126（Linux）跨提供商 SMTP 加密聊天 `CONNECTED`（pre-QUIC）；
+- **QUIC 数据面**：16 会话、16 × 1 MB 文件、4 MB 单文件、断点续传、SHA-256、MailRouter、Qt controller、SingleWindow offscreen 测试通过；
 - **QUIC 真实 163/126 端到端：尚未验收**；
 - 共享 socket punch+QUIC spike：P2P1 打洞后在同一 UDP socket 上完成 QUIC chat，本地测试通过；
 - **全链路 handoff 测试**：Session 信令（FileChannel）→ STUN/punch → 同一 UDP socket → QUIC chat，测试通过；SMTP 复用同一 Session 信令路径但未在该测试中实测；
-- **GUI/controller handoff**：MultiSessionWindow → SessionWorker → QuicController.start_handoff → PunchQuicClient/Server；5 个 multi-session offscreen 测试通过；
-- **QUIC Controller/GUI 尚未接入 punch**，也尚未发送 CANDIDATE；
+- **GUI/controller handoff**：SingleWindow → SessionWorker → QuicController.start_handoff → PunchQuicClient/Server；5 个 multi-session + 1 个 single-window offscreen 测试通过；
 - **尚未完成**：真实 163/126 QUIC 验收、证书指纹固定、100 GB 级文件实测、PyInstaller GUI exe/安装包、托盘/通知、自动重连；
 - **未做安全审计**。
 
@@ -252,10 +239,10 @@ python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
 - **`Max sessions` 只部分生效**：窗口设置主要影响新 client manager；已启动的 server manager 仍用创建时上限。
 - **Legacy UDP 路径无重传**：旧路径丢包就是丢消息；新 QUIC 路径有可靠性，但尚未生产验收。
 - **无消息持久化/离线补发**：聊天记录只在当前进程内；断线后新消息，旧消息不补发。
-- **无文件传输的旧主窗口**：文件传输只在新的 Multi-session/QUIC 窗口；旧主窗口仍是 legacy。
+- **GUI 文件传输走 QUIC**；Legacy CLI 无文件。
 - **无多设备/语音/群聊**。
 - **Allow UDP 只处理本机防火墙**：路由器/NAT/对称 NAT 不在范围内；Windows 规则默认只对 Private/Domain 生效。
-- **GUI 仍是 MVP**：旧主窗口和新 Multi-session 窗口并存；安装包、托盘/通知在路线图上。
+- **GUI 仍是 MVP**：`SingleWindow` 是唯一入口；旧 `MainWindow` 类还在 `app.py` 中但不再使用，后续删除；安装包、托盘/通知在路线图上。
 
 ## 项目结构
 
@@ -276,12 +263,13 @@ p2p/
   runtime_env.py       # CLI 的 vault → 环境变量 fallback
   vault.py             # scrypt + ChaCha20-Poly1305、change/clear
   gui/
-    app.py             # 旧主窗口 + Multi-session 入口
+    app.py             # 入口/VaultDialog；旧 MainWindow 已废弃
     setup_wizard.py    # identity 向导（无 peer）
     vault_manager.py   # 修改口令/清除/锁定
     quic_controller.py # Qt ↔ asyncio/QUIC 桥
-    multi_session.py   # contact 列表 + 多 tab 窗口
-    worker.py          # Legacy Session → Qt signals
+    multi_session.py   # contact 列表 + 多 tab 基础窗口
+    single_window.py   # 唯一 GUI：identity/vault/contact/firewall shell
+    worker.py          # Session 信令/punch/handoff → Qt signals
   signal/
     file.py            # 共享目录
     imap_store.py      # 共享邮箱（测试）
@@ -293,9 +281,8 @@ scripts/
   run_vault.py         # Legacy CLI
   allow_firewall.ps1   # Windows UDP 端口放行（UAC）
   pair_test.py         # 两个 vault 非交互测试
-tests/                 # 25 个测试文件，79 个测试
+tests/                 # 26 个测试文件，80 个测试
 docs/images/gui.png
-docs/images/multi-session.png
 DEVELOPMENT.md
 LICENSE
 ```
@@ -304,7 +291,7 @@ LICENSE
 
 ```bash
 # 需要 aioquic；没有时 QUIC 测试会 skip
-.venv/bin/python -m unittest discover -s tests -v   # 79 tests
+.venv/bin/python -m unittest discover -s tests -v   # 80 tests
 # Windows: py -3 -m unittest discover -s tests -v
 python3 scripts/demo_same_machine.py                # Legacy 同机加密 demo
 
@@ -315,8 +302,7 @@ QT_QPA_PLATFORM=offscreen python3 -m p2p.gui
 ## 文档
 
 - [DEVELOPMENT.md](DEVELOPMENT.md)：开发记录、实验过程、旧流程和更多细节；
-- [docs/images/gui.png](docs/images/gui.png)：旧主窗口预览；
-- [docs/images/multi-session.png](docs/images/multi-session.png)：多会话窗口预览；
+- [docs/images/gui.png](docs/images/gui.png)：SingleWindow 预览；
 - [setup.identity.example.json](setup.identity.example.json)：非交互 identity 示例。
 
 ## 许可证

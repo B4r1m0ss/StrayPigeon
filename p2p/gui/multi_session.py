@@ -154,6 +154,7 @@ class MultiSessionWindow(QWidget):
         left_layout.addWidget(self.connect_btn)
         left_layout.addWidget(self.disconnect_btn)
         left.setMaximumWidth(330)
+        self.left_layout = left_layout
 
         layout = QHBoxLayout(self)
         layout.addWidget(left)
