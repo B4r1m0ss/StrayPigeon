@@ -4,11 +4,13 @@ import base64
 import tempfile
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from PyQt6.QtCore import QObject, pyqtSignal
-from PyQt6.QtWidgets import QApplication
+from PyQt6.QtWidgets import QApplication, QMessageBox
 
 from p2p.gui.single_window import SingleWindow
+from p2p.vault import load_vault
 
 
 class FakeController(QObject):
@@ -81,9 +83,26 @@ class SingleWindowTests(unittest.TestCase):
         self.assertEqual(self.window.vault_btn.text(), "Vault…")
         self.assertEqual(self.window.new_btn.text(), "New contact")
         self.assertEqual(self.window.join_btn.text(), "Join invite")
+        self.assertEqual(self.window.delete_btn.text(), "Delete contact")
         self.assertEqual(self.window.firewall_btn.text(), "Allow UDP")
         self.assertEqual(self.window.contact_list.count(), 1)
         self.assertEqual(self.window.tab_widget.count(), 1)
+
+
+    def test_delete_contact_removes_vault_entry(self) -> None:
+        with (
+            patch(
+                "p2p.gui.single_window.QMessageBox.warning",
+                return_value=QMessageBox.StandardButton.Yes,
+            ),
+            patch("p2p.gui.single_window.QMessageBox.information"),
+        ):
+            self.window._delete_contact()
+        self.assertNotIn("b@example.com", self.window.data["contacts"])
+        self.assertEqual(self.window.contact_list.count(), 0)
+        self.assertEqual(self.window.tab_widget.count(), 0)
+        loaded = load_vault(self.window.vault_path, "correct-horse")
+        self.assertNotIn("b@example.com", loaded["contacts"])
 
 
 if __name__ == "__main__":

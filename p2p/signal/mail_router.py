@@ -69,6 +69,13 @@ class MailRouter:
             raise ValueError("PSK must be 32 bytes")
         self.contacts[contact_id] = psk
 
+    def unbind_contact(self, contact_id: str) -> None:
+        """Forget a contact PSK and all sids bound to it (vault deletion)."""
+        self.contacts.pop(contact_id, None)
+        for sid, bound in list(self._sid_to_contact.items()):
+            if bound == contact_id:
+                del self._sid_to_contact[sid]
+
     def bind_sid(self, sid: str, contact_id: str) -> None:
         if contact_id not in self.contacts:
             raise ValueError(f"unknown contact: {contact_id}")

@@ -3,7 +3,7 @@
 > **Email-signaled, end-to-end encrypted P2P chat.**
 > 一只迷途的信鸽，也总能找到同伴。
 
-![tests](https://img.shields.io/badge/tests-81%20passing-brightgreen)
+![tests](https://img.shields.io/badge/tests-82%20passing-brightgreen)
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![license](https://img.shields.io/badge/license-GPL--3.0-green)
 ![platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)
@@ -178,6 +178,7 @@ python3 -m p2p.gui
 - `New contact` 自动生成 initiator contact 和邀请码；`Join invite` 自动取相反 role；
 - 连接过程显示 `signaling / punching…` → `punching / QUIC handoff…` → `connected`；
 - 连接内部是：`SessionWorker(quic_handoff=True)` → legacy `Session` 做 SMTP/IMAP 信令 + STUN + P2P1 punch → `QuicController.start_handoff()` → `PunchQuicClient/Server` 在**同一个 UDP socket** 上完成 QUIC 握手；
+- **Delete contact**：删除 contact、PSK 和 vault 里的对应条目；会先停止该 contact 的 worker/QUIC 会话，不可恢复，不通知对方；
 - **Vault…**：修改口令、清除/重置、锁定；
 - **Allow UDP**：放行本机当前 UDP 端口（Windows UAC；Linux 显示 ufw/firewalld/nft 命令）；
 - **Max sessions**、**Local UDP port**、**Peer host / Peer port**；MailRouter 收到 CANDIDATE 时会自动填充并连接；
@@ -207,8 +208,8 @@ python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
 
 ## 当前状态
 
-- **81 个单元测试通过**；
-- 系统 Python 没装 aioquic 时：81 tests，11 skipped；
+- **82 个单元测试通过**；
+- 系统 Python 没装 aioquic 时：82 tests，11 skipped；
 - **Legacy 数据面（CLI/兼容）**：同机加密 demo `PASS`；之前真实 163（Windows）↔ 126（Linux）跨提供商 SMTP 加密聊天 `CONNECTED`（pre-QUIC）；
 - **QUIC 数据面**：16 会话、16 × 1 MB 文件、4 MB 单文件、断点续传、SHA-256、MailRouter、Qt controller、SingleWindow offscreen 测试通过；
 - **QUIC 真实 163/126 端到端：尚未验收**；
@@ -281,7 +282,7 @@ scripts/
   run_vault.py         # Legacy CLI
   allow_firewall.ps1   # Windows UDP 端口放行（UAC）
   pair_test.py         # 两个 vault 非交互测试
-tests/                 # 26 个测试文件，81 个测试
+tests/                 # 26 个测试文件，82 个测试
 docs/images/gui.png
 DEVELOPMENT.md
 LICENSE
@@ -291,7 +292,7 @@ LICENSE
 
 ```bash
 # 需要 aioquic；没有时 QUIC 测试会 skip
-.venv/bin/python -m unittest discover -s tests -v   # 81 tests
+.venv/bin/python -m unittest discover -s tests -v   # 82 tests
 # Windows: py -3 -m unittest discover -s tests -v
 python3 scripts/demo_same_machine.py                # Legacy 同机加密 demo
 

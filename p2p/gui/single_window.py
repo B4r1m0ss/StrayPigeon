@@ -86,9 +86,12 @@ class SingleWindow(MultiSessionWindow):
         self.new_btn.clicked.connect(self._new_contact)
         self.join_btn = QPushButton("Join invite")
         self.join_btn.clicked.connect(self._join_contact)
+        self.delete_btn = QPushButton("Delete contact")
+        self.delete_btn.clicked.connect(self._delete_contact)
         contact_buttons = QHBoxLayout()
         contact_buttons.addWidget(self.new_btn)
         contact_buttons.addWidget(self.join_btn)
+        contact_buttons.addWidget(self.delete_btn)
         self.left_layout.insertLayout(3, contact_buttons)
 
         self.firewall_btn = QPushButton("Allow UDP")
@@ -191,6 +194,58 @@ class SingleWindow(MultiSessionWindow):
         layout.addWidget(edit, 1)
         layout.addLayout(buttons)
         dialog.exec()
+
+    def _delete_contact(self) -> None:
+        key = self._current_key()
+        if not key:
+            QMessageBox.information(self, "StrayPigeon", "Select a contact first.")
+            return
+        contact = (self.data.get("contacts") or {}).get(key)
+        if not isinstance(contact, dict):
+            return
+        answer = QMessageBox.warning(
+            self,
+            "Delete contact",
+            f"Delete {key}?\n\n"
+            "This removes the contact, its PSK and its entry in the vault. "
+            "The peer is not notified. This cannot be undone.\n\nContinue?",
+            QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+            QMessageBox.StandardButton.No,
+        )
+        if answer != QMessageBox.StandardButton.Yes:
+            return
+
+        worker = self._workers.pop(key, None)
+        if worker is not None:
+            try:
+                worker.stop()  # type: ignore[attr-defined]
+            except Exception:  # noqa: BLE001
+                pass
+            if hasattr(worker, "wait"):
+                try:
+                    worker.wait(3000)  # type: ignore[attr-defined]
+                except Exception:  # noqa: BLE001
+                    pass
+        try:
+            self.controller.disconnect(key)
+        except Exception:  # noqa: BLE001
+            pass
+        self._connected.discard(key)
+        router = self.mail_router
+        if router is not None and hasattr(router, "unbind_contact"):
+            try:
+                router.unbind_contact(key)  # type: ignore[attr-defined]
+            except Exception:  # noqa: BLE001
+                pass
+
+        removed = self.data["contacts"].pop(key)
+        if not self._save():
+            self.data["contacts"][key] = removed
+            return
+        self._refresh_contacts()
+        self.disconnect_btn.setEnabled(False)
+        self.connect_btn.setEnabled(self.contact_list.count() > 0)
+        QMessageBox.information(self, "StrayPigeon", f"Deleted {key} from the vault.")
 
     # ---- vault ---------------------------------------------------------
     def _manage_vault(self) -> None:
