@@ -179,6 +179,7 @@ python3 -m p2p.gui
 - 连接过程显示 `signaling / punching…` → `punching / QUIC handoff…` → `connected`；
 - 连接内部是：`SessionWorker(quic_handoff=True)` → legacy `Session` 做 SMTP/IMAP 信令 + STUN + P2P1 punch → `QuicController.start_handoff()` → `PunchQuicClient/Server` 在**同一个 UDP socket** 上完成 QUIC 握手；
 - **连接反馈**：Connect 后按钮变为 `Connecting…`，tab 显示不确定进度条，并逐行写 `[conn]` 阶段日志（bound / peer candidates / punching / QUIC handshake / connected）；左侧状态栏同步显示当前 contact；
+- **QUIC 心跳**：建立连接后每 15 秒发送一次 QUIC PING，保持 NAT 映射/空闲计时器；`idle_timeout=600s`；
 - **启动时不会自动连接**：MailRouter 只更新候选，必须手动点 Connect；
 - Connect 期间 **Connect** 按钮禁用；worker 结束后自动恢复；避免重复点击误报“already connecting”。
 - **Delete contact**：删除 contact、PSK 和 vault 里的对应条目；会先停止该 contact 的 worker/QUIC 会话，不可恢复，不通知对方；

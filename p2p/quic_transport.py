@@ -14,6 +14,7 @@ Design:
 from __future__ import annotations
 
 import asyncio
+import asyncio
 import datetime
 import ipaddress
 import ssl
@@ -46,13 +47,28 @@ class QuicChatProtocol(QuicConnectionProtocol):
         self._on_connected = on_connected
         self._on_closed = on_closed
         self._closed_notified = False
+        self._keepalive_task: asyncio.Task[None] | None = None
 
     def connection_made(self, transport) -> None:
         super().connection_made(transport)
+        if self._keepalive_task is None:
+            self._keepalive_task = asyncio.create_task(self._keepalive())
         if self._on_connected is not None:
             self._on_connected(self)
 
+    async def _keepalive(self) -> None:
+        """QUIC PING every 15s: keeps NAT mapping and idle timer alive."""
+        try:
+            while True:
+                await asyncio.sleep(15.0)
+                await self.ping()
+        except (asyncio.CancelledError, Exception):  # noqa: BLE001
+            return
+
     def connection_lost(self, exc) -> None:
+        if self._keepalive_task is not None:
+            self._keepalive_task.cancel()
+            self._keepalive_task = None
         super().connection_lost(exc)
         self._notify_closed()
 
