@@ -63,6 +63,7 @@ class QuicController(QObject):
     state_changed = pyqtSignal(str, str)
     message_received = pyqtSignal(str, str)
     file_progress = pyqtSignal(str, str, int, int)
+    file_finished = pyqtSignal(str, str)
     error = pyqtSignal(str, str)
 
     def __init__(
@@ -256,6 +257,7 @@ class QuicController(QObject):
             self.error.emit(session_id, f"file: {type(exc).__name__}: {exc}")
         finally:
             self._senders.pop(session_id, None)
+            self.file_finished.emit(session_id, sender.file_id)
 
     def disconnect(self, session_id: str) -> None:
         punch = self._punch_sessions.pop(session_id, None)

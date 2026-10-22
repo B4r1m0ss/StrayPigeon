@@ -17,6 +17,7 @@ class FakeController(QObject):
     state_changed = pyqtSignal(str, str)
     message_received = pyqtSignal(str, str)
     file_progress = pyqtSignal(str, str, int, int)
+    file_finished = pyqtSignal(str, str)
     error = pyqtSignal(str, str)
 
     def __init__(self) -> None:

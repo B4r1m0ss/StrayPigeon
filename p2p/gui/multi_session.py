@@ -188,6 +188,7 @@ class MultiSessionWindow(QWidget):
         self.controller.state_changed.connect(self._on_state)
         self.controller.message_received.connect(self._on_message)
         self.controller.file_progress.connect(self._on_file_progress)
+        self.controller.file_finished.connect(self._on_file_finished)
         self.controller.error.connect(self._on_error)
         self.connect_btn.clicked.connect(self._connect)
         self.disconnect_btn.clicked.connect(self._disconnect)
@@ -422,6 +423,7 @@ class MultiSessionWindow(QWidget):
         tab = self._tabs[key]
         tab.append(f"[file] sending {Path(path).name}")
         tab.set_progress(Path(path).name, 0, 1)
+        tab.file_btn.setEnabled(False)
         self.controller.send_file(key, path)
 
     def _disconnect(self) -> None:
@@ -503,6 +505,11 @@ class MultiSessionWindow(QWidget):
         except Exception as exc:  # noqa: BLE001
             self._on_error(session_id, f"file progress handler: {type(exc).__name__}: {exc}")
 
+    def _on_file_finished(self, session_id: str, file_id: str) -> None:
+        tab = self._tab_for(session_id)
+        if tab is not None:
+            tab.file_btn.setEnabled(True)
+
     def _on_error(self, session_id: str, text: str) -> None:
         tab = self._tab_for(session_id)
         if tab is not None:
@@ -510,6 +517,7 @@ class MultiSessionWindow(QWidget):
             tab.set_state("error")
             tab.set_connecting(False)
             tab.reset_progress()
+            tab.file_btn.setEnabled(True)
         self.connect_btn.setText("Connect")
         self.status_label.setText(f"{session_id}: error")
         QMessageBox.warning(self, "StrayPigeon", text)

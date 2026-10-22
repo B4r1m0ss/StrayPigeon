@@ -129,7 +129,13 @@ class ControllerHandoffFileTests(unittest.TestCase):
             self.assertIn(("bob", "connected"), states)
 
             try:
-                for sender, name in (("alice", "from_alice.bin"), ("bob", "from_bob.bin")):
+                jobs = (
+                    ("alice", "from_alice_1.bin"),
+                    ("alice", "from_alice_2.bin"),
+                    ("bob", "from_bob_1.bin"),
+                    ("bob", "from_bob_2.bin"),
+                )
+                for sender, name in jobs:
                     source = root / name
                     source.write_bytes(secrets.token_bytes(300_000))
                     controller.send_file(sender, str(source))
