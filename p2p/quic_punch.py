@@ -127,6 +127,7 @@ class PunchQuicClient(_PunchBase):
         candidates: list[Address],
         timeout: float = 15.0,
         sock: socket.socket | None = None,
+        peer_addr: Address | None = None,
     ) -> Address:
         loop = asyncio.get_running_loop()
         if sock is not None:
@@ -202,6 +203,7 @@ class PunchQuicServer(_PunchBase):
         candidates: list[Address] | None = None,
         timeout: float = 15.0,
         sock: socket.socket | None = None,
+        skip_punch: bool = False,
     ) -> None:
         loop = asyncio.get_running_loop()
         if sock is not None:
@@ -212,7 +214,7 @@ class PunchQuicServer(_PunchBase):
             )
         assert self.transport is not None
         self.quic_server.connection_made(self.transport)
-        if candidates:
+        if candidates and not skip_punch:
             self._punch_tasks.append(asyncio.create_task(self._punch(candidates, timeout=timeout)))
 
     def connection_made(self, transport) -> None:

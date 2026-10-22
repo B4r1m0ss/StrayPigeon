@@ -136,7 +136,12 @@ class QuicController(QObject):
                     on_closed=lambda sid=session_id: self.state_changed.emit(sid, "closed"),
                 )
                 await punch.start(  # type: ignore[attr-defined]
-                    "0.0.0.0", 0, candidates=candidates, timeout=20.0, sock=sock
+                    "0.0.0.0",
+                    0,
+                    candidates=candidates,
+                    timeout=20.0,
+                    sock=sock,
+                    skip_punch=True,
                 )
                 # The server is listening immediately, but QUIC is not
                 # connected until the initiator's handshake arrives.
@@ -153,7 +158,11 @@ class QuicController(QObject):
                     on_closed=lambda sid=session_id: self.state_changed.emit(sid, "closed"),
                 )
                 await punch.start(  # type: ignore[attr-defined]
-                    0, candidates, timeout=20.0, sock=sock
+                    0,
+                    candidates,
+                    timeout=20.0,
+                    sock=sock,
+                    peer_addr=handoff.get("peer_addr"),
                 )
         except Exception as exc:  # noqa: BLE001
             self.error.emit(session_id, f"handoff: {type(exc).__name__}: {exc}")

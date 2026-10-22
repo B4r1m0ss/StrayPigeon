@@ -100,8 +100,8 @@ class ControllerHandoffFileTests(unittest.TestCase):
                 "bob",
                 {
                     "socket": bob.sock,
-                    "peer_addr": alice.peer_addr,
-                    "peer_candidates": [alice.peer_addr],
+                    "peer_addr": bob.peer_addr,
+                    "peer_candidates": [bob.peer_addr],
                     "sid": alice.sid,
                     "psk": psk,
                     "role": "responder",
@@ -111,8 +111,8 @@ class ControllerHandoffFileTests(unittest.TestCase):
                 "alice",
                 {
                     "socket": alice.sock,
-                    "peer_addr": bob.peer_addr,
-                    "peer_candidates": [bob.peer_addr],
+                    "peer_addr": alice.peer_addr,
+                    "peer_candidates": [alice.peer_addr],
                     "sid": alice.sid,
                     "psk": psk,
                     "role": "initiator",
