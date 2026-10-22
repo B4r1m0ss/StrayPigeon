@@ -147,6 +147,12 @@ class MultiSessionWindowTests(unittest.TestCase):
         self.window.contact_list.setCurrentRow(0)
         self.window._connect()
         self.assertTrue(self.worker.started)
+        self.assertEqual(self.window.connect_btn.text(), "Connecting…")
+        tab = self.window._tabs["b@example.com"]
+        self.assertIn("[conn] starting signaling", tab.chat.toPlainText())
+        self.assertTrue(tab.conn_progress.isVisible())
+        self.worker.state.emit({"state": "bound"})
+        self.assertIn("[conn] local UDP socket bound", tab.chat.toPlainText())
         self.window._on_handoff(
             "b@example.com",
             {
@@ -204,6 +210,12 @@ class MultiSessionWindowTests(unittest.TestCase):
     def test_mail_candidate_auto_connects(self) -> None:
         self.router.emit_candidate("b@example.com", "192.0.2.10", 40123)
         self.assertTrue(self.worker.started)
+        self.assertEqual(self.window.connect_btn.text(), "Connecting…")
+        tab = self.window._tabs["b@example.com"]
+        self.assertIn("[conn] starting signaling", tab.chat.toPlainText())
+        self.assertTrue(tab.conn_progress.isVisible())
+        self.worker.state.emit({"state": "bound"})
+        self.assertIn("[conn] local UDP socket bound", tab.chat.toPlainText())
         self.window._on_handoff(
             "b@example.com",
             {

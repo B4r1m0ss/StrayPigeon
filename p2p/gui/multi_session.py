@@ -34,6 +34,11 @@ class ChatTab(QWidget):
         super().__init__(parent)
         self.contact_id = contact_id
         self.state = QLabel("idle")
+        self.state.setStyleSheet("font-weight: 600; padding: 2px 0;")
+        self.conn_progress = QProgressBar()
+        self.conn_progress.setRange(0, 0)
+        self.conn_progress.setTextVisible(False)
+        self.conn_progress.setVisible(False)
         self.chat = QPlainTextEdit()
         self.chat.setReadOnly(True)
         self.chat.setPlaceholderText("No messages yet.")
@@ -49,6 +54,7 @@ class ChatTab(QWidget):
         row.addWidget(self.file_btn)
         layout = QVBoxLayout(self)
         layout.addWidget(self.state)
+        layout.addWidget(self.conn_progress)
         layout.addWidget(self.chat, 1)
         layout.addWidget(self.progress)
         layout.addLayout(row)
@@ -60,6 +66,9 @@ class ChatTab(QWidget):
 
     def set_state(self, text: str) -> None:
         self.state.setText(text)
+
+    def set_connecting(self, active: bool) -> None:
+        self.conn_progress.setVisible(active)
 
     def set_progress(self, file_id: str, done: int, total: int) -> None:
         self.progress.setVisible(True)
@@ -154,6 +163,9 @@ class MultiSessionWindow(QWidget):
         left_layout.addLayout(settings)
         left_layout.addWidget(self.connect_btn)
         left_layout.addWidget(self.disconnect_btn)
+        self.status_label = QLabel("Ready")
+        self.status_label.setWordWrap(True)
+        left_layout.addWidget(self.status_label)
         left.setMaximumWidth(330)
         self.left_layout = left_layout
 
@@ -307,7 +319,11 @@ class MultiSessionWindow(QWidget):
         worker.error.connect(lambda code, detail, k=key: self._on_error(k, f"{code} {detail}"))
         worker.handoff_ready.connect(lambda handoff, k=key: self._on_handoff(k, handoff))
         worker.finished.connect(lambda k=key: self._on_worker_finished(k))
-        tab.set_state("signaling / punching…")
+        tab.set_state("starting signaling…")
+        tab.set_connecting(True)
+        tab.append("[conn] starting signaling / STUN / UDP punch…")
+        self.status_label.setText(f"{key}: starting signaling…")
+        self.connect_btn.setText("Connecting…")
         self.connect_btn.setEnabled(False)
         self.disconnect_btn.setEnabled(True)
         worker.start()
@@ -319,9 +335,22 @@ class MultiSessionWindow(QWidget):
 
     def _on_worker_state(self, key: str, payload: dict) -> None:
         state = str(payload.get("state") or "…")
+        labels = {
+            "bound": "local UDP socket bound",
+            "peer_ready": "peer candidates received",
+            "punching": "UDP punching…",
+            "quic_ready": "punch done; handing off to QUIC",
+        }
+        label = labels.get(state, state)
         tab = self._tabs.get(key)
         if tab is not None:
-            tab.set_state(state)
+            tab.set_state(label)
+            if state != "stopped":
+                tab.append(f"[conn] {label}")
+            if state in ("bound", "peer_ready", "punching", "quic_ready"):
+                tab.set_connecting(True)
+        if state != "stopped":
+            self.status_label.setText(f"{key}: {label}")
         if state in ("bound", "peer_ready", "punching"):
             self.connect_btn.setEnabled(False)
             self.disconnect_btn.setEnabled(True)
@@ -330,8 +359,14 @@ class MultiSessionWindow(QWidget):
         self._workers.pop(key, None)
         if key in self._handoff_keys:
             return
+        tab = self._tabs.get(key)
+        if tab is not None:
+            tab.set_connecting(False)
+            tab.append("[conn] signaling/punch session ended")
+        self.connect_btn.setText("Connect")
         if not self._workers:
             self.connect_btn.setEnabled(self.contact_list.count() > 0)
+            self.status_label.setText("Ready")
             if key not in self._connected:
                 self.disconnect_btn.setEnabled(False)
 
@@ -339,7 +374,10 @@ class MultiSessionWindow(QWidget):
         self._handoff_keys.add(key)
         tab = self._tabs.get(key)
         if tab is not None:
-            tab.set_state("punching / QUIC handoff…")
+            tab.set_state("QUIC handshake…")
+            tab.set_connecting(True)
+            tab.append("[conn] starting QUIC handshake on the punched socket…")
+        self.status_label.setText(f"{key}: QUIC handshake…")
         self.connect_btn.setEnabled(False)
         self.disconnect_btn.setEnabled(True)
         self.controller.start_handoff(key, handoff)
@@ -394,8 +432,11 @@ class MultiSessionWindow(QWidget):
         tab = self._tabs.get(key)
         if tab is not None:
             tab.set_state("disconnected")
+            tab.set_connecting(False)
         self.disconnect_btn.setEnabled(False)
         self.connect_btn.setEnabled(True)
+        self.connect_btn.setText("Connect")
+        self.status_label.setText(f"{key}: disconnected")
 
     # ---- controller signals -------------------------------------------
     def _tab_for(self, session_id: str) -> ChatTab | None:
@@ -407,14 +448,21 @@ class MultiSessionWindow(QWidget):
             self._handoff_keys.discard(session_id)
             self.connect_btn.setEnabled(False)
             self.disconnect_btn.setEnabled(True)
+            self.connect_btn.setText("Connect")
+            self.status_label.setText(f"{session_id}: connected")
         elif state in ("closed", "error"):
             self._connected.discard(session_id)
             self._handoff_keys.discard(session_id)
             self.connect_btn.setEnabled(self.contact_list.count() > 0)
             self.disconnect_btn.setEnabled(False)
+            self.connect_btn.setText("Connect")
+            self.status_label.setText(f"{session_id}: {state}")
         tab = self._tab_for(session_id)
         if tab is not None:
             tab.set_state(state)
+            tab.set_connecting(False)
+            if state in ("connected", "closed", "error"):
+                tab.append(f"[conn] {state}")
 
     def _on_message(self, session_id: str, text: str) -> None:
         tab = self._tab_for(session_id)
@@ -433,6 +481,9 @@ class MultiSessionWindow(QWidget):
         if tab is not None:
             tab.append(f"[error] {text}")
             tab.set_state("error")
+            tab.set_connecting(False)
+        self.connect_btn.setText("Connect")
+        self.status_label.setText(f"{session_id}: error")
         QMessageBox.warning(self, "StrayPigeon", text)
 
     def closeEvent(self, event) -> None:  # noqa: N802
