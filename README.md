@@ -212,7 +212,7 @@ python3 scripts/run_vault.py --vault ~/.config/email-p2p/vault.json \
 ## 当前状态
 
 - **85 个单元测试通过**；
-- 系统 Python 没装 aioquic 时：85 tests，11 skipped；
+- 系统 Python 没装 aioquic 时：85 tests，12 skipped；
 - **Legacy 数据面（CLI/兼容）**：同机加密 demo `PASS`；之前真实 163（Windows）↔ 126（Linux）跨提供商 SMTP 加密聊天 `CONNECTED`（pre-QUIC）；
 - **QUIC 数据面**：16 会话、16 × 1 MB 文件、4 MB 单文件、断点续传、SHA-256、MailRouter、Qt controller、SingleWindow offscreen 测试通过；
 - **QUIC 真实 163/126 端到端：尚未验收**；
