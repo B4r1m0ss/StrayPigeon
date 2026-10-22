@@ -12,10 +12,11 @@ try:  # optional QUIC extra
     from PyQt6.QtCore import QCoreApplication
 
     from p2p.config import Config
-    from p2p.gui.quic_controller import QuicController
+    from p2p.gui import quic_controller
     from p2p.session import Session
 
-    HAVE_QUIC = True
+    QuicController = quic_controller.QuicController
+    HAVE_QUIC = bool(quic_controller.HAVE_QUIC)
 except Exception:  # noqa: BLE001
     HAVE_QUIC = False
 
