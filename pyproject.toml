@@ -1,0 +1,24 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "stray-pigeon"
+version = "0.3.0"
+description = "Email-signaled, end-to-end encrypted P2P chat with UDP hole punching"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "GPL-3.0-only" }
+dependencies = []
+
+[project.scripts]
+p2p = "p2p.__main__:main"
+straypigeon = "p2p.gui.app:main"
+
+[project.optional-dependencies]
+crypto = ["cryptography>=42"]
+gui = ["PyQt6>=6.6"]
+quic = ["aioquic>=1.0"]
+
+[tool.setuptools]
+packages = ["p2p", "p2p.signal", "p2p.gui"]

@@ -1,0 +1,12 @@
+{
+  "_comment": "Shared-mailbox TEST mode only. Copy to setup.test.local.json, chmod 600.",
+  "mode": "imap",
+  "my_email": "test@example.com",
+  "imap_host": "imap.example.com",
+  "folder": "p2p-test-1",
+  "auth_code": "YOUR_AUTH_CODE",
+  "vault": "state/test-a-vault.json",
+  "vault_passphrase": "YOUR_VAULT_PASSPHRASE",
+  "invite": "state/test-invite.txt",
+  "test": true
+}

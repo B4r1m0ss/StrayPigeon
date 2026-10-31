@@ -1,0 +1,12 @@
+{
+  "mode": "smtp",
+  "my_email": "you@126.com",
+  "imap_host": "imap.126.com",
+  "smtp_host": "smtp.126.com",
+  "smtp_port": 465,
+  "smtp_starttls": false,
+  "auth_code": "YOUR_AUTH_CODE",
+  "vault": "vault.json",
+  "vault_passphrase": "CHANGE_ME_MIN_8_CHARS",
+  "test": true
+}
