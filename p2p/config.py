@@ -8,6 +8,27 @@ from dataclasses import dataclass, field
 DEFAULT_STUN = ("stun.l.google.com:19302", "stun.cloudflare.com:3478")
 
 
+def _env_float(name: str, default: float) -> float:
+    raw = os.environ.get(name, "").strip()
+    if not raw:
+        return default
+    try:
+        return float(raw)
+    except ValueError:
+        return default
+
+
+def _env_bool(name: str, default: bool) -> bool:
+    raw = os.environ.get(name, "").strip().lower()
+    if not raw:
+        return default
+    return raw in ("1", "true", "yes", "on")
+
+
+def _env_str(name: str, default: str) -> str:
+    return os.environ.get(name, "").strip() or default
+
+
 @dataclass
 class Config:
     """Runtime configuration.
@@ -38,6 +59,13 @@ class Config:
     stun_timeout: float = 2.0
     replay_window: float = 120.0
     quic_handoff: bool = False
+    quic_idle_timeout: float = 600.0
+    quic_ping_interval: float = 15.0
+    quic_ca_file: str = ""
+    quic_pin_sha256: str = ""
+    apdm_early_exit: bool = True
+    imap_poll_interval: float = 0.5
+    imap_uid_cache: bool = True
     contact_id: str = ""
     my_email: str = ""
     peer_email: str = ""
@@ -49,6 +77,27 @@ class Config:
     smtp_starttls: bool = False
     folder: str = "INBOX"
     _psk: bytes | None = field(default=None, repr=False)
+
+    def __post_init__(self) -> None:
+        # Experiment switches are environment-only and preserve old defaults
+        # unless explicitly set. No secret is read here.
+        self.quic_idle_timeout = max(
+            1.0, _env_float("P2P_QUIC_IDLE_TIMEOUT", self.quic_idle_timeout)
+        )
+        self.quic_ping_interval = max(
+            0.0, _env_float("P2P_QUIC_PING_INTERVAL", self.quic_ping_interval)
+        )
+        self.quic_ca_file = _env_str("P2P_QUIC_CA_FILE", self.quic_ca_file)
+        self.quic_pin_sha256 = _env_str(
+            "P2P_QUIC_PIN_SHA256", self.quic_pin_sha256
+        ).lower()
+        self.apdm_early_exit = _env_bool(
+            "P2P_APDM_EARLY_EXIT", self.apdm_early_exit
+        )
+        self.imap_poll_interval = max(
+            0.05, _env_float("P2P_IMAP_POLL_INTERVAL", self.imap_poll_interval)
+        )
+        self.imap_uid_cache = _env_bool("P2P_IMAP_UID_CACHE", self.imap_uid_cache)
 
     @classmethod
     def from_vault(
@@ -68,7 +117,7 @@ class Config:
         replay_window: float | None = None,
         quic_handoff: bool = False,
     ) -> "Config":
-        """Build per-contact config with no process-wide environment reads."""
+        """Build per-contact config; experiment switches still come from env."""
         from .contacts import normalize_role, select_contact
 
         key, contact = select_contact(data, contact_id)
@@ -201,4 +250,9 @@ class Config:
             "stun": list(self.stun_servers),
             "keepalive": self.keepalive,
             "replay_window": self.replay_window,
+            "quic_idle_timeout": self.quic_idle_timeout,
+            "quic_ping_interval": self.quic_ping_interval,
+            "apdm_early_exit": self.apdm_early_exit,
+            "imap_poll_interval": self.imap_poll_interval,
+            "imap_uid_cache": self.imap_uid_cache,
         }

@@ -110,7 +110,9 @@ class Session:
                 raise SystemExit("IMAP mode needs IMAP host/user/password")
             from .signal.imap_store import ImapStoreChannel
 
-            return ImapStoreChannel(host, user, password, folder)
+            return ImapStoreChannel(
+                host, user, password, folder, uid_cache=self.cfg.imap_uid_cache
+            )
         if self.cfg.signal_mode == "smtp":
             use_cfg = bool(self.cfg.smtp_host)
             smtp_host = (self.cfg.smtp_host if use_cfg else os.environ.get("P2P_SMTP_HOST", "")).strip()
@@ -154,6 +156,7 @@ class Session:
                 password,
                 folder,
                 starttls,
+                uid_cache=self.cfg.imap_uid_cache,
             )
         raise SystemExit(f"signal mode {self.cfg.signal_mode!r} is not implemented yet; use --signal file")
 
@@ -250,7 +253,7 @@ class Session:
                     self.sid = sid
                 self.seen_sids.add(self.sid)
                 return seq, msg
-            time.sleep(0.1)
+            time.sleep(self.cfg.imap_poll_interval)
         raise TimeoutError("no peer candidate before timeout")
 
     def _peer_candidates_from_msg(self, msg: dict) -> list[Candidate]:
@@ -340,7 +343,11 @@ class Session:
                 return 4
 
             peer_nat = str(msg.get("nat") or "unknown")
-            if self.nat_mapping == "apdm" and peer_nat == "apdm":
+            if (
+                self.cfg.apdm_early_exit
+                and self.nat_mapping == "apdm"
+                and peer_nat == "apdm"
+            ):
                 self.log.event("ERROR", code="E_SYMMETRIC_NAT")
                 self._emit("error", code="E_SYMMETRIC_NAT")
                 return 5

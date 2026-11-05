@@ -27,13 +27,17 @@ class ImapStoreChannel:
         password: str,
         folder: str = "p2p-demo",
         search: str = "ALL",
+        uid_cache: bool = True,
     ):
         self.host = host
         self.user = user
         self._password = password
         self.folder = folder
         self.search = search
+        self.uid_cache = uid_cache
         self.conn: imaplib.IMAP4_SSL | None = None
+        self._fetched_uids: set[int] = set()
+        self._messages: dict[int, tuple[str, int, bytes]] = {}
 
     def _connect(self) -> None:
         if self.conn is not None:
@@ -73,16 +77,21 @@ class ImapStoreChannel:
 
     def recv(self, sid: str, after: int) -> list[tuple[int, bytes]]:
         self._connect()
-        # TODO(v0.2): cache UIDs and only fetch UID > last_uid. For the first
-        # working version, fetch all and filter by the seq embedded in Subject.
         typ, data = self.conn.uid("SEARCH", None, self.search)
         if typ != "OK" or not data:
             return []
-        out: list[tuple[int, int, bytes]] = []
-        for uid in data[0].split():
-            typ, msg_data = self.conn.uid("FETCH", uid, "(RFC822)")
+        for raw_uid in data[0].split():
+            try:
+                uid = int(raw_uid)
+            except (TypeError, ValueError):
+                continue
+            if self.uid_cache and uid in self._fetched_uids:
+                continue
+            typ, msg_data = self.conn.uid("FETCH", raw_uid, "(RFC822)")
             if typ != "OK" or not msg_data or not isinstance(msg_data[0], tuple):
                 continue
+            if self.uid_cache:
+                self._fetched_uids.add(uid)
             raw = msg_data[0][1]
             try:
                 parsed = email.message_from_bytes(raw)
@@ -91,15 +100,18 @@ class ImapStoreChannel:
                 if len(parts) != 3 or parts[0] != "p2p1":
                     continue
                 msg_sid, msg_seq = parts[1], int(parts[2])
-                if sid and msg_sid != sid:
-                    continue
-                if msg_seq <= after:
-                    continue
                 payload = parsed.get_payload(decode=True) or b""
                 blob = base64.b64decode(payload.strip())
-                out.append((int(uid), msg_seq, blob))
             except Exception:  # noqa: BLE001
                 continue
+            self._messages[uid] = (msg_sid, msg_seq, blob)
+        out: list[tuple[int, int, bytes]] = []
+        for uid, (msg_sid, msg_seq, blob) in self._messages.items():
+            if sid and msg_sid != sid:
+                continue
+            if msg_seq <= after:
+                continue
+            out.append((uid, msg_seq, blob))
         # Highest IMAP UID == newest email. Return newest first so a responder
         # does not pick an older p2p1/... candidate from a previous attempt.
         out.sort(key=lambda item: item[0], reverse=True)

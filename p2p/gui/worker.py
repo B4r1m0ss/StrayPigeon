@@ -63,6 +63,10 @@ class SessionWorker(QThread):
                     "sid": self.session.sid,
                     "psk": self.session.psk,
                     "role": self.cfg.role,
+                    "quic_idle_timeout": self.cfg.quic_idle_timeout,
+                    "quic_ping_interval": self.cfg.quic_ping_interval,
+                    "quic_ca_file": self.cfg.quic_ca_file,
+                    "quic_pin_sha256": self.cfg.quic_pin_sha256,
                 }
                 self.handoff_ready.emit()
             self.state.emit({"state": "stopped", "code": code})

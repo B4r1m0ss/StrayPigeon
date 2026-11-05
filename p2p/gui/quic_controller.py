@@ -120,6 +120,10 @@ class QuicController(QObject):
         role = str(handoff.get("role") or "initiator")
         candidates = list(handoff.get("peer_candidates") or [])
         second_punch = bool(handoff.get("second_punch"))
+        idle_timeout = float(handoff.get("quic_idle_timeout") or 600.0)
+        ping_interval = float(handoff.get("quic_ping_interval") or 15.0)
+        ca_file = handoff.get("quic_ca_file") or None
+        pin_sha256 = str(handoff.get("quic_pin_sha256") or "")
         if sock is None or not sid or not isinstance(psk, (bytes, bytearray)):
             self.error.emit(session_id, "invalid handoff")
             return
@@ -127,7 +131,9 @@ class QuicController(QObject):
             if role == "responder":
                 if self._server_config is None:
                     cert, key = make_self_signed_cert(self.cert_dir)
-                    self._server_config = server_configuration(cert, key)
+                    self._server_config = server_configuration(
+                        cert, key, idle_timeout=idle_timeout
+                    )
                 punch: object = PunchQuicServer(
                     self._server_config,
                     sid,
@@ -135,6 +141,8 @@ class QuicController(QObject):
                     bytes(psk),
                     on_message=lambda _sid, data: self._on_message(session_id, data),
                     on_closed=lambda sid=session_id: self.state_changed.emit(sid, "closed"),
+                    ping_interval=ping_interval,
+                    pin_sha256=pin_sha256,
                 )
                 await punch.start(  # type: ignore[attr-defined]
                     "0.0.0.0",
@@ -149,7 +157,9 @@ class QuicController(QObject):
                 await punch.wait_connected(timeout=20.0)  # type: ignore[attr-defined]
             else:
                 if self._client_config is None:
-                    self._client_config = client_configuration()
+                    self._client_config = client_configuration(
+                        idle_timeout=idle_timeout, ca_file=ca_file
+                    )
                 punch = PunchQuicClient(
                     self._client_config,
                     sid,
@@ -157,6 +167,8 @@ class QuicController(QObject):
                     bytes(psk),
                     on_message=lambda _sid, data: self._on_message(session_id, data),
                     on_closed=lambda sid=session_id: self.state_changed.emit(sid, "closed"),
+                    ping_interval=ping_interval,
+                    pin_sha256=pin_sha256,
                 )
                 await punch.start(  # type: ignore[attr-defined]
                     0,

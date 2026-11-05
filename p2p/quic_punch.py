@@ -107,6 +107,8 @@ class PunchQuicClient(_PunchBase):
         psk: bytes,
         on_message: Callable[[str, bytes], None] | None = None,
         on_closed: Callable[[], None] | None = None,
+        ping_interval: float = 15.0,
+        pin_sha256: str = "",
     ) -> None:
         super().__init__(configuration, sid, lease_id, psk, on_message)
         self.on_closed = on_closed
@@ -119,6 +121,8 @@ class PunchQuicClient(_PunchBase):
             on_closed=lambda _protocol: (
                 self.on_closed() if self.on_closed is not None else None
             ),
+            ping_interval=ping_interval,
+            pin_sha256=pin_sha256,
         )
 
     async def start(
@@ -137,7 +141,13 @@ class PunchQuicClient(_PunchBase):
                 lambda: self, local_addr=("0.0.0.0", local_port)
             )
         try:
-            observed = await self._punch(candidates, timeout=timeout)
+            if peer_addr is not None:
+                # Same-socket direct handoff: the mapping is already open;
+                # do not spend a punch window re-validating it.
+                self.observed = peer_addr
+                observed = peer_addr
+            else:
+                observed = await self._punch(candidates, timeout=timeout)
         except asyncio.TimeoutError as exc:
             raise TimeoutError("client P2P1 punch timed out") from exc
         if observed is None:
@@ -177,6 +187,8 @@ class PunchQuicServer(_PunchBase):
         psk: bytes,
         on_message: Callable[[str, bytes], None] | None = None,
         on_closed: Callable[[], None] | None = None,
+        ping_interval: float = 15.0,
+        pin_sha256: str = "",
     ) -> None:
         super().__init__(configuration, sid, lease_id, psk, on_message)
         self.on_closed = on_closed
@@ -192,6 +204,8 @@ class PunchQuicServer(_PunchBase):
                 on_closed=lambda _protocol: (
                     self.on_closed() if self.on_closed is not None else None
                 ),
+                ping_interval=ping_interval,
+                pin_sha256=pin_sha256,
                 **kwargs,
             ),
         )

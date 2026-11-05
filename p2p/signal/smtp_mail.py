@@ -35,9 +35,15 @@ class SmtpMailChannel(ImapStoreChannel):
         password: str,
         folder: str = "INBOX",
         starttls: bool = False,
+        uid_cache: bool = True,
     ):
         super().__init__(
-            imap_host, user, password, folder, search='SUBJECT "p2p1/"'
+            imap_host,
+            user,
+            password,
+            folder,
+            search='SUBJECT "p2p1/"',
+            uid_cache=uid_cache,
         )
         self.smtp_host = smtp_host
         self.smtp_port = smtp_port

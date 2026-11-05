@@ -14,8 +14,8 @@ Design:
 from __future__ import annotations
 
 import asyncio
-import asyncio
 import datetime
+import hashlib
 import ipaddress
 import ssl
 from contextlib import AsyncExitStack
@@ -25,7 +25,11 @@ from typing import Any, Callable
 from aioquic.asyncio import connect, serve
 from aioquic.asyncio.protocol import QuicConnectionProtocol
 from aioquic.quic.configuration import QuicConfiguration
-from aioquic.quic.events import ConnectionTerminated, StreamDataReceived
+from aioquic.quic.events import (
+    ConnectionTerminated,
+    HandshakeCompleted,
+    StreamDataReceived,
+)
 
 ALPN = "stray-pigeon/1"
 
@@ -39,6 +43,8 @@ class QuicChatProtocol(QuicConnectionProtocol):
         on_message: Callable[["QuicChatProtocol", bytes], None] | None = None,
         on_connected: Callable[["QuicChatProtocol"], None] | None = None,
         on_closed: Callable[["QuicChatProtocol"], None] | None = None,
+        ping_interval: float = 15.0,
+        pin_sha256: str = "",
         **kwargs: Any,
     ) -> None:
         super().__init__(*args, **kwargs)
@@ -48,6 +54,8 @@ class QuicChatProtocol(QuicConnectionProtocol):
         self._on_closed = on_closed
         self._closed_notified = False
         self._keepalive_task: asyncio.Task[None] | None = None
+        self._ping_interval = max(0.0, float(ping_interval))
+        self._pin_sha256 = pin_sha256.replace(":", "").strip().lower()
 
     def connection_made(self, transport) -> None:
         super().connection_made(transport)
@@ -57,13 +65,19 @@ class QuicChatProtocol(QuicConnectionProtocol):
             self._on_connected(self)
 
     async def _keepalive(self) -> None:
-        """QUIC PING every 15s: keeps NAT mapping and idle timer alive."""
-        try:
-            while True:
-                await asyncio.sleep(15.0)
-                await self.ping()
-        except (asyncio.CancelledError, Exception):  # noqa: BLE001
+        """QUIC PING on the configured interval; 0 disables it."""
+        if self._ping_interval <= 0:
             return
+        while True:
+            try:
+                await asyncio.sleep(self._ping_interval)
+                await self.ping()
+            except asyncio.CancelledError:
+                raise
+            except Exception:  # noqa: BLE001
+                # One transient ping failure must not silently disable
+                # keepalive for the rest of the connection; retry next tick.
+                await asyncio.sleep(min(self._ping_interval, 1.0))
 
     def connection_lost(self, exc) -> None:
         if self._keepalive_task is not None:
@@ -80,6 +94,8 @@ class QuicChatProtocol(QuicConnectionProtocol):
             self._on_closed(self)
 
     def quic_event_received(self, event) -> None:
+        if isinstance(event, HandshakeCompleted):
+            self._check_pin()
         if isinstance(event, StreamDataReceived):
             buf = self._buffers.setdefault(event.stream_id, bytearray())
             buf.extend(event.data)
@@ -89,6 +105,24 @@ class QuicChatProtocol(QuicConnectionProtocol):
                 if self._on_message is not None:
                     self._on_message(self, payload)
         elif isinstance(event, ConnectionTerminated):
+            self._notify_closed()
+
+    def _check_pin(self) -> None:
+        """Reject a peer certificate whose SHA-256 does not match the pin."""
+        if not self._pin_sha256 or not self._quic.configuration.is_client:
+            return
+        cert = getattr(self._quic.tls, "_peer_certificate", None)
+        if cert is None:
+            self.close()
+            self._notify_closed()
+            return
+        from cryptography.hazmat.primitives import serialization
+
+        digest = hashlib.sha256(
+            cert.public_bytes(serialization.Encoding.DER)
+        ).hexdigest()
+        if digest != self._pin_sha256:
+            self.close()
             self._notify_closed()
 
     def send_message(self, text: str) -> None:
@@ -137,10 +171,14 @@ class QuicSessionManager:
         max_sessions: int = 16,
         on_message: Callable[[str, bytes], None] | None = None,
         on_state: Callable[[str, str], None] | None = None,
+        ping_interval: float = 15.0,
+        pin_sha256: str = "",
     ) -> None:
         self.max_sessions = max(1, min(16, int(max_sessions)))
         self.on_message = on_message
         self.on_state = on_state
+        self._ping_interval = max(0.0, float(ping_interval))
+        self._pin_sha256 = pin_sha256
         self._sessions: dict[str, QuicChatSession] = {}
         self._server = None
         self._server_config: QuicConfiguration | None = None
@@ -173,6 +211,8 @@ class QuicSessionManager:
             *args,
             on_message=self._dispatch_message,
             on_closed=self._protocol_closed,
+            ping_interval=self._ping_interval,
+            pin_sha256=self._pin_sha256,
             **kwargs,
         )
         session_id = f"in:{id(protocol)}"
@@ -206,6 +246,8 @@ class QuicSessionManager:
                         *args,
                         on_message=self._dispatch_message,
                         on_closed=self._protocol_closed,
+                        ping_interval=self._ping_interval,
+                        pin_sha256=self._pin_sha256,
                         **kwargs,
                     ),
                 )
@@ -295,8 +337,20 @@ def make_self_signed_cert(
     return cert_path, key_path
 
 
-def client_configuration(idle_timeout: float = 600.0) -> QuicConfiguration:
-    """Local spike/client config; real peers pin the server cert fingerprint."""
+def client_configuration(
+    idle_timeout: float = 600.0,
+    ca_file: str | Path | None = None,
+) -> QuicConfiguration:
+    """Client config; CA validation is opt-in for the E8 experiment."""
+    if ca_file:
+        return QuicConfiguration(
+            is_client=True,
+            alpn_protocols=[ALPN],
+            server_name="localhost",
+            verify_mode=ssl.CERT_REQUIRED,
+            cafile=str(ca_file),
+            idle_timeout=idle_timeout,
+        )
     return QuicConfiguration(
         is_client=True,
         alpn_protocols=[ALPN],
