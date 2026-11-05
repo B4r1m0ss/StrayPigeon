@@ -121,7 +121,8 @@ class QuicController(QObject):
         candidates = list(handoff.get("peer_candidates") or [])
         second_punch = bool(handoff.get("second_punch"))
         idle_timeout = float(handoff.get("quic_idle_timeout") or 600.0)
-        ping_interval = float(handoff.get("quic_ping_interval") or 15.0)
+        ping_raw = handoff.get("quic_ping_interval")
+        ping_interval = 15.0 if ping_raw is None or ping_raw == "" else float(ping_raw)
         ca_file = handoff.get("quic_ca_file") or None
         pin_sha256 = str(handoff.get("quic_pin_sha256") or "")
         if sock is None or not sid or not isinstance(psk, (bytes, bytearray)):
