@@ -56,6 +56,7 @@ class QuicChatProtocol(QuicConnectionProtocol):
         self._keepalive_task: asyncio.Task[None] | None = None
         self._ping_interval = max(0.0, float(ping_interval))
         self._pin_sha256 = pin_sha256.replace(":", "").strip().lower()
+        self.pin_failed = False
 
     def connection_made(self, transport) -> None:
         super().connection_made(transport)
@@ -113,6 +114,7 @@ class QuicChatProtocol(QuicConnectionProtocol):
             return
         cert = getattr(self._quic.tls, "_peer_certificate", None)
         if cert is None:
+            self.pin_failed = True
             self.close()
             self._notify_closed()
             return
@@ -122,6 +124,7 @@ class QuicChatProtocol(QuicConnectionProtocol):
             cert.public_bytes(serialization.Encoding.DER)
         ).hexdigest()
         if digest != self._pin_sha256:
+            self.pin_failed = True
             self.close()
             self._notify_closed()
 
@@ -255,6 +258,9 @@ class QuicSessionManager:
         except BaseException:
             await stack.aclose()
             raise
+        if getattr(protocol, "pin_failed", False):
+            await stack.aclose()
+            raise ConnectionError("QUIC certificate pin mismatch")
         self._protocol_ids[id(protocol)] = session_id
         self._sessions[session_id] = QuicChatSession(
             session_id, protocol, stack, self

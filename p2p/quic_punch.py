@@ -159,6 +159,8 @@ class PunchQuicClient(_PunchBase):
             await asyncio.wait_for(self.protocol.wait_connected(), timeout)
         except asyncio.TimeoutError as exc:
             raise TimeoutError("client QUIC handshake timed out") from exc
+        if getattr(self.protocol, "pin_failed", False):
+            raise ConnectionError("QUIC certificate pin mismatch")
         return observed
 
     def datagram_received(self, data: bytes, addr: Address) -> None:
