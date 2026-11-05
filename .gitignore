@@ -22,6 +22,14 @@ logs/
 /scripts/build_paper_docx.py
 /scripts/build_copyright_docs.py
 
+# internal evaluation / testbed scripts — kept outside the public repo
+/tests/
+/scripts/netns_testbed.sh
+/scripts/netns_symmetric2.sh
+/scripts/nat_experiment.py
+/scripts/stun_probe_server.py
+/scripts/packet_capture.py
+
 # generated document deliverables
 *.docx
 *.doc

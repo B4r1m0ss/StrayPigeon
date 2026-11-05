@@ -3,7 +3,6 @@
 > **Email-signaled, end-to-end encrypted P2P chat.**
 > 一只迷途的信鸽，也总能找到同伴。
 
-![tests](https://img.shields.io/badge/tests-85%20passing-brightgreen)
 ![python](https://img.shields.io/badge/python-3.10%2B-blue)
 ![license](https://img.shields.io/badge/license-GPL--3.0-green)
 ![platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux-lightgrey)
@@ -16,7 +15,7 @@
 
 ## 当前状态
 
-- **85 个单元测试通过**；系统 Python 没装 aioquic 时：85 tests，12 skipped；
+- **公开仓库只包含应用源码**；内部实验脚本和测试套件不随公开仓库提供；
 - **QUIC 直接建立在 legacy Session 打洞后的同一个 UDP socket 上**，不再二次打洞；
 - **QUIC PING 每 15 秒**，`idle_timeout=600s`；
 - **尚未做安全审计**；QUIC TLS 当前是 `CERT_NONE`，证书指纹固定（fingerprint pinning）还没实现，不能当作生产级端到端认证。
@@ -271,8 +270,7 @@ QUIC PING 心跳 / 空闲后再聊天
 - 4 MB 单文件、断点续传、SHA-256；
 - handoff 后文件双向、连续多文件；
 - 连接失败/关闭、超时阶段、worker 生命周期；
-- SingleWindow 的 vault/contact/firewall shell；
-- 85 tests，系统 Python 无 aioquic 时 12 skipped。
+- SingleWindow 的 vault/contact/firewall shell。
 
 ## 安全模型
 
@@ -332,18 +330,13 @@ scripts/
   run_vault.py         # Legacy CLI
   allow_firewall.ps1   # Windows UDP 端口放行（UAC）
   pair_test.py         # 两个 vault 非交互测试
-tests/                 # 27 个测试文件，85 个测试
 DEVELOPMENT.md
 LICENSE
 ```
 
-## 测试
+## 运行
 
 ```bash
-# 需要 aioquic；没有时 QUIC 测试会 skip
-.venv/bin/python -m unittest discover -s tests -v   # 85 tests
-# Windows: py -3 -m unittest discover -s tests -v
-
 python3 scripts/demo_same_machine.py                # Legacy 同机加密 demo
 
 # GUI offscreen
