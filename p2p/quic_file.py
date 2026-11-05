@@ -21,6 +21,9 @@ from .quic_transport import QuicChatSession
 
 DEFAULT_CHUNK_SIZE = 1024 * 1024  # 1 MiB
 _MAX_CHUNK_SIZE = 4 * 1024 * 1024
+# aioquic grants 128 bidirectional streams by default. One file frame uses
+# one stream, so keep the default chunk count below that limit for large files.
+_MAX_SAFE_STREAMS = 120
 
 
 def encode_frame(header: dict[str, Any], payload: bytes = b"") -> bytes:
@@ -294,7 +297,14 @@ class FileSender:
         self.file_id = file_id or secrets.token_hex(16)
         self.on_progress = on_progress
         self.size = self.path.stat().st_size
-        self.chunk_count = (self.size + chunk_size - 1) // chunk_size
+        if (
+            chunk_size == DEFAULT_CHUNK_SIZE
+            and self.size > _MAX_SAFE_STREAMS * DEFAULT_CHUNK_SIZE
+        ):
+            # Default callers (GUI) must not create one QUIC stream per MiB
+            # for multi-hundred-MiB files.
+            self.chunk_size = _MAX_CHUNK_SIZE
+        self.chunk_count = (self.size + self.chunk_size - 1) // self.chunk_size
         self._accepted = asyncio.Event()
         self._done = asyncio.Event()
         self._have: set[int] = set()
