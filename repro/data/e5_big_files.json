@@ -1,0 +1,16 @@
+{
+  "topology": "netns LAN bridge, one QUIC stream per file, length-prefixed frames",
+  "1GiB": {
+    "bytes": 1073741824,
+    "seconds": 28.609716653823853,
+    "received": true,
+    "approx_mbps": 300.2
+  },
+  "2GiB": {
+    "bytes": 2147483648,
+    "seconds": 54.45367169380188,
+    "received": true,
+    "approx_mbps": 315.4
+  },
+  "shared_policy": "<redacted-path>"
+}

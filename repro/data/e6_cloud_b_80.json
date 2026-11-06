@@ -1,0 +1,5762 @@
+[
+  {
+    "round": 0,
+    "runid": "e6-1793963940-0",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.958893060684204,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793963940.195978,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793963947.2592375,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793963947.2594204,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793963953.1462984,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.990792512893677
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.809345722198486,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793963942.27607,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793963953.0681376,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793963953.0683074,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793963953.0685637,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.846233606338501
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 1,
+    "runid": "e6-1793963954-1",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.824459552764893,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793963954.8048303,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793963960.8514981,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793963960.8516805,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793963968.6210144,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.85666036605835
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.684923648834229,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793963956.8707852,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793963968.5410469,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793963968.541219,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793963968.541447,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.7229323387146
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 2,
+    "runid": "e6-1793963970-2",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.06938648223877,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793963970.2799208,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793963976.4456742,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793963976.4458644,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793963983.3409777,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.101588726043701
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.931047439575195,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793963972.3462605,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793963983.26259,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793963983.2627604,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793963983.2629778,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.968368291854858
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 3,
+    "runid": "e6-1793963984-3",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.383657693862915,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793963984.9996514,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793963991.2474418,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793963991.2476304,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793963998.3749263,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.415738821029663
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.244122743606567,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793963987.066613,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793963998.2959733,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793963998.29616,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793963998.2963824,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.280168056488037
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 4,
+    "runid": "e6-1793963999-4",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.271662712097168,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964000.0363054,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964006.2735715,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964006.2737365,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964013.2995076,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.303838968276978
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.13292121887207,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964002.103111,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964013.2211375,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964013.221311,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964013.221541,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.17044734954834
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 5,
+    "runid": "e6-1793964014-5",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.749040365219116,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964014.9557257,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964021.1539705,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964021.1541567,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964028.6963685,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.781662464141846
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.609378099441528,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964017.0229368,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964028.6176746,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964028.617851,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964028.6180742,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.646203517913818
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 6,
+    "runid": "e6-1793964030-6",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.88221549987793,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964030.3553956,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964036.9534285,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964036.9535897,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964043.2292583,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.915131568908691
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.743337154388428,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964032.4226336,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964043.1511796,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964043.1513536,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964043.1515782,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.779943466186523
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 7,
+    "runid": "e6-1793964044-7",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.367538928985596,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964044.889044,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964051.1830883,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964051.1832438,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964058.2481644,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.39926528930664
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.228757381439209,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964046.9562786,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964058.1700478,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964058.1702363,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964058.170459,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.266223907470703
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 8,
+    "runid": "e6-1793964059-8",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.704323530197144,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964059.9061396,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964066.8293998,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964066.829579,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964073.601406,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.735462427139282
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.560772180557251,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964061.977204,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964073.5231762,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964073.5233533,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964073.5235758,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.596972703933716
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 9,
+    "runid": "e6-1793964075-9",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.442582845687866,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964075.259983,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964081.8034036,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964081.803565,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964088.6937203,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.474900245666504
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.30463695526123,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964077.3239903,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964088.6139581,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964088.6141303,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964088.614349,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.342417240142822
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 10,
+    "runid": "e6-1793964090-10",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.357579231262207,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964090.350525,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964096.6960773,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964096.6962318,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964103.6993282,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.390218019485474
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.172818422317505,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964092.4175909,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964103.5755322,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964103.5757146,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964103.5759447,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.209352016448975
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 11,
+    "runid": "e6-1793964105-11",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.101035833358765,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964105.3568575,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964111.8323312,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964111.8325338,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964118.4494576,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.133782148361206
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.961583137512207,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964107.4220984,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964118.3688788,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964118.3690581,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964118.369282,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.996954441070557
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 12,
+    "runid": "e6-1793964120-12",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.538009405136108,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964120.109365,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964126.7465737,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964126.7467654,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964133.6383207,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.571287870407104
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.39828610420227,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964122.1723588,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964133.5558012,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964133.555977,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964133.5562127,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.434954404830933
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 13,
+    "runid": "e6-1793964135-13",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.89245891571045,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964135.2990363,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964141.5968356,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964141.5969982,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964148.1830752,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.924160242080688
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.755153894424438,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964137.3603957,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964148.1008599,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964148.101029,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964148.1012428,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.792373418807983
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 14,
+    "runid": "e6-1793964149-14",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.873290777206421,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964149.8404098,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964156.4914968,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964156.4917018,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964162.7053742,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.906257390975952
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.733796119689941,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964151.903168,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964162.622289,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964162.6224637,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964162.6226947,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.770392179489136
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 15,
+    "runid": "e6-1793964164-15",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.143270492553711,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964164.3673298,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964170.9937735,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964170.9939754,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964177.501265,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.1755051612854
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.005764484405518,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964166.4265342,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964177.417696,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964177.4178698,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964177.418089,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.041253089904785
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 16,
+    "runid": "e6-1793964179-16",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.038177251815796,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964179.1616716,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964185.6217566,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964185.621981,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964192.191134,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.070743799209595
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.902175664901733,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964181.2205656,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964192.107674,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964192.107845,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964192.1080909,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.939416408538818
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 17,
+    "runid": "e6-1793964193-17",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 14.577574968338013,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964193.8499017,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964200.7055957,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964200.7057557,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964208.4193041,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 15.610467433929443
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.437573671340942,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964195.9126902,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964208.335428,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964208.3356016,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964208.3358238,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.473377227783203
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 18,
+    "runid": "e6-1793964210-18",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.346002578735352,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964210.0778174,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964216.6545417,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964216.6547313,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964223.4153516,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.378256559371948
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.207020044326782,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964212.1384542,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964223.3307035,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964223.330873,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964223.331091,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.24284815788269
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 19,
+    "runid": "e6-1793964225-19",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.533861875534058,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964225.0738988,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964231.76812,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964231.7682855,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964238.598967,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.566120147705078
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.395747184753418,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964227.1331527,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964238.513805,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964238.5139816,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964238.514206,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.432490587234497
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 20,
+    "runid": "e6-1793964240-20",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.033658266067505,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964240.258239,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964246.7967508,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964246.7969248,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964253.2825987,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.065441846847534
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.894890546798706,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964242.3168676,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964253.19705,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964253.197221,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964253.197442,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.931490421295166
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 21,
+    "runid": "e6-1793964254-21",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.79781174659729,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964254.9411538,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964261.6646342,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964261.6648264,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964268.7306285,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.830149173736572
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.657821893692017,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964257.001931,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964268.6449716,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964268.6451466,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964268.6453784,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.694464921951294
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 22,
+    "runid": "e6-1793964270-22",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.836359739303589,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964270.3899777,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964277.2230961,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964277.2232587,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964283.218016,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.869256973266602
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.696762323379517,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964272.4496047,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964283.131699,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964283.1318705,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964283.132104,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.73434066772461
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 23,
+    "runid": "e6-1793964284-23",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.792877912521362,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964284.8785992,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964291.5426478,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964291.542805,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964298.6621442,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.82485032081604
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.65614938735962,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964286.9341679,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964298.575494,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964298.5756814,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964298.5759006,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.693066120147705
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 24,
+    "runid": "e6-1793964300-24",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 15.339259147644043,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964300.3258317,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964307.0626519,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964307.0628507,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964315.6560695,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 16.37085723876953
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.204826831817627,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964302.3790479,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964315.5691144,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964315.5692866,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964315.5695102,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.242882013320923
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 25,
+    "runid": "e6-1793964317-25",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 15.367521524429321,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964317.3142085,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964324.0387084,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964324.0388863,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964332.6728446,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 16.399619340896606
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.228139877319336,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964319.3720026,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964332.5852244,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964332.5853992,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964332.585615,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.263527631759644
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 26,
+    "runid": "e6-1793964334-26",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.16005253791809,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964334.3299096,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964341.0255232,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964341.0257409,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964347.4816964,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.192218542098999
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.020790100097656,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964336.388078,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964347.3941302,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964347.394305,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964347.394523,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.05788516998291
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 27,
+    "runid": "e6-1793964349-27",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.178255558013916,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964349.1406157,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964355.9554584,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964355.955675,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964362.310072,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.210479021072388
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.03918719291687,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964351.1976104,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964362.2220008,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964362.2221918,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964362.2224317,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.075751066207886
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 28,
+    "runid": "e6-1793964363-28",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 14.251253366470337,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964363.9661634,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964370.8722084,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964370.8724036,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964378.2090006,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 15.283555269241333
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.110597848892212,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964366.024835,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964378.1207108,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964378.1208873,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964378.121109,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.150664806365967
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 29,
+    "runid": "e6-1793964379-29",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.586078405380249,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964379.867482,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964386.941063,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964386.9412203,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964393.4441557,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.618565082550049
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.44668436050415,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964381.924047,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964393.3558652,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964393.3560376,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964393.3562598,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.484104871749878
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 30,
+    "runid": "e6-1793964395-30",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.461625337600708,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964395.1000183,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964402.2029436,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964402.2031074,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964408.553411,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.496230602264404
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.321858644485474,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964397.1576164,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964408.4645352,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964408.4647279,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964408.464973,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.358847618103027
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 31,
+    "runid": "e6-1793964410-31",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 15.076891660690308,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964410.2127423,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964417.0462728,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964417.046469,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964425.2813082,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 16.109240770339966
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.937745094299316,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964412.2690237,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964425.1918902,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964425.1920645,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964425.1922867,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.973476648330688
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 32,
+    "runid": "e6-1793964426-32",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 14.271458864212036,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964426.9377038,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964433.9240093,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964433.9241843,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964441.200653,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 15.304103374481201
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.130914688110352,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964428.995925,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964441.1119823,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964441.1121552,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964441.112374,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.167927026748657
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 33,
+    "runid": "e6-1793964442-33",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.52626347541809,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964442.8578212,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964449.8911326,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964449.8913143,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964455.3755848,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.558549165725708
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.388216495513916,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964444.913667,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964455.2869282,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964455.2871156,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964455.287337,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.425459623336792
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 34,
+    "runid": "e6-1793964456-34",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.217743635177612,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964457.0399776,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964464.1962907,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964464.1964593,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964470.24912,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.250005960464478
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.082968950271606,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964459.0920935,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964470.1603477,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964470.16054,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964470.1607697,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.120500564575195
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 35,
+    "runid": "e6-1793964471-35",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.742941617965698,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964471.9076817,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964479.1775112,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964479.1776922,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964485.6418512,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.77549433708191
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.60123062133789,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964473.9660528,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964485.5524108,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964485.552604,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964485.5528238,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.638683319091797
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 36,
+    "runid": "e6-1793964487-36",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 15.398098230361938,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964487.2993073,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964494.4879906,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964494.488156,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964502.6888897,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 16.43066430091858
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.264898777008057,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964489.3551834,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964502.6052144,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964502.605384,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964502.6056101,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.30171012878418
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 37,
+    "runid": "e6-1793964504-37",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.197885513305664,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964504.3486907,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964511.8212,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964511.8213649,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964517.538272,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.232208013534546
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.06483006477356,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964506.4032779,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964517.4533837,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964517.4535577,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964517.4537911,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.101689100265503
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 38,
+    "runid": "e6-1793964519-38",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 15.123850107192993,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964519.1981459,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964526.3232517,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964526.3234546,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964534.3135943,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 16.155832052230835
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.989931344985962,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964521.2546842,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964534.2297394,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964534.2299094,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964534.2301316,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.02755093574524
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 39,
+    "runid": "e6-1793964535-39",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 15.07854413986206,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964535.972845,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964543.2128928,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964543.213064,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964551.0424013,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 16.11039900779724
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.942991256713867,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964538.028306,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964550.956425,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964550.9566243,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964550.9568503,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.980314254760742
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 40,
+    "runid": "e6-1793964552-40",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.988614082336426,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964552.7015586,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964559.976928,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964559.9771063,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964565.6815174,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.021113872528076
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.85615348815918,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964554.7555218,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964565.596816,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964565.597005,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964565.5972416,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.891645431518555
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 41,
+    "runid": "e6-1793964567-41",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 15.143074989318848,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964567.3410814,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964574.6809177,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964574.6810796,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964582.475721,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 16.174532651901245
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.009827375411987,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964569.3958812,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964582.3909335,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964582.391106,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964582.391326,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.046679019927979
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 42,
+    "runid": "e6-1793964584-42",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.529250383377075,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964584.1362445,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964591.5575075,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964591.5576725,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964597.6565595,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.56210470199585
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.396892547607422,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964586.1895137,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964597.5715854,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964597.5717762,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964597.5719955,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.434990406036377
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 43,
+    "runid": "e6-1793964599-43",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.958266735076904,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964599.3127189,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964606.743663,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964606.7438283,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964612.26251,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.990593910217285
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.797468900680542,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964601.3952384,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964612.1776912,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964612.1778636,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964612.1780853,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.833643913269043
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 44,
+    "runid": "e6-1793964613-44",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.584553003311157,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964613.921325,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964621.4079611,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964621.4081764,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964627.4972253,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.617191076278687
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.446266174316406,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964615.9801972,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964627.411654,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964627.4118283,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964627.4120393,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.483652591705322
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 45,
+    "runid": "e6-1793964629-45",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.234206199645996,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964629.1557486,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964636.8350968,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964636.8352609,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964642.3811262,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.266851902008057
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.100955963134766,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964631.2102926,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964642.2965152,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964642.296688,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964642.2969081,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.137928485870361
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 46,
+    "runid": "e6-1793964643-46",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.163254022598267,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964644.043935,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964651.8002484,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964651.80043,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964657.1979773,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.196236848831177
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.032363653182983,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964646.0958126,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964657.113482,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964657.1136725,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964657.1138923,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.070752620697021
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 47,
+    "runid": "e6-1793964658-47",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.836162090301514,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964658.8563855,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964666.6328776,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964666.6330366,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964671.6838832,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.868890047073364
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.703027725219727,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964660.910879,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964671.5991297,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964671.5993161,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964671.5995297,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.74130392074585
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 48,
+    "runid": "e6-1793964673-48",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.91626763343811,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964673.3433425,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964680.9692855,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964680.96946,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964686.2504961,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.947935342788696
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.78248643875122,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964675.3975918,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964686.1652918,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964686.165463,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964686.165682,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.819228649139404
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 49,
+    "runid": "e6-1793964687-49",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.782176494598389,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964687.9072165,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964695.3483484,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964695.348519,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964700.6810803,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.814376831054688
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.645337104797363,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964689.965324,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964700.5957675,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964700.5959432,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964700.5961647,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.681680679321289
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 50,
+    "runid": "e6-1793964702-50",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.259616613388062,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964702.3396614,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964710.3384664,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964710.3386462,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964715.5904877,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.292361974716187
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.125816583633423,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964704.394862,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964715.5057583,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964715.5059323,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964715.5061612,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.163492918014526
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 51,
+    "runid": "e6-1793964717-51",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.945489168167114,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964717.2503178,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964724.8094535,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964724.8096569,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964730.1875472,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.977991580963135
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.811820983886719,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964719.305443,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964730.1023688,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964730.1025407,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964730.1027863,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.84814739227295
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 52,
+    "runid": "e6-1793964731-52",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 14.4201180934906,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964731.8469808,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964739.5169752,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964739.517168,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964746.2582078,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 15.452842950820923
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.284377098083496,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964733.902176,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964746.1718986,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964746.1720753,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964746.1722934,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.321857213973999
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 53,
+    "runid": "e6-1793964747-53",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.51804232597351,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964747.9172182,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964755.7323482,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964755.732513,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964761.4268577,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.549933671951294
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.382041692733765,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964749.9748347,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964761.342204,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964761.3423867,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964761.3426049,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.41821026802063
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 54,
+    "runid": "e6-1793964763-54",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.515753507614136,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964763.0885346,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964770.767758,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964770.7679524,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964776.5951085,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.548161506652832
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.38430142402649,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964765.140539,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964776.5100088,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964776.5101848,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964776.5104105,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.419970750808716
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 55,
+    "runid": "e6-1793964778-55",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.060465574264526,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964778.2575035,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964786.0313115,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964786.0314732,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964791.308999,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.093278169631958
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.93795394897461,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964780.3068483,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964791.2300498,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964791.23022,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964791.2304375,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.974286317825317
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 56,
+    "runid": "e6-1793964792-56",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.457091808319092,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964792.9709303,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964800.97192,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964800.9720843,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964806.419662,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.490687847137451
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.329880237579346,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964795.0269938,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964806.3416889,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964806.341864,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964806.34208,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.366734504699707
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 57,
+    "runid": "e6-1793964808-57",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.228965044021606,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964808.0800607,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964815.9601667,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964815.9603457,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964821.300728,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.261790037155151
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.104320049285889,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964810.1327214,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964821.2219024,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964821.222093,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964821.2225306,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.140695810317993
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 58,
+    "runid": "e6-1793964822-58",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.28846025466919,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964822.9612944,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964830.8627295,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964830.8629117,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964836.2412248,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.321236848831177
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.160061359405518,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964825.0183516,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964836.1633928,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964836.163569,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964836.1638124,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.196831464767456
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 59,
+    "runid": "e6-1793964837-59",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 14.784744501113892,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964837.9044592,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964845.834172,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964845.8344128,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964852.6803093,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 15.817023277282715
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.660167694091797,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964839.9571662,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964852.6025286,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964852.6027162,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964852.6029239,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.697606563568115
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 60,
+    "runid": "e6-1793964854-60",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.903350591659546,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964854.3373477,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964862.319082,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964862.31924,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964867.231983,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.935835838317871
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.774774312973022,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964856.3930986,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964867.1530976,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964867.1532712,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964867.1535037,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.81224536895752
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 61,
+    "runid": "e6-1793964868-61",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.412385702133179,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964868.8914177,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964877.031417,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964877.0315716,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964882.295099,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.44523549079895
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.284307479858398,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964870.9548578,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964882.2162607,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964882.2164516,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964882.216676,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.321729898452759
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 62,
+    "runid": "e6-1793964883-62",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 14.543487787246704,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964883.9567611,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964892.1396072,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964892.1397765,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964898.4891346,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 15.575897216796875
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.415546417236328,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964886.0109975,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964898.4115412,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964898.4117346,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964898.4119587,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.45140552520752
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 63,
+    "runid": "e6-1793964900-63",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.364100217819214,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964900.1495128,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964908.074555,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964908.0747266,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964913.504832,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.396473169326782
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.237198114395142,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964902.2041461,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964913.4265134,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964913.4267015,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964913.426922,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.27365493774414
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 64,
+    "runid": "e6-1793964915-64",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.38444447517395,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964915.1618667,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964923.2538908,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964923.2540545,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964928.5380135,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.41741681098938
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.257276058197021,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964917.2176893,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964928.460127,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964928.4603047,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964928.4605498,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.293558120727539
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 65,
+    "runid": "e6-1793964930-65",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.407169342041016,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964930.2004602,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964938.6739814,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964938.6741362,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964943.5993664,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.439562320709229
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.279326915740967,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964932.2560763,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964943.520652,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964943.5208273,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964943.5210562,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.315840482711792
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 66,
+    "runid": "e6-1793964945-66",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.189881563186646,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964945.257046,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964953.9502995,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964953.9504857,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964958.4385478,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.22356915473938
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.062501907348633,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964947.3121417,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964958.3599336,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964958.3601117,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964958.360331,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.100704193115234
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 67,
+    "runid": "e6-1793964960-67",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.292892456054688,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964960.098192,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964968.5646343,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964968.564834,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964973.3824923,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.327401399612427
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.165446519851685,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964962.153946,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964973.3042424,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964973.304414,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964973.3046503,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.201083898544312
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 68,
+    "runid": "e6-1793964974-68",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 15.364509344100952,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964975.0465672,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964983.4702423,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964983.4704738,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793964990.4012818,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 16.399836540222168
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.235349655151367,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964977.1014462,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793964990.3217673,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964990.321941,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793964990.3221574,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.271671533584595
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 69,
+    "runid": "e6-1793964991-69",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 15.257570266723633,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793964992.0638542,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965000.2378614,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965000.2380219,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965007.3132098,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 16.290199518203735
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.12932276725769,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793964994.1204703,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965007.2348804,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965007.235057,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965007.2352793,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.167658805847168
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 70,
+    "runid": "e6-1793965008-70",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.49232530593872,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793965008.9722185,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965017.240591,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965017.240821,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965022.456158,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.524670839309692
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.364835262298584,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793965011.0280716,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965022.3780575,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965022.378231,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965022.3784568,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.40094256401062
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 71,
+    "runid": "e6-1793965024-71",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.523640394210815,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793965024.1138852,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965032.181402,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965032.1815803,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965037.629028,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.555248498916626
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.396863222122192,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793965026.168772,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965037.5508034,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965037.5509813,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965037.5512064,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.432884216308594
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 72,
+    "runid": "e6-1793965039-72",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.39103364944458,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793965039.2847626,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965047.8118458,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965047.8120298,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965052.6671987,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.42336630821228
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.264276266098022,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793965041.3401906,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965052.5897343,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965052.5899074,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965052.5901215,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.301908731460571
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 73,
+    "runid": "e6-1793965054-73",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.368545293807983,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793965054.329083,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965062.7202353,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965062.720409,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965067.6887424,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.40162181854248
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.24266529083252,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793965056.3830142,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965067.6108868,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965067.6110637,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965067.6112955,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.28006386756897
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 74,
+    "runid": "e6-1793965069-74",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.085433959960938,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793965069.3488898,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965077.9003608,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965077.9005756,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965082.426095,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.118726968765259
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.958049774169922,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793965071.4037955,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965082.3471127,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965082.3472857,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965082.347509,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.99433445930481
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 75,
+    "runid": "e6-1793965084-75",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.43051266670227,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793965084.0846896,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965092.5292861,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965092.529449,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965097.506696,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.462937831878662
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.304006338119507,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793965086.1397965,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965097.4290645,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965097.4292552,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965097.4294763,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.34128999710083
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 76,
+    "runid": "e6-1793965099-76",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.475306749343872,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793965099.166193,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965107.780113,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965107.7802854,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965112.6329427,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.508944511413574
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.350733518600464,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793965101.219584,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965112.555189,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965112.5553615,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965112.5555913,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.387597799301147
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 77,
+    "runid": "e6-1793965114-77",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 15.359156370162964,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793965114.2924147,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965122.7166662,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965122.7168522,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965129.6426744,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 16.391833782196045
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.232696533203125,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793965116.3473675,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965129.5651762,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965129.5653532,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965129.5655687,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.270021915435791
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 78,
+    "runid": "e6-1793965131-78",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.224934816360474,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793965131.3018951,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965139.6737278,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965139.6738958,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965144.516932,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.256879329681396
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.099226474761963,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793965133.3552735,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965144.43975,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965144.439941,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965144.4401662,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.134972333908081
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 79,
+    "runid": "e6-1793965146-79",
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.013700246810913,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793965146.1740248,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965154.7949781,
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965154.7951665,
+            "state": "punching",
+            "peer": "<public-ip>:40000"
+          },
+          {
+            "t": 1793965159.1790943,
+            "state": "connected",
+            "peer": "<public-ip>:40000"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.046222925186157
+      },
+      "stderr": ""
+    },
+    "Cloud": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.887739181518555,
+        "role": "Cloud",
+        "events": [
+          {
+            "t": 1793965148.229,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793965159.101951,
+            "state": "peer_ready",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965159.102121,
+            "state": "punching",
+            "peer": "<public-ip>:7357"
+          },
+          {
+            "t": 1793965159.1023288,
+            "state": "connected",
+            "peer": "<public-ip>:7357"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.925119638442993
+      },
+      "stderr": ""
+    }
+  }
+]

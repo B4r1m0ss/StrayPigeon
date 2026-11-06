@@ -1,0 +1,274 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://github.com/B4r1m0ss/StrayPigeon/repro/schema.json",
+  "title": "StrayPigeon experiment records",
+  "description": "Schema for the per-run and summary JSON files shipped with the reproduction package. No packet captures and no mailbox credentials are included.",
+  "definitions": {
+    "file_result": {
+      "type": "object",
+      "properties": {
+        "bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "seconds": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "receive_seconds": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "minimum": 0
+        },
+        "received": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "sent": {
+          "type": "boolean"
+        },
+        "sha_match": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "source_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "target_sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "file_errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "state": {
+      "type": "array",
+      "description": "One protocol state transition, rendered as [session id, state].",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 2,
+      "maxItems": 2
+    },
+    "handoff_side": {
+      "type": "object",
+      "properties": {
+        "role": {
+          "enum": [
+            "initiator",
+            "responder",
+            "A",
+            "B",
+            "Cloud"
+          ]
+        },
+        "advertise": {
+          "type": "string"
+        },
+        "port": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 65535
+        },
+        "session_seconds": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "quic_seconds": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "total_seconds": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "connect_seconds": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "idle_seconds": {
+          "type": "number"
+        },
+        "states": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/state"
+          }
+        },
+        "errors": {
+          "type": "array"
+        },
+        "events": {
+          "type": "array"
+        },
+        "file": {
+          "$ref": "#/definitions/file_result"
+        }
+      },
+      "additionalProperties": true
+    },
+    "session_round": {
+      "type": "object",
+      "description": "One round of E1/E6: connect_s plus the four state timestamps.",
+      "properties": {
+        "round": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "runid": {
+          "type": "string"
+        },
+        "A": {
+          "$ref": "#/definitions/handoff_side"
+        },
+        "B": {
+          "$ref": "#/definitions/handoff_side"
+        },
+        "Cloud": {
+          "$ref": "#/definitions/handoff_side"
+        }
+      },
+      "required": [
+        "round"
+      ],
+      "additionalProperties": true
+    },
+    "e3_row": {
+      "type": "object",
+      "properties": {
+        "arm": {
+          "enum": [
+            "direct",
+            "repunch",
+            "newsocket"
+          ]
+        },
+        "i": {
+          "type": "integer"
+        },
+        "exit": {
+          "type": "integer"
+        },
+        "a": {
+          "$ref": "#/definitions/handoff_side"
+        },
+        "b": {
+          "$ref": "#/definitions/handoff_side"
+        }
+      },
+      "required": [
+        "arm",
+        "i",
+        "exit"
+      ],
+      "additionalProperties": true
+    },
+    "e5_netem_row": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "type": "string"
+        },
+        "size": {
+          "type": "integer"
+        },
+        "i": {
+          "type": "integer"
+        },
+        "exit": {
+          "type": "integer"
+        },
+        "file": {
+          "$ref": "#/definitions/file_result"
+        }
+      },
+      "required": [
+        "profile",
+        "size",
+        "exit"
+      ],
+      "additionalProperties": true
+    }
+  },
+  "properties": {
+    "experiment": {
+      "type": "string"
+    },
+    "topology": {
+      "type": "string"
+    },
+    "size": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "rounds": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "ok": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "sha_match": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "rows": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "by": {
+      "type": "object"
+    },
+    "summary": {
+      "type": "object"
+    },
+    "note": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true,
+  "oneOf": [
+    {
+      "type": "object"
+    },
+    {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/session_round"
+      }
+    }
+  ]
+}

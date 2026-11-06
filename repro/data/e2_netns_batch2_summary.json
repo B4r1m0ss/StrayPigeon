@@ -1,0 +1,736 @@
+{
+  "rows": [
+    {
+      "mode": "off",
+      "i": 1,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 10,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 11,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 12,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 13,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 14,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 15,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 16,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 17,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 18,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 19,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 2,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 20,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 3,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 4,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 5,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 6,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 7,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 8,
+      "exit": 124
+    },
+    {
+      "mode": "off",
+      "i": 9,
+      "exit": 124
+    },
+    {
+      "mode": "on",
+      "i": 1,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.12077045440673828,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 10,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.12132143974304199,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 11,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.12184977531433105,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 12,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.12084245681762695,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 13,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.12078666687011719,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 14,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.12080550193786621,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 15,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.12086629867553711,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 16,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.12073779106140137,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 17,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.12102103233337402,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 18,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.12092876434326172,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 19,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.1411135196685791,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 2,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.12077927589416504,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 20,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.12087583541870117,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 3,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.12072372436523438,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 4,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.1207132339477539,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 5,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.1412372589111328,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 6,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.12108087539672852,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 7,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.12088656425476074,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 8,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.1207726001739502,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    },
+    {
+      "mode": "on",
+      "i": 9,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.12115287780761719,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ]
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ]
+      }
+    }
+  ],
+  "summary": {
+    "off": {
+      "n": 20,
+      "closed": 0,
+      "file_received": 0
+    },
+    "on": {
+      "n": 20,
+      "closed": 0,
+      "file_received": 20
+    }
+  }
+}

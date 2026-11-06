@@ -1,0 +1,240 @@
+{
+  "rows": [
+    {
+      "profile": "rate100",
+      "size": 268435456,
+      "i": 1,
+      "exit": 0,
+      "file": {
+        "seconds": 23.237942457199097,
+        "bytes": 268435456,
+        "received": true
+      }
+    },
+    {
+      "profile": "rate100",
+      "size": 268435456,
+      "i": 2,
+      "exit": 0,
+      "file": {
+        "seconds": 23.276754140853882,
+        "bytes": 268435456,
+        "received": true
+      }
+    },
+    {
+      "profile": "rate100",
+      "size": 268435456,
+      "i": 3,
+      "exit": 0,
+      "file": {
+        "seconds": 23.24789023399353,
+        "bytes": 268435456,
+        "received": true
+      }
+    },
+    {
+      "profile": "rate100",
+      "size": 4194304,
+      "i": 1,
+      "exit": 0,
+      "file": {
+        "seconds": 0.3821678161621094,
+        "bytes": 4194304,
+        "received": true
+      }
+    },
+    {
+      "profile": "rate100",
+      "size": 4194304,
+      "i": 2,
+      "exit": 0,
+      "file": {
+        "seconds": 0.382190465927124,
+        "bytes": 4194304,
+        "received": true
+      }
+    },
+    {
+      "profile": "rate100",
+      "size": 4194304,
+      "i": 3,
+      "exit": 0,
+      "file": {
+        "seconds": 0.3820617198944092,
+        "bytes": 4194304,
+        "received": true
+      }
+    },
+    {
+      "profile": "rate100",
+      "size": 67108864,
+      "i": 1,
+      "exit": 0,
+      "file": {
+        "seconds": 5.816586971282959,
+        "bytes": 67108864,
+        "received": true
+      }
+    },
+    {
+      "profile": "rate100",
+      "size": 67108864,
+      "i": 2,
+      "exit": 0,
+      "file": {
+        "seconds": 5.811941146850586,
+        "bytes": 67108864,
+        "received": true
+      }
+    },
+    {
+      "profile": "rate100",
+      "size": 67108864,
+      "i": 3,
+      "exit": 0,
+      "file": {
+        "seconds": 5.814326763153076,
+        "bytes": 67108864,
+        "received": true
+      }
+    },
+    {
+      "profile": "rate100_d100_l1",
+      "size": 268435456,
+      "i": 1,
+      "exit": 1,
+      "file": {
+        "seconds": 40.01283383369446,
+        "bytes": 268435456,
+        "received": false
+      }
+    },
+    {
+      "profile": "rate100_d100_l1",
+      "size": 268435456,
+      "i": 2,
+      "exit": 1,
+      "file": {
+        "seconds": 40.01236009597778,
+        "bytes": 268435456,
+        "received": false
+      }
+    },
+    {
+      "profile": "rate100_d100_l1",
+      "size": 268435456,
+      "i": 3,
+      "exit": 1,
+      "file": {
+        "seconds": 40.01846933364868,
+        "bytes": 268435456,
+        "received": false
+      }
+    },
+    {
+      "profile": "rate100_d100_l1",
+      "size": 4194304,
+      "i": 1,
+      "exit": 1,
+      "file": {
+        "seconds": 40.002755641937256,
+        "bytes": 4194304,
+        "received": false
+      }
+    },
+    {
+      "profile": "rate100_d100_l1",
+      "size": 4194304,
+      "i": 2,
+      "exit": 1,
+      "file": {
+        "seconds": 40.0016827583313,
+        "bytes": 4194304,
+        "received": false
+      }
+    },
+    {
+      "profile": "rate100_d100_l1",
+      "size": 4194304,
+      "i": 3,
+      "exit": 1,
+      "file": {
+        "seconds": 40.010605335235596,
+        "bytes": 4194304,
+        "received": false
+      }
+    },
+    {
+      "profile": "rate100_d100_l1",
+      "size": 67108864,
+      "i": 1,
+      "exit": 1,
+      "file": {
+        "seconds": 40.01080775260925,
+        "bytes": 67108864,
+        "received": false
+      }
+    },
+    {
+      "profile": "rate100_d100_l1",
+      "size": 67108864,
+      "i": 2,
+      "exit": 1,
+      "file": {
+        "seconds": 40.00848031044006,
+        "bytes": 67108864,
+        "received": false
+      }
+    },
+    {
+      "profile": "rate100_d100_l1",
+      "size": 67108864,
+      "i": 3,
+      "exit": 1,
+      "file": {
+        "seconds": 40.00320363044739,
+        "bytes": 67108864,
+        "received": false
+      }
+    }
+  ],
+  "summary": {
+    "rate100/4194304": {
+      "n": 3,
+      "ok": 3,
+      "median_s": 0.3821678161621094,
+      "mbps": 87.80025575405008
+    },
+    "rate100/67108864": {
+      "n": 3,
+      "ok": 3,
+      "median_s": 5.814326763153076,
+      "mbps": 92.3358686000059
+    },
+    "rate100/268435456": {
+      "n": 3,
+      "ok": 3,
+      "median_s": 23.24789023399353,
+      "mbps": 92.373270278948
+    },
+    "rate100_d100_l1/4194304": {
+      "n": 0,
+      "ok": 0,
+      "median_s": null,
+      "mbps": null
+    },
+    "rate100_d100_l1/67108864": {
+      "n": 0,
+      "ok": 0,
+      "median_s": null,
+      "mbps": null
+    },
+    "rate100_d100_l1/268435456": {
+      "n": 0,
+      "ok": 0,
+      "median_s": null,
+      "mbps": null
+    }
+  }
+}

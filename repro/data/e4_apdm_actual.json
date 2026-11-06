@@ -1,0 +1,30 @@
+{
+  "mode": "symmetric2",
+  "apdm_early_exit": false,
+  "rounds": 1,
+  "result": {
+    "both_nat": "apdm",
+    "both_peer_nat": "apdm",
+    "punch_window_s": 8.0,
+    "punch_tx": true,
+    "punch_timeout": true,
+    "error": "E_NO_PATH",
+    "not_early_exit": "E_SYMMETRIC_NAT absent",
+    "p2p1_packets": {
+      "a": 129,
+      "b": 135
+    },
+    "sent_probes": {
+      "a": 120,
+      "b": 120
+    },
+    "punch_start_ts": {
+      "a": 1793904345.963,
+      "b": 1793904345.464
+    },
+    "punch_timeout_ts": {
+      "a": 1793904353.978,
+      "b": 1793904353.471
+    }
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "experiment": "E3 control: initiator switches to a NEW UDP socket, LAN topology (no NAT)",
+  "purpose": "separate an application-level refusal of a new peer address from NAT filtering",
+  "result": {
+    "rounds": 3,
+    "connected": 3
+  },
+  "contrast": {
+    "eim_new_socket": "0/20 (original E3 record)",
+    "eim_same_socket": "34/34",
+    "lan_new_socket": "3/3"
+  },
+  "rows": [
+    {
+      "topology": "lan (no NAT)",
+      "new_socket": true,
+      "connected": true,
+      "quic_seconds": 0.06190061569213867,
+      "file": {
+        "seconds": 0.14111542701721191,
+        "bytes": 4194304,
+        "received": true
+      },
+      "file_received_responder": true
+    },
+    {
+      "topology": "lan (no NAT)",
+      "new_socket": true,
+      "connected": true,
+      "quic_seconds": 0.06203579902648926,
+      "file": {
+        "seconds": 0.14107656478881836,
+        "bytes": 4194304,
+        "received": true
+      },
+      "file_received_responder": true
+    },
+    {
+      "topology": "lan (no NAT)",
+      "new_socket": true,
+      "connected": true,
+      "quic_seconds": 0.08312821388244629,
+      "file": {
+        "seconds": 0.1411576271057129,
+        "bytes": 4194304,
+        "received": true
+      },
+      "file_received_responder": true
+    }
+  ]
+}

@@ -1,0 +1,386 @@
+{
+  "rows": [
+    {
+      "mode": "off",
+      "i": 1,
+      "exit": 1,
+      "a": {
+        "file": {
+          "seconds": 40.01574110984802,
+          "bytes": 4194304,
+          "received": false
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ],
+          [
+            "initiator",
+            "closed"
+          ]
+        ],
+        "idle": 6.009700775146484
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 0,
+          "received": false
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ],
+          [
+            "responder",
+            "closed"
+          ]
+        ],
+        "idle": 6.010038614273071
+      }
+    },
+    {
+      "mode": "off",
+      "i": 2,
+      "exit": 1,
+      "a": {
+        "file": {
+          "seconds": 40.002432346343994,
+          "bytes": 4194304,
+          "received": false
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ],
+          [
+            "initiator",
+            "closed"
+          ]
+        ],
+        "idle": 6.0099875926971436
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 0,
+          "received": false
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ],
+          [
+            "responder",
+            "closed"
+          ]
+        ],
+        "idle": 6.009886741638184
+      }
+    },
+    {
+      "mode": "off",
+      "i": 3,
+      "exit": 1,
+      "a": {
+        "file": {
+          "seconds": 40.012285470962524,
+          "bytes": 4194304,
+          "received": false
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ],
+          [
+            "initiator",
+            "closed"
+          ]
+        ],
+        "idle": 6.010355710983276
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 0,
+          "received": false
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ],
+          [
+            "responder",
+            "closed"
+          ]
+        ],
+        "idle": 6.009236812591553
+      }
+    },
+    {
+      "mode": "off",
+      "i": 4,
+      "exit": 1,
+      "a": {
+        "file": {
+          "seconds": 40.006938219070435,
+          "bytes": 4194304,
+          "received": false
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ],
+          [
+            "initiator",
+            "closed"
+          ]
+        ],
+        "idle": 6.0099194049835205
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 0,
+          "received": false
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ],
+          [
+            "responder",
+            "closed"
+          ]
+        ],
+        "idle": 6.0095367431640625
+      }
+    },
+    {
+      "mode": "off",
+      "i": 5,
+      "exit": 1,
+      "a": {
+        "file": {
+          "seconds": 40.01266527175903,
+          "bytes": 4194304,
+          "received": false
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ],
+          [
+            "initiator",
+            "closed"
+          ]
+        ],
+        "idle": 6.009642124176025
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 0,
+          "received": false
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ],
+          [
+            "responder",
+            "closed"
+          ]
+        ],
+        "idle": 6.009557485580444
+      }
+    },
+    {
+      "mode": "on",
+      "i": 1,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.14136528968811035,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "idle": 6.009701728820801
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ],
+        "idle": 6.009850978851318
+      }
+    },
+    {
+      "mode": "on",
+      "i": 2,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.1414172649383545,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "idle": 6.009433746337891
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ],
+        "idle": 6.0092902183532715
+      }
+    },
+    {
+      "mode": "on",
+      "i": 3,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.14134454727172852,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "idle": 6.010326623916626
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ],
+        "idle": 6.009868144989014
+      }
+    },
+    {
+      "mode": "on",
+      "i": 4,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.14100933074951172,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "idle": 6.010119199752808
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ],
+        "idle": 6.010469913482666
+      }
+    },
+    {
+      "mode": "on",
+      "i": 5,
+      "exit": 0,
+      "a": {
+        "file": {
+          "seconds": 0.14185547828674316,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "idle": 6.01045036315918
+      },
+      "b": {
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        },
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ],
+        "idle": 6.0105462074279785
+      }
+    }
+  ],
+  "summary": {
+    "off": {
+      "n": 5,
+      "closed": 5,
+      "file_received": 0
+    },
+    "on": {
+      "n": 5,
+      "closed": 0,
+      "file_received": 5
+    }
+  }
+}

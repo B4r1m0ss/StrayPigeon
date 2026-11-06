@@ -15,10 +15,24 @@
 
 ## 当前状态
 
-- **公开仓库只包含应用源码**；内部实验脚本和测试套件不随公开仓库提供；
+- **公开仓库包含应用源码 + 论文复现数据包**（`repro/`：逐轮 JSON、汇总与校验脚本）；内部实验脚本和测试套件不随公开仓库提供；
 - **QUIC 直接建立在 legacy Session 打洞后的同一个 UDP socket 上**，不再二次打洞；
 - **QUIC PING 每 15 秒**，`idle_timeout=600s`；
 - **尚未做安全审计**；QUIC TLS 当前是 `CERT_NONE`，证书指纹固定（fingerprint pinning）还没实现，不能当作生产级端到端认证。
+
+## 复现数据
+
+论文（《复用邮箱信令的直连 P2P 通信：设计、实现与受控边界评估》）的逐轮实验记录放在
+[`repro/`](repro/)：25 个 JSON 加 `schema.json`、`validate.py`、`aggregate.py`。
+
+```bash
+cd repro
+python3 validate.py     # 校验数据自洽，并用数据重算论文里的关键数字
+python3 aggregate.py    # 从 rows 重新汇总中位数与成功率
+```
+
+数据已脱敏：邮箱、内网/公网地址、本地路径分别替换为 `<mailbox>`、`<lan-ip>`、
+`<public-ip>`、`<redacted-path>`；不含原始 pcap。
 
 ## 为什么叫 StrayPigeon
 

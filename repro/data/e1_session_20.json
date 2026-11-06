@@ -1,0 +1,1442 @@
+[
+  {
+    "round": 0,
+    "runid": "e1-1793906811-0",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 11.21843409538269,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793906813.0978563,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906824.3045676,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906824.3048093,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906824.3051374,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 12.250543117523193
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 13.181849002838135,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793906811.2070942,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906815.813761,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906815.8139791,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906824.3797798,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 14.213708877563477
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 1,
+    "runid": "e1-1793906825-1",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.438323497772217,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793906827.9091587,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906838.3356347,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906838.3358688,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906838.3362436,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.469040155410767
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.396313428878784,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793906826.0217693,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906830.0893958,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906830.0896504,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906838.4069386,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.427977323532104
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 2,
+    "runid": "e1-1793906839-2",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.420454740524292,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793906841.9407544,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906852.3499792,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906852.3502004,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906852.3505683,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.451847076416016
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.379831314086914,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793906840.0489566,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906844.100904,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906844.1012256,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906852.4176888,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.411616325378418
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 3,
+    "runid": "e1-1793906853-3",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.50864052772522,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793906855.9480894,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906866.4466426,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906866.447045,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906866.4473052,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.540283441543579
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.458279609680176,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793906854.0632074,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906857.6715496,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906857.671767,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906866.5111244,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.48981261253357
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 4,
+    "runid": "e1-1793906868-4",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.495605230331421,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793906870.0493898,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906880.5328767,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906880.5330772,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906880.5333648,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.526982069015503
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.44957971572876,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793906868.1551132,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906872.758431,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906872.758663,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906880.594212,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.479737997055054
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 5,
+    "runid": "e1-1793906882-5",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.098472833633423,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793906884.1385672,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906894.224874,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906894.2254426,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906894.2257526,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.130770683288574
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.060006141662598,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793906882.23436,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906886.937244,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906886.9374008,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906894.2837746,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.09211540222168
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 6,
+    "runid": "e1-1793906895-6",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.46513319015503,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793906897.8293817,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906908.2826962,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906908.282921,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906908.2832427,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.49581503868103
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.420332431793213,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793906895.9287226,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906900.6780353,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906900.678242,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906908.3385766,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.452624082565308
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 7,
+    "runid": "e1-1793906909-7",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.182161092758179,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793906911.8863528,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906922.0570722,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906922.057243,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906922.0577388,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.214290380477905
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.141900062561035,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793906909.9811673,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906913.6458457,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906913.6460304,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906922.1108527,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.173075914382935
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 8,
+    "runid": "e1-1793906923-8",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.682570934295654,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793906925.6524148,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906936.325963,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906936.3264618,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906936.3267605,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.713714599609375
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.632027626037598,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793906923.7576923,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906927.5924416,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906927.5926864,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906936.377443,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.66325330734253
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 9,
+    "runid": "e1-1793906937-9",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.22414493560791,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793906939.9325542,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906950.1455848,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906950.1457396,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906950.1459272,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.256580829620361
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.184258937835693,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793906938.0209537,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906941.8024666,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906941.8026972,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906950.1945448,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.215928792953491
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 10,
+    "runid": "e1-1793906951-10",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.28844666481018,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793906953.749662,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906964.0267303,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906964.0269756,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906964.027372,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.320809602737427
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.247908115386963,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793906951.836684,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906955.6393719,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906955.6395326,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906964.0739224,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.27979063987732
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 11,
+    "runid": "e1-1793906965-11",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.81270456314087,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793906967.635307,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906978.4359708,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906978.4362137,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906978.436501,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.84398341178894
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.775226831436157,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793906965.7145433,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906969.9675095,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906969.967802,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906978.4810665,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.806758403778076
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 12,
+    "runid": "e1-1793906980-12",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.117343187332153,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793906982.0462792,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906992.147329,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906992.1475348,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793906992.1478631,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.14853835105896
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.075805187225342,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793906980.1258492,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906983.9543736,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906983.954577,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906992.1910906,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.10697340965271
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 13,
+    "runid": "e1-1793906993-13",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.270350456237793,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793906995.7535574,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793907006.0124226,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793907006.0126846,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793907006.01299,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.30186915397644
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.229728698730469,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793906993.8354058,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793906997.7559807,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793906997.7562616,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793907006.0543633,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.262312173843384
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 14,
+    "runid": "e1-1793907007-14",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.88835620880127,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793907009.6190138,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793907020.4963098,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793907020.4965127,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793907020.4968102,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.920827627182007
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.845196008682251,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793907007.7019434,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793907011.6186857,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793907011.6188974,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793907020.5361912,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.877172470092773
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 15,
+    "runid": "e1-1793907022-15",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.376384735107422,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793907024.103754,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793907034.4674335,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793907034.4677389,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793907034.4680812,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.409356832504272
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.378612995147705,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793907022.1382697,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793907026.0537205,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793907026.0539372,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793907034.5060167,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.409971714019775
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 16,
+    "runid": "e1-1793907036-16",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.39455246925354,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793907038.0700314,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793907048.4532995,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793907048.4535558,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793907048.4538891,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.426742315292358
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.351257801055908,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793907036.151281,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793907040.594108,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793907040.5943367,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793907048.490225,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.382730484008789
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 17,
+    "runid": "e1-1793907050-17",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.417378902435303,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793907052.0622902,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793907062.4673545,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793907062.4675317,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793907062.467851,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.449334621429443
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.380991458892822,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793907050.132591,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793907054.6708734,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793907054.6711147,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793907062.5030692,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.412334442138672
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 18,
+    "runid": "e1-1793907064-18",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 7.008607387542725,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793907066.0731018,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793907073.0697927,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793907073.0699692,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793907073.0702407,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 8.040212392807007
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 8.967885732650757,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793907064.148422,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793907068.7623007,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793907068.7625213,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793907073.1041725,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 10.000190496444702
+      },
+      "stderr": ""
+    }
+  },
+  {
+    "round": 19,
+    "runid": "e1-1793907074-19",
+    "A": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 10.485398054122925,
+        "role": "A",
+        "events": [
+          {
+            "t": 1793907076.6722777,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793907087.146453,
+            "state": "peer_ready",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793907087.1467934,
+            "state": "punching",
+            "peer": "<public-ip>:30338"
+          },
+          {
+            "t": 1793907087.147129,
+            "state": "connected",
+            "peer": "<lan-ip>:41101"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 11.51769495010376
+      },
+      "stderr": ""
+    },
+    "B": {
+      "exit": 0,
+      "result": {
+        "event": "result",
+        "ok": true,
+        "connect_s": 12.441929578781128,
+        "role": "B",
+        "events": [
+          {
+            "t": 1793907074.7485619,
+            "state": "bound",
+            "peer": "peer"
+          },
+          {
+            "t": 1793907078.7815022,
+            "state": "peer_ready",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793907078.7816546,
+            "state": "punching",
+            "peer": "<public-ip>:18835"
+          },
+          {
+            "t": 1793907087.1797028,
+            "state": "connected",
+            "peer": "<lan-ip>:41100"
+          }
+        ],
+        "done": true,
+        "elapsed_s": 13.474517583847046
+      },
+      "stderr": ""
+    }
+  }
+]

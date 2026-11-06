@@ -1,0 +1,43 @@
+{
+  "note": "connect time is measured per side from its own process start; the two medians are not directly comparable — compare connected_wallclock_skew_median_s instead",
+  "groups": {
+    "E1": {
+      "rounds": 100,
+      "sides": {
+        "A": {
+          "n": 100,
+          "mail_wait_median_s": 10.4,
+          "post_mail_median_s": 0.0,
+          "connect_median_s": 10.41
+        },
+        "B": {
+          "n": 100,
+          "mail_wait_median_s": 4.71,
+          "post_mail_median_s": 7.71,
+          "connect_median_s": 12.38
+        }
+      },
+      "probe_start_skew_median_s": 1.989,
+      "connected_wallclock_skew_median_s": 0.028
+    },
+    "E6": {
+      "rounds": 100,
+      "sides": {
+        "Cloud": {
+          "n": 100,
+          "mail_wait_median_s": 11.21,
+          "post_mail_median_s": 0.0,
+          "connect_median_s": 11.23
+        },
+        "B": {
+          "n": 100,
+          "mail_wait_median_s": 7.01,
+          "post_mail_median_s": 6.6,
+          "connect_median_s": 13.37
+        }
+      },
+      "probe_start_skew_median_s": 2.055,
+      "connected_wallclock_skew_median_s": -0.084
+    }
+  }
+}

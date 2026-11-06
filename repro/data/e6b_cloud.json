@@ -1,0 +1,771 @@
+{
+  "experiment": "E6b: cloud 163 (public) -> B 126 behind NAT, 1 MiB QUIC file transfer",
+  "topology": "cloud <public-ip> -> debian4TestB behind libvirt NAT; signaling over real 163/126 mail",
+  "size": 1048576,
+  "rounds": 6,
+  "ok": 6,
+  "sha_match": 6,
+  "note": "success is judged on the receiver (received + SHA); the sender's file_finished signal timed out in one round, which is a stream-teardown artifact, not a failed transfer",
+  "rows": [
+    {
+      "round": 0,
+      "size": 1048576,
+      "run_id": "1793976276-20901f",
+      "topology": "cloud->LAN behind NAT",
+      "Cloud": {
+        "role": "initiator",
+        "side": "vm",
+        "my_email_domain": "163.com",
+        "port": 40000,
+        "advertise": "<public-ip>",
+        "peer_addr": [
+          "<public-ip>",
+          57745
+        ],
+        "session_seconds": 13.047,
+        "quic_seconds": 0.704,
+        "connect_seconds": 13.751,
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "events": [
+          {
+            "kind": "state",
+            "state": "bound",
+            "name": "<mailbox>",
+            "peer": "<mailbox>"
+          },
+          {
+            "kind": "state",
+            "state": "peer_ready",
+            "peer": "<public-ip>:57745",
+            "nat": "eim",
+            "candidates": 3
+          },
+          {
+            "kind": "state",
+            "state": "punching",
+            "peer": "<public-ip>:57745",
+            "candidates": 3,
+            "window": 15.0
+          },
+          {
+            "kind": "state",
+            "state": "quic_ready",
+            "peer": "<public-ip>:57745",
+            "sid": "331ccac6b5e8587faf2169a9230cfd8e"
+          }
+        ],
+        "file": {
+          "bytes": 1048576,
+          "seconds": 60.620298862457275,
+          "sent": true,
+          "file_errors": [],
+          "source_sha256": "9ac035d5a62346894eefc5dfc813bdb06f667f0623b4b2497c7c7e807b1ff455",
+          "received": null,
+          "sha_match": null
+        }
+      },
+      "B": {
+        "role": "responder",
+        "side": "vm",
+        "my_email_domain": "126.com",
+        "port": 40000,
+        "advertise": "<lan-ip>",
+        "peer_addr": [
+          "<public-ip>",
+          40000
+        ],
+        "session_seconds": 14.372,
+        "quic_seconds": 0.067,
+        "connect_seconds": 14.439,
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "events": [
+          {
+            "kind": "state",
+            "state": "bound",
+            "name": "<mailbox>",
+            "peer": "<mailbox>"
+          },
+          {
+            "kind": "state",
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000",
+            "nat": "unknown",
+            "candidates": 2
+          },
+          {
+            "kind": "state",
+            "state": "punching",
+            "peer": "<public-ip>:40000",
+            "candidates": 2,
+            "window": 15.0
+          },
+          {
+            "kind": "state",
+            "state": "quic_ready",
+            "peer": "<public-ip>:40000",
+            "sid": "331ccac6b5e8587faf2169a9230cfd8e"
+          }
+        ],
+        "file": {
+          "bytes": 1048576,
+          "seconds": null,
+          "receive_seconds": 57.3796,
+          "received": true,
+          "target_sha256": "9ac035d5a62346894eefc5dfc813bdb06f667f0623b4b2497c7c7e807b1ff455",
+          "sha_match": null
+        }
+      },
+      "ok": true,
+      "sha_match": true,
+      "source_file": "e6b_smoke3.json"
+    },
+    {
+      "round": 0,
+      "size": 1048576,
+      "run_id": "1793976367-24e18c",
+      "topology": "cloud->LAN behind NAT",
+      "Cloud": {
+        "role": "initiator",
+        "side": "vm",
+        "my_email_domain": "163.com",
+        "port": 40000,
+        "advertise": "<public-ip>",
+        "peer_addr": [
+          "<public-ip>",
+          57745
+        ],
+        "session_seconds": 10.685,
+        "quic_seconds": 0.403,
+        "connect_seconds": 11.088,
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "events": [
+          {
+            "kind": "state",
+            "state": "bound",
+            "name": "<mailbox>",
+            "peer": "<mailbox>"
+          },
+          {
+            "kind": "state",
+            "state": "peer_ready",
+            "peer": "<public-ip>:57745",
+            "nat": "eim",
+            "candidates": 3
+          },
+          {
+            "kind": "state",
+            "state": "punching",
+            "peer": "<public-ip>:57745",
+            "candidates": 3,
+            "window": 15.0
+          },
+          {
+            "kind": "state",
+            "state": "quic_ready",
+            "peer": "<public-ip>:57745",
+            "sid": "7b6dc3667c6fb50a7d82aa39141dae7e"
+          }
+        ],
+        "file": {
+          "bytes": 1048576,
+          "seconds": 180.01225543022156,
+          "sent": false,
+          "file_errors": [],
+          "source_sha256": "e9023947152f8bbecc455d99efb3b5252de4d6a2c2a1512a1f32839168a2bae4",
+          "received": null,
+          "sha_match": null
+        }
+      },
+      "B": {
+        "role": "responder",
+        "side": "vm",
+        "my_email_domain": "126.com",
+        "port": 40000,
+        "advertise": "<lan-ip>",
+        "peer_addr": [
+          "<public-ip>",
+          40000
+        ],
+        "session_seconds": 12.01,
+        "quic_seconds": 0.07,
+        "connect_seconds": 12.08,
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "events": [
+          {
+            "kind": "state",
+            "state": "bound",
+            "name": "<mailbox>",
+            "peer": "<mailbox>"
+          },
+          {
+            "kind": "state",
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000",
+            "nat": "eim",
+            "candidates": 3
+          },
+          {
+            "kind": "state",
+            "state": "punching",
+            "peer": "<public-ip>:40000",
+            "candidates": 3,
+            "window": 15.0
+          },
+          {
+            "kind": "state",
+            "state": "quic_ready",
+            "peer": "<public-ip>:40000",
+            "sid": "7b6dc3667c6fb50a7d82aa39141dae7e"
+          }
+        ],
+        "file": {
+          "bytes": 1048576,
+          "seconds": null,
+          "receive_seconds": 53.4147,
+          "received": true,
+          "target_sha256": "e9023947152f8bbecc455d99efb3b5252de4d6a2c2a1512a1f32839168a2bae4",
+          "sha_match": null
+        }
+      },
+      "ok": false,
+      "sha_match": true,
+      "source_file": "e6b_rep.json"
+    },
+    {
+      "round": 1,
+      "size": 1048576,
+      "run_id": "1793976562-3052c2",
+      "topology": "cloud->LAN behind NAT",
+      "Cloud": {
+        "role": "initiator",
+        "side": "vm",
+        "my_email_domain": "163.com",
+        "port": 40000,
+        "advertise": "<public-ip>",
+        "peer_addr": [
+          "<public-ip>",
+          23462
+        ],
+        "session_seconds": 12.735,
+        "quic_seconds": 0.062,
+        "connect_seconds": 12.797,
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "events": [
+          {
+            "kind": "state",
+            "state": "bound",
+            "name": "<mailbox>",
+            "peer": "<mailbox>"
+          },
+          {
+            "kind": "state",
+            "state": "peer_ready",
+            "peer": "<public-ip>:23462",
+            "nat": "eim",
+            "candidates": 3
+          },
+          {
+            "kind": "state",
+            "state": "punching",
+            "peer": "<public-ip>:23462",
+            "candidates": 3,
+            "window": 15.0
+          },
+          {
+            "kind": "state",
+            "state": "quic_ready",
+            "peer": "<public-ip>:23462",
+            "sid": "e2b682201ef255999d6fe8b7c98cbbc2"
+          }
+        ],
+        "file": {
+          "bytes": 1048576,
+          "seconds": 1.5867290496826172,
+          "sent": true,
+          "file_errors": [],
+          "source_sha256": "f3d4bc3dc86784435b0d40a9508db70ebef059a3110a94a04f003b3a85a78d19",
+          "received": null,
+          "sha_match": null
+        }
+      },
+      "B": {
+        "role": "responder",
+        "side": "vm",
+        "my_email_domain": "126.com",
+        "port": 40000,
+        "advertise": "<lan-ip>",
+        "peer_addr": [
+          "<public-ip>",
+          40000
+        ],
+        "session_seconds": 13.978,
+        "quic_seconds": 0.056,
+        "connect_seconds": 14.034,
+        "states": [
+          [
+            "responder",
+            "connected"
+          ],
+          [
+            "responder",
+            "closed"
+          ]
+        ],
+        "errors": [],
+        "events": [
+          {
+            "kind": "state",
+            "state": "bound",
+            "name": "<mailbox>",
+            "peer": "<mailbox>"
+          },
+          {
+            "kind": "state",
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000",
+            "nat": "unknown",
+            "candidates": 2
+          },
+          {
+            "kind": "state",
+            "state": "punching",
+            "peer": "<public-ip>:40000",
+            "candidates": 2,
+            "window": 15.0
+          },
+          {
+            "kind": "state",
+            "state": "quic_ready",
+            "peer": "<public-ip>:40000",
+            "sid": "e2b682201ef255999d6fe8b7c98cbbc2"
+          }
+        ],
+        "file": {
+          "bytes": 1048576,
+          "seconds": null,
+          "receive_seconds": 1.5728,
+          "received": true,
+          "target_sha256": "f3d4bc3dc86784435b0d40a9508db70ebef059a3110a94a04f003b3a85a78d19",
+          "sha_match": null
+        }
+      },
+      "ok": true,
+      "sha_match": true,
+      "source_file": "e6b_rep.json"
+    },
+    {
+      "round": 0,
+      "size": 1048576,
+      "run_id": "1793976595-7b89d6",
+      "topology": "cloud->LAN behind NAT",
+      "Cloud": {
+        "role": "initiator",
+        "side": "vm",
+        "my_email_domain": "163.com",
+        "port": 40000,
+        "advertise": "<public-ip>",
+        "peer_addr": [
+          "<public-ip>",
+          23462
+        ],
+        "session_seconds": 11.079,
+        "quic_seconds": 0.081,
+        "connect_seconds": 11.16,
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "events": [
+          {
+            "kind": "state",
+            "state": "bound",
+            "name": "<mailbox>",
+            "peer": "<mailbox>"
+          },
+          {
+            "kind": "state",
+            "state": "peer_ready",
+            "peer": "<public-ip>:23462",
+            "nat": "eim",
+            "candidates": 3
+          },
+          {
+            "kind": "state",
+            "state": "punching",
+            "peer": "<public-ip>:23462",
+            "candidates": 3,
+            "window": 15.0
+          },
+          {
+            "kind": "state",
+            "state": "quic_ready",
+            "peer": "<public-ip>:23462",
+            "sid": "6b474a72c901c1fb6acb89d090e656cc"
+          }
+        ],
+        "file": {
+          "bytes": 1048576,
+          "seconds": 1.7074236869812012,
+          "sent": true,
+          "file_errors": [],
+          "source_sha256": "c88964b6fc730e29d8aeaa831f082c6c5fc964ca6fb65be96d686bb9f32e0a1b",
+          "received": null,
+          "sha_match": null
+        }
+      },
+      "B": {
+        "role": "responder",
+        "side": "vm",
+        "my_email_domain": "126.com",
+        "port": 40000,
+        "advertise": "<lan-ip>",
+        "peer_addr": [
+          "<public-ip>",
+          40000
+        ],
+        "session_seconds": 12.297,
+        "quic_seconds": 0.074,
+        "connect_seconds": 12.371,
+        "states": [
+          [
+            "responder",
+            "connected"
+          ],
+          [
+            "responder",
+            "closed"
+          ]
+        ],
+        "errors": [],
+        "events": [
+          {
+            "kind": "state",
+            "state": "bound",
+            "name": "<mailbox>",
+            "peer": "<mailbox>"
+          },
+          {
+            "kind": "state",
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000",
+            "nat": "eim",
+            "candidates": 3
+          },
+          {
+            "kind": "state",
+            "state": "punching",
+            "peer": "<public-ip>:40000",
+            "candidates": 3,
+            "window": 15.0
+          },
+          {
+            "kind": "state",
+            "state": "quic_ready",
+            "peer": "<public-ip>:40000",
+            "sid": "6b474a72c901c1fb6acb89d090e656cc"
+          }
+        ],
+        "file": {
+          "bytes": 1048576,
+          "seconds": null,
+          "receive_seconds": 1.6913,
+          "received": true,
+          "target_sha256": "c88964b6fc730e29d8aeaa831f082c6c5fc964ca6fb65be96d686bb9f32e0a1b",
+          "sha_match": null
+        }
+      },
+      "ok": true,
+      "sha_match": true,
+      "source_file": "e6b_cloud_1m.json"
+    },
+    {
+      "round": 1,
+      "size": 1048576,
+      "run_id": "1793976620-c740f2",
+      "topology": "cloud->LAN behind NAT",
+      "Cloud": {
+        "role": "initiator",
+        "side": "vm",
+        "my_email_domain": "163.com",
+        "port": 40000,
+        "advertise": "<public-ip>",
+        "peer_addr": [
+          "<public-ip>",
+          23462
+        ],
+        "session_seconds": 12.743,
+        "quic_seconds": 0.082,
+        "connect_seconds": 12.825,
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "events": [
+          {
+            "kind": "state",
+            "state": "bound",
+            "name": "<mailbox>",
+            "peer": "<mailbox>"
+          },
+          {
+            "kind": "state",
+            "state": "peer_ready",
+            "peer": "<public-ip>:23462",
+            "nat": "eim",
+            "candidates": 3
+          },
+          {
+            "kind": "state",
+            "state": "punching",
+            "peer": "<public-ip>:23462",
+            "candidates": 3,
+            "window": 15.0
+          },
+          {
+            "kind": "state",
+            "state": "quic_ready",
+            "peer": "<public-ip>:23462",
+            "sid": "e173fcf9da15678d4e19c138c7ccf124"
+          }
+        ],
+        "file": {
+          "bytes": 1048576,
+          "seconds": 1.7072949409484863,
+          "sent": true,
+          "file_errors": [],
+          "source_sha256": "58512e4f6b4560c3fc66f5e567e438cc09b2d18496c425930ba0d3d97e24e032",
+          "received": null,
+          "sha_match": null
+        }
+      },
+      "B": {
+        "role": "responder",
+        "side": "vm",
+        "my_email_domain": "126.com",
+        "port": 40000,
+        "advertise": "<lan-ip>",
+        "peer_addr": [
+          "<public-ip>",
+          40000
+        ],
+        "session_seconds": 13.949,
+        "quic_seconds": 0.076,
+        "connect_seconds": 14.025,
+        "states": [
+          [
+            "responder",
+            "connected"
+          ],
+          [
+            "responder",
+            "closed"
+          ]
+        ],
+        "errors": [],
+        "events": [
+          {
+            "kind": "state",
+            "state": "bound",
+            "name": "<mailbox>",
+            "peer": "<mailbox>"
+          },
+          {
+            "kind": "state",
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000",
+            "nat": "unknown",
+            "candidates": 2
+          },
+          {
+            "kind": "state",
+            "state": "punching",
+            "peer": "<public-ip>:40000",
+            "candidates": 2,
+            "window": 15.0
+          },
+          {
+            "kind": "state",
+            "state": "quic_ready",
+            "peer": "<public-ip>:40000",
+            "sid": "e173fcf9da15678d4e19c138c7ccf124"
+          }
+        ],
+        "file": {
+          "bytes": 1048576,
+          "seconds": null,
+          "receive_seconds": 1.6901,
+          "received": true,
+          "target_sha256": "58512e4f6b4560c3fc66f5e567e438cc09b2d18496c425930ba0d3d97e24e032",
+          "sha_match": null
+        }
+      },
+      "ok": true,
+      "sha_match": true,
+      "source_file": "e6b_cloud_1m.json"
+    },
+    {
+      "round": 2,
+      "size": 1048576,
+      "run_id": "1793976645-3e2c79",
+      "topology": "cloud->LAN behind NAT",
+      "Cloud": {
+        "role": "initiator",
+        "side": "vm",
+        "my_email_domain": "163.com",
+        "port": 40000,
+        "advertise": "<public-ip>",
+        "peer_addr": [
+          "<public-ip>",
+          23462
+        ],
+        "session_seconds": 11.155,
+        "quic_seconds": 0.082,
+        "connect_seconds": 11.236,
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "events": [
+          {
+            "kind": "state",
+            "state": "bound",
+            "name": "<mailbox>",
+            "peer": "<mailbox>"
+          },
+          {
+            "kind": "state",
+            "state": "peer_ready",
+            "peer": "<public-ip>:23462",
+            "nat": "eim",
+            "candidates": 3
+          },
+          {
+            "kind": "state",
+            "state": "punching",
+            "peer": "<public-ip>:23462",
+            "candidates": 3,
+            "window": 15.0
+          },
+          {
+            "kind": "state",
+            "state": "quic_ready",
+            "peer": "<public-ip>:23462",
+            "sid": "9caf649a35e31d2a87cca7c210f78006"
+          }
+        ],
+        "file": {
+          "bytes": 1048576,
+          "seconds": 1.6870858669281006,
+          "sent": true,
+          "file_errors": [],
+          "source_sha256": "cf4b070dbbfb8079b28fe5f3b2d6feb7eb2da8b1921c18d862c871f0303fc83a",
+          "received": null,
+          "sha_match": null
+        }
+      },
+      "B": {
+        "role": "responder",
+        "side": "vm",
+        "my_email_domain": "126.com",
+        "port": 40000,
+        "advertise": "<lan-ip>",
+        "peer_addr": [
+          "<public-ip>",
+          40000
+        ],
+        "session_seconds": 12.372,
+        "quic_seconds": 0.074,
+        "connect_seconds": 12.446,
+        "states": [
+          [
+            "responder",
+            "connected"
+          ],
+          [
+            "responder",
+            "closed"
+          ]
+        ],
+        "errors": [],
+        "events": [
+          {
+            "kind": "state",
+            "state": "bound",
+            "name": "<mailbox>",
+            "peer": "<mailbox>"
+          },
+          {
+            "kind": "state",
+            "state": "peer_ready",
+            "peer": "<public-ip>:40000",
+            "nat": "eim",
+            "candidates": 3
+          },
+          {
+            "kind": "state",
+            "state": "punching",
+            "peer": "<public-ip>:40000",
+            "candidates": 3,
+            "window": 15.0
+          },
+          {
+            "kind": "state",
+            "state": "quic_ready",
+            "peer": "<public-ip>:40000",
+            "sid": "9caf649a35e31d2a87cca7c210f78006"
+          }
+        ],
+        "file": {
+          "bytes": 1048576,
+          "seconds": null,
+          "receive_seconds": 1.6705,
+          "received": true,
+          "target_sha256": "cf4b070dbbfb8079b28fe5f3b2d6feb7eb2da8b1921c18d862c871f0303fc83a",
+          "sha_match": null
+        }
+      },
+      "ok": true,
+      "sha_match": true,
+      "source_file": "e6b_cloud_1m.json"
+    }
+  ]
+}

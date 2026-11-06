@@ -1,0 +1,480 @@
+{
+  "experiment": "E5 netem decomposition: which part of 100 ms + 1% loss turns into a timeout",
+  "harness": "e3test/scripts/netns_testbed.sh lan; nat_experiment.py file wait defaults to 40 s",
+  "finding": "handshake unaffected; delay-only and loss-only are cheap; the delay x loss interaction needs 28.7-65.2 s for 4 MiB, so the 40 s harness timeout reports 0/3",
+  "rounds": 13,
+  "rows": [
+    {
+      "condition": "rate100",
+      "netem_a": "rate 100mbit",
+      "netem_b": "",
+      "size": 4194304,
+      "returncode": 0,
+      "a": {
+        "role": "initiator",
+        "advertise": "<lan-ip>",
+        "port": 40000,
+        "session_seconds": 0.5022218227386475,
+        "quic_seconds": 0.06184530258178711,
+        "total_seconds": 0.5640671253204346,
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "idle_seconds": 0.0,
+        "file": {
+          "seconds": 0.38202452659606934,
+          "bytes": 4194304,
+          "received": true
+        }
+      },
+      "b": {
+        "role": "responder",
+        "advertise": "<lan-ip>",
+        "port": 40000,
+        "session_seconds": 0.5029232501983643,
+        "quic_seconds": 0.06880640983581543,
+        "total_seconds": 0.5717296600341797,
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "idle_seconds": 0.0,
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        }
+      }
+    },
+    {
+      "condition": "rate100_d100",
+      "netem_a": "rate 100mbit delay 100ms",
+      "netem_b": "rate 100mbit delay 100ms",
+      "size": 4194304,
+      "returncode": 0,
+      "a": {
+        "role": "initiator",
+        "advertise": "<lan-ip>",
+        "port": 40000,
+        "session_seconds": 0.5025818347930908,
+        "quic_seconds": 0.2419581413269043,
+        "total_seconds": 0.7445399761199951,
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "idle_seconds": 0.0,
+        "file": {
+          "seconds": 2.068617343902588,
+          "bytes": 4194304,
+          "received": true
+        }
+      },
+      "b": {
+        "role": "responder",
+        "advertise": "<lan-ip>",
+        "port": 40000,
+        "session_seconds": 0.6017205715179443,
+        "quic_seconds": 0.05543327331542969,
+        "total_seconds": 0.657153844833374,
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "idle_seconds": 0.0,
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        }
+      }
+    },
+    {
+      "condition": "rate100_l1",
+      "netem_a": "rate 100mbit loss 1%",
+      "netem_b": "rate 100mbit loss 1%",
+      "size": 4194304,
+      "returncode": 0,
+      "a": {
+        "role": "initiator",
+        "advertise": "<lan-ip>",
+        "port": 40000,
+        "session_seconds": 0.5027496814727783,
+        "quic_seconds": 0.06122875213623047,
+        "total_seconds": 0.5639784336090088,
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "idle_seconds": 0.0,
+        "file": {
+          "seconds": 0.6638529300689697,
+          "bytes": 4194304,
+          "received": true
+        }
+      },
+      "b": {
+        "role": "responder",
+        "advertise": "<lan-ip>",
+        "port": 40000,
+        "session_seconds": 0.5108516216278076,
+        "quic_seconds": 0.06607747077941895,
+        "total_seconds": 0.5769290924072266,
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "idle_seconds": 0.0,
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        }
+      }
+    },
+    {
+      "condition": "rate100_d100_l1",
+      "netem_a": "rate 100mbit delay 100ms loss 1%",
+      "netem_b": "rate 100mbit delay 100ms loss 1%",
+      "size": 4194304,
+      "returncode": 0,
+      "a": {
+        "role": "initiator",
+        "advertise": "<lan-ip>",
+        "port": 40000,
+        "session_seconds": 0.502899169921875,
+        "quic_seconds": 0.2629868984222412,
+        "total_seconds": 0.7658860683441162,
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "idle_seconds": 0.0,
+        "file": {
+          "seconds": 60.04778981208801,
+          "bytes": 4194304,
+          "received": true
+        }
+      },
+      "b": {
+        "role": "responder",
+        "advertise": "<lan-ip>",
+        "port": 40000,
+        "session_seconds": 0.5966699123382568,
+        "quic_seconds": 0.06696033477783203,
+        "total_seconds": 0.6636302471160889,
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "idle_seconds": 0.0,
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        }
+      }
+    },
+    {
+      "condition": "rate100_d20_l1",
+      "netem_a": "rate 100mbit delay 20ms loss 1%",
+      "netem_b": "rate 100mbit delay 20ms loss 1%",
+      "size": 4194304,
+      "returncode": 0,
+      "a": {
+        "role": "initiator",
+        "advertise": "<lan-ip>",
+        "port": 40000,
+        "session_seconds": 0.5026192665100098,
+        "quic_seconds": 0.20265603065490723,
+        "total_seconds": 0.705275297164917,
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "idle_seconds": 0.0,
+        "file": {
+          "seconds": 12.209835290908813,
+          "bytes": 4194304,
+          "received": true
+        }
+      },
+      "b": {
+        "role": "responder",
+        "advertise": "<lan-ip>",
+        "port": 40000,
+        "session_seconds": 0.5187010765075684,
+        "quic_seconds": 0.07561492919921875,
+        "total_seconds": 0.5943160057067871,
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "idle_seconds": 0.0,
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        }
+      }
+    },
+    {
+      "condition": "rate100_d100_l1_1m",
+      "netem_a": "rate 100mbit delay 100ms loss 1%",
+      "netem_b": "rate 100mbit delay 100ms loss 1%",
+      "size": 1048576,
+      "returncode": 0,
+      "a": {
+        "role": "initiator",
+        "advertise": "<lan-ip>",
+        "port": 40000,
+        "session_seconds": 1.0025851726531982,
+        "quic_seconds": 0.3020617961883545,
+        "total_seconds": 1.3046469688415527,
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "idle_seconds": 0.0,
+        "file": {
+          "seconds": 2.3699657917022705,
+          "bytes": 1048576,
+          "received": true
+        }
+      },
+      "b": {
+        "role": "responder",
+        "advertise": "<lan-ip>",
+        "port": 40000,
+        "session_seconds": 1.1028094291687012,
+        "quic_seconds": 0.10139822959899902,
+        "total_seconds": 1.2042076587677002,
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "idle_seconds": 0.0,
+        "file": {
+          "seconds": null,
+          "bytes": 1048576,
+          "received": true
+        }
+      }
+    },
+    {
+      "condition": "rate100_d100_l1_256k",
+      "netem_a": "rate 100mbit delay 100ms loss 1%",
+      "netem_b": "rate 100mbit delay 100ms loss 1%",
+      "size": 262144,
+      "returncode": 0,
+      "a": {
+        "role": "initiator",
+        "advertise": "<lan-ip>",
+        "port": 40000,
+        "session_seconds": 0.7032272815704346,
+        "quic_seconds": 0.22271347045898438,
+        "total_seconds": 0.925940752029419,
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "idle_seconds": 0.0,
+        "file": {
+          "seconds": 6.165909767150879,
+          "bytes": 262144,
+          "received": true
+        }
+      },
+      "b": {
+        "role": "responder",
+        "advertise": "<lan-ip>",
+        "port": 40000,
+        "session_seconds": 0.7025277614593506,
+        "quic_seconds": 0.1242678165435791,
+        "total_seconds": 0.8267955780029297,
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "idle_seconds": 0.0,
+        "file": {
+          "seconds": null,
+          "bytes": 262144,
+          "received": true
+        }
+      }
+    },
+    {
+      "condition": "rate100_d100_l01",
+      "netem_a": "rate 100mbit delay 100ms loss 0.1%",
+      "netem_b": "rate 100mbit delay 100ms loss 0.1%",
+      "size": 4194304,
+      "returncode": 0,
+      "a": {
+        "role": "initiator",
+        "advertise": "<lan-ip>",
+        "port": 40000,
+        "session_seconds": 0.7036352157592773,
+        "quic_seconds": 0.22253894805908203,
+        "total_seconds": 0.9261741638183594,
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "idle_seconds": 0.0,
+        "file": {
+          "seconds": 2.5899906158447266,
+          "bytes": 4194304,
+          "received": true
+        }
+      },
+      "b": {
+        "role": "responder",
+        "advertise": "<lan-ip>",
+        "port": 40000,
+        "session_seconds": 0.7034633159637451,
+        "quic_seconds": 0.10724687576293945,
+        "total_seconds": 0.8107101917266846,
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "idle_seconds": 0.0,
+        "file": {
+          "seconds": null,
+          "bytes": 4194304,
+          "received": true
+        }
+      }
+    },
+    {
+      "condition": "rate100_d100_l1_rep0",
+      "netem_a": "rate 100mbit delay 100ms loss 1%",
+      "netem_b": "rate 100mbit delay 100ms loss 1%",
+      "size": 4194304,
+      "returncode": 0,
+      "a": {
+        "file": {
+          "seconds": 65.19950222969055,
+          "received": true,
+          "bytes": 4194304
+        }
+      },
+      "b": null,
+      "replicate_of": "rate100_d100_l1"
+    },
+    {
+      "condition": "rate100_d100_l1_rep1",
+      "netem_a": "rate 100mbit delay 100ms loss 1%",
+      "netem_b": "rate 100mbit delay 100ms loss 1%",
+      "size": 4194304,
+      "returncode": 0,
+      "a": {
+        "file": {
+          "seconds": 48.35271859169006,
+          "received": true,
+          "bytes": 4194304
+        }
+      },
+      "b": null,
+      "replicate_of": "rate100_d100_l1"
+    },
+    {
+      "condition": "rate100_d100_l1_rep2",
+      "netem_a": "rate 100mbit delay 100ms loss 1%",
+      "netem_b": "rate 100mbit delay 100ms loss 1%",
+      "size": 4194304,
+      "returncode": 0,
+      "a": {
+        "file": {
+          "seconds": 43.26725625991821,
+          "received": true,
+          "bytes": 4194304
+        }
+      },
+      "b": null,
+      "replicate_of": "rate100_d100_l1"
+    },
+    {
+      "condition": "rate100_d100_l1_rep3",
+      "netem_a": "rate 100mbit delay 100ms loss 1%",
+      "netem_b": "rate 100mbit delay 100ms loss 1%",
+      "size": 4194304,
+      "returncode": 0,
+      "a": {
+        "file": {
+          "seconds": 43.65617895126343,
+          "received": true,
+          "bytes": 4194304
+        }
+      },
+      "b": null,
+      "replicate_of": "rate100_d100_l1"
+    },
+    {
+      "condition": "rate100_d100_l1_rep4",
+      "netem_a": "rate 100mbit delay 100ms loss 1%",
+      "netem_b": "rate 100mbit delay 100ms loss 1%",
+      "size": 4194304,
+      "returncode": 0,
+      "a": {
+        "file": {
+          "seconds": 28.72050905227661,
+          "received": true,
+          "bytes": 4194304
+        }
+      },
+      "b": null,
+      "replicate_of": "rate100_d100_l1"
+    }
+  ]
+}

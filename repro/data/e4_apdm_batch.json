@@ -1,0 +1,581 @@
+{
+  "summary": {
+    "n": 30,
+    "both_apdm": 28,
+    "both_punch_tx": 28,
+    "both_no_path": 28,
+    "symmetric_nat_seen": 0,
+    "p2p1_a_min": 0,
+    "p2p1_b_min": 0
+  },
+  "rows": [
+    {
+      "i": 1,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 2,
+      "exit": null
+    },
+    {
+      "i": 3,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 4,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 5,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 6,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 7,
+      "exit": null
+    },
+    {
+      "i": 8,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 9,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 10,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 11,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 12,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 132,
+      "p2p1_b": 135
+    },
+    {
+      "i": 13,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 123,
+      "p2p1_b": 129
+    },
+    {
+      "i": 14,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 15,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 132,
+      "p2p1_b": 135
+    },
+    {
+      "i": 16,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 17,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 18,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 19,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 20,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 21,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 22,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 23,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 24,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 132,
+      "p2p1_b": 135
+    },
+    {
+      "i": 25,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 26,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 27,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 28,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 29,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    },
+    {
+      "i": 30,
+      "exit": null,
+      "initiator": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "responder": {
+        "nat": "apdm",
+        "peer_nat": "apdm",
+        "punch_tx": true,
+        "punch_timeout": true,
+        "error": "E_NO_PATH"
+      },
+      "p2p1_a": 129,
+      "p2p1_b": 135
+    }
+  ]
+}

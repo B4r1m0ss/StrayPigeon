@@ -1,0 +1,373 @@
+{
+  "experiment": "E1b over LAN VMs: real 163->126 mailbox signaling + QUIC file",
+  "topology": "debian4TestA (163) -> debian4TestB (126), LAN <lan-ip>/24",
+  "size": 4194304,
+  "rounds": 3,
+  "ok": 3,
+  "sha_match": 3,
+  "rows": [
+    {
+      "round": 0,
+      "size": 4194304,
+      "run_id": "1793975546-ead174",
+      "A": {
+        "role": "initiator",
+        "side": "vm",
+        "my_email_domain": "163.com",
+        "port": 40000,
+        "advertise": "<lan-ip>",
+        "peer_addr": [
+          "<lan-ip>",
+          40000
+        ],
+        "session_seconds": 11.258,
+        "quic_seconds": 0.062,
+        "connect_seconds": 11.32,
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "events": [
+          {
+            "kind": "state",
+            "state": "bound",
+            "name": "<mailbox>",
+            "peer": "<mailbox>"
+          },
+          {
+            "kind": "state",
+            "state": "peer_ready",
+            "peer": "<public-ip>:39118",
+            "nat": "eim",
+            "candidates": 3
+          },
+          {
+            "kind": "state",
+            "state": "punching",
+            "peer": "<public-ip>:39118",
+            "candidates": 3,
+            "window": 15.0
+          },
+          {
+            "kind": "state",
+            "state": "quic_ready",
+            "peer": "<lan-ip>:40000",
+            "sid": "7597880b22106ef6696d9e85551a9b47"
+          }
+        ],
+        "file": {
+          "bytes": 4194304,
+          "seconds": 0.2017221450805664,
+          "sent": true,
+          "file_errors": [],
+          "source_sha256": "76a32379fe0eddd95d00445d7233be7dc7c2e1d75d399c5a1da4955b41ccf4af",
+          "received": null,
+          "sha_match": null
+        }
+      },
+      "B": {
+        "role": "responder",
+        "side": "vm",
+        "my_email_domain": "126.com",
+        "port": 40000,
+        "advertise": "<lan-ip>",
+        "peer_addr": [
+          "<lan-ip>",
+          40000
+        ],
+        "session_seconds": 12.408,
+        "quic_seconds": 0.073,
+        "connect_seconds": 12.481,
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "events": [
+          {
+            "kind": "state",
+            "state": "bound",
+            "name": "<mailbox>",
+            "peer": "<mailbox>"
+          },
+          {
+            "kind": "state",
+            "state": "peer_ready",
+            "peer": "<public-ip>:10683",
+            "nat": "eim",
+            "candidates": 3
+          },
+          {
+            "kind": "state",
+            "state": "punching",
+            "peer": "<public-ip>:10683",
+            "candidates": 3,
+            "window": 15.0
+          },
+          {
+            "kind": "state",
+            "state": "quic_ready",
+            "peer": "<lan-ip>:40000",
+            "sid": "7597880b22106ef6696d9e85551a9b47"
+          }
+        ],
+        "file": {
+          "bytes": 4194304,
+          "seconds": null,
+          "received": true,
+          "target_sha256": "76a32379fe0eddd95d00445d7233be7dc7c2e1d75d399c5a1da4955b41ccf4af",
+          "sha_match": null
+        }
+      },
+      "ok": true,
+      "sha_match": true
+    },
+    {
+      "round": 1,
+      "size": 4194304,
+      "run_id": "1793975564-633700",
+      "A": {
+        "role": "initiator",
+        "side": "vm",
+        "my_email_domain": "163.com",
+        "port": 40000,
+        "advertise": "<lan-ip>",
+        "peer_addr": [
+          "<lan-ip>",
+          40000
+        ],
+        "session_seconds": 10.703,
+        "quic_seconds": 0.062,
+        "connect_seconds": 10.766,
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "events": [
+          {
+            "kind": "state",
+            "state": "bound",
+            "name": "<mailbox>",
+            "peer": "<mailbox>"
+          },
+          {
+            "kind": "state",
+            "state": "peer_ready",
+            "peer": "<public-ip>:39118",
+            "nat": "eim",
+            "candidates": 3
+          },
+          {
+            "kind": "state",
+            "state": "punching",
+            "peer": "<public-ip>:39118",
+            "candidates": 3,
+            "window": 15.0
+          },
+          {
+            "kind": "state",
+            "state": "quic_ready",
+            "peer": "<lan-ip>:40000",
+            "sid": "7e8a748eed57e8fff57a0ebba204ced3"
+          }
+        ],
+        "file": {
+          "bytes": 4194304,
+          "seconds": 0.22234749794006348,
+          "sent": true,
+          "file_errors": [],
+          "source_sha256": "5005a8d73bc475c8791a89ec59f1a2b9e29d3c9e2ac49aac4dc040061733ab9a",
+          "received": null,
+          "sha_match": null
+        }
+      },
+      "B": {
+        "role": "responder",
+        "side": "vm",
+        "my_email_domain": "126.com",
+        "port": 40000,
+        "advertise": "<lan-ip>",
+        "peer_addr": [
+          "<lan-ip>",
+          40000
+        ],
+        "session_seconds": 11.818,
+        "quic_seconds": 0.066,
+        "connect_seconds": 11.885,
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "events": [
+          {
+            "kind": "state",
+            "state": "bound",
+            "name": "<mailbox>",
+            "peer": "<mailbox>"
+          },
+          {
+            "kind": "state",
+            "state": "peer_ready",
+            "peer": "<public-ip>:10683",
+            "nat": "eim",
+            "candidates": 3
+          },
+          {
+            "kind": "state",
+            "state": "punching",
+            "peer": "<public-ip>:10683",
+            "candidates": 3,
+            "window": 15.0
+          },
+          {
+            "kind": "state",
+            "state": "quic_ready",
+            "peer": "<lan-ip>:40000",
+            "sid": "7e8a748eed57e8fff57a0ebba204ced3"
+          }
+        ],
+        "file": {
+          "bytes": 4194304,
+          "seconds": null,
+          "received": true,
+          "target_sha256": "5005a8d73bc475c8791a89ec59f1a2b9e29d3c9e2ac49aac4dc040061733ab9a",
+          "sha_match": null
+        }
+      },
+      "ok": true,
+      "sha_match": true
+    },
+    {
+      "round": 2,
+      "size": 4194304,
+      "run_id": "1793975578-b8588a",
+      "A": {
+        "role": "initiator",
+        "side": "vm",
+        "my_email_domain": "163.com",
+        "port": 40000,
+        "advertise": "<lan-ip>",
+        "peer_addr": [
+          "<lan-ip>",
+          40000
+        ],
+        "session_seconds": 10.113,
+        "quic_seconds": 0.082,
+        "connect_seconds": 10.196,
+        "states": [
+          [
+            "initiator",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "events": [
+          {
+            "kind": "state",
+            "state": "bound",
+            "name": "<mailbox>",
+            "peer": "<mailbox>"
+          },
+          {
+            "kind": "state",
+            "state": "peer_ready",
+            "peer": "<public-ip>:39118",
+            "nat": "eim",
+            "candidates": 3
+          },
+          {
+            "kind": "state",
+            "state": "punching",
+            "peer": "<public-ip>:39118",
+            "candidates": 3,
+            "window": 15.0
+          },
+          {
+            "kind": "state",
+            "state": "quic_ready",
+            "peer": "<lan-ip>:40000",
+            "sid": "15a0161807bba07b68c5e7cc4e8058c1"
+          }
+        ],
+        "file": {
+          "bytes": 4194304,
+          "seconds": 0.2218327522277832,
+          "sent": true,
+          "file_errors": [],
+          "source_sha256": "8bdded524afeaaac30622b1411ed74040063dd92f9131ffb335a5f4b61228cf3",
+          "received": null,
+          "sha_match": null
+        }
+      },
+      "B": {
+        "role": "responder",
+        "side": "vm",
+        "my_email_domain": "126.com",
+        "port": 40000,
+        "advertise": "<lan-ip>",
+        "peer_addr": [
+          "<lan-ip>",
+          40000
+        ],
+        "session_seconds": 11.227,
+        "quic_seconds": 0.084,
+        "connect_seconds": 11.311,
+        "states": [
+          [
+            "responder",
+            "connected"
+          ]
+        ],
+        "errors": [],
+        "events": [
+          {
+            "kind": "state",
+            "state": "bound",
+            "name": "<mailbox>",
+            "peer": "<mailbox>"
+          },
+          {
+            "kind": "state",
+            "state": "peer_ready",
+            "peer": "<public-ip>:10683",
+            "nat": "eim",
+            "candidates": 3
+          },
+          {
+            "kind": "state",
+            "state": "punching",
+            "peer": "<public-ip>:10683",
+            "candidates": 3,
+            "window": 15.0
+          },
+          {
+            "kind": "state",
+            "state": "quic_ready",
+            "peer": "<lan-ip>:40000",
+            "sid": "15a0161807bba07b68c5e7cc4e8058c1"
+          }
+        ],
+        "file": {
+          "bytes": 4194304,
+          "seconds": null,
+          "received": true,
+          "target_sha256": "8bdded524afeaaac30622b1411ed74040063dd92f9131ffb335a5f4b61228cf3",
+          "sha_match": null
+        }
+      },
+      "ok": true,
+      "sha_match": true
+    }
+  ]
+}

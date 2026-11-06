@@ -1,0 +1,18 @@
+{
+  "topology": "debian4TestA -> debian4TestB, LAN <lan-ip>/24, one QUIC stream/file",
+  "A_resources": "4 vCPU / 4 GiB",
+  "B_resources": "4 vCPU / 4 GiB",
+  "1GiB": {
+    "seconds": 36.143908739089966,
+    "bytes": 1073741824,
+    "sha256": "49bc20df15e412a64472421e13fe86ff1c5165e18b2afccf160d4dc19fe68a14",
+    "approx_mbps": 237.6
+  },
+  "2GiB": {
+    "seconds": 73.63834238052368,
+    "bytes": 2147483648,
+    "sha256": "a7c744c13cc101ed66c29f672f92455547889cc586ce6d44fe76ae824958ea51",
+    "approx_mbps": 233.3
+  },
+  "cleanup": "source/target dirs removed on both VMs; /tmp untouched"
+}

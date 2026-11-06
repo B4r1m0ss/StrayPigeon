@@ -1,0 +1,610 @@
+{
+  "good": 50,
+  "bad": 50,
+  "n_good": 50,
+  "n_bad": 50,
+  "good_pin": "54af188cd30ab24ed096e7b520823be495d9964f76bb3a6f83578169ced2bd55",
+  "bad_pin": "204b260e7f3051cdf9fccc3608a6b6fe654592b7045e31cab9a6b9a2ea815132",
+  "rows": [
+    {
+      "label": "good",
+      "i": 0,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 1,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 2,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 3,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 4,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 5,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 6,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 7,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 8,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 9,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 10,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 11,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 12,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 13,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 14,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 15,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 16,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 17,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 18,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 19,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 20,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 21,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 22,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 23,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 24,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 25,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 26,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 27,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 28,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 29,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 30,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 31,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 32,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 33,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 34,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 35,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 36,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 37,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 38,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 39,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 40,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 41,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 42,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 43,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 44,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 45,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 46,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 47,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 48,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "good",
+      "i": 49,
+      "sessions": 1,
+      "closed": false
+    },
+    {
+      "label": "bad",
+      "i": 0,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 1,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 2,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 3,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 4,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 5,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 6,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 7,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 8,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 9,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 10,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 11,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 12,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 13,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 14,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 15,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 16,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 17,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 18,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 19,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 20,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 21,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 22,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 23,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 24,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 25,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 26,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 27,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 28,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 29,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 30,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 31,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 32,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 33,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 34,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 35,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 36,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 37,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 38,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 39,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 40,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 41,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 42,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 43,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 44,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 45,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 46,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 47,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 48,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    },
+    {
+      "label": "bad",
+      "i": 49,
+      "error": "ConnectionError",
+      "detail": "QUIC certificate pin mismatch"
+    }
+  ]
+}

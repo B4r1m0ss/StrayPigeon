@@ -1,0 +1,636 @@
+{
+  "rows": [
+    {
+      "arm": "direct",
+      "i": 1,
+      "exit": 0,
+      "a": {
+        "quic": 0.08181905746459961,
+        "received": true
+      },
+      "b": {
+        "quic": 0.08078956604003906,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 10,
+      "exit": 0,
+      "a": {
+        "quic": 0.06143951416015625,
+        "received": true
+      },
+      "b": {
+        "quic": 0.07720494270324707,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 11,
+      "exit": 0,
+      "a": {
+        "quic": 0.06162881851196289,
+        "received": true
+      },
+      "b": {
+        "quic": 0.06590437889099121,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 12,
+      "exit": 0,
+      "a": {
+        "quic": 0.06132364273071289,
+        "received": true
+      },
+      "b": {
+        "quic": 0.06604671478271484,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 13,
+      "exit": 0,
+      "a": {
+        "quic": 0.04151153564453125,
+        "received": true
+      },
+      "b": {
+        "quic": 0.055887460708618164,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 14,
+      "exit": 0,
+      "a": {
+        "quic": 0.061688899993896484,
+        "received": true
+      },
+      "b": {
+        "quic": 0.06277322769165039,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 15,
+      "exit": 0,
+      "a": {
+        "quic": 0.061244964599609375,
+        "received": true
+      },
+      "b": {
+        "quic": 0.06194901466369629,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 16,
+      "exit": 0,
+      "a": {
+        "quic": 0.04128098487854004,
+        "received": true
+      },
+      "b": {
+        "quic": 0.05605792999267578,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 17,
+      "exit": 0,
+      "a": {
+        "quic": 0.08135676383972168,
+        "received": true
+      },
+      "b": {
+        "quic": 0.07861781120300293,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 18,
+      "exit": 0,
+      "a": {
+        "quic": 0.06187701225280762,
+        "received": true
+      },
+      "b": {
+        "quic": 0.058229684829711914,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 19,
+      "exit": 0,
+      "a": {
+        "quic": 0.04148077964782715,
+        "received": true
+      },
+      "b": {
+        "quic": 0.05638313293457031,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 2,
+      "exit": 0,
+      "a": {
+        "quic": 0.04162287712097168,
+        "received": true
+      },
+      "b": {
+        "quic": 0.05521893501281738,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 20,
+      "exit": 0,
+      "a": {
+        "quic": 0.0414426326751709,
+        "received": true
+      },
+      "b": {
+        "quic": 0.050237178802490234,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 3,
+      "exit": 0,
+      "a": {
+        "quic": 0.10146045684814453,
+        "received": true
+      },
+      "b": {
+        "quic": 0.11666727066040039,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 4,
+      "exit": 0,
+      "a": {
+        "quic": 0.04151201248168945,
+        "received": true
+      },
+      "b": {
+        "quic": 0.04991888999938965,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 5,
+      "exit": 0,
+      "a": {
+        "quic": 0.08153414726257324,
+        "received": true
+      },
+      "b": {
+        "quic": 0.08029890060424805,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 6,
+      "exit": 0,
+      "a": {
+        "quic": 0.061625003814697266,
+        "received": true
+      },
+      "b": {
+        "quic": 0.06500983238220215,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 7,
+      "exit": 0,
+      "a": {
+        "quic": 0.061788082122802734,
+        "received": true
+      },
+      "b": {
+        "quic": 0.06720685958862305,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 8,
+      "exit": 0,
+      "a": {
+        "quic": 0.06151103973388672,
+        "received": true
+      },
+      "b": {
+        "quic": 0.05929207801818848,
+        "received": true
+      }
+    },
+    {
+      "arm": "direct",
+      "i": 9,
+      "exit": 0,
+      "a": {
+        "quic": 0.06144571304321289,
+        "received": true
+      },
+      "b": {
+        "quic": 0.07302093505859375,
+        "received": true
+      }
+    },
+    {
+      "arm": "newsocket",
+      "i": 1,
+      "exit": 1
+    },
+    {
+      "arm": "newsocket",
+      "i": 10,
+      "exit": 1
+    },
+    {
+      "arm": "newsocket",
+      "i": 2,
+      "exit": 1
+    },
+    {
+      "arm": "newsocket",
+      "i": 3,
+      "exit": 1
+    },
+    {
+      "arm": "newsocket",
+      "i": 4,
+      "exit": 1
+    },
+    {
+      "arm": "newsocket",
+      "i": 5,
+      "exit": 1
+    },
+    {
+      "arm": "newsocket",
+      "i": 6,
+      "exit": 1
+    },
+    {
+      "arm": "newsocket",
+      "i": 7,
+      "exit": 1
+    },
+    {
+      "arm": "newsocket",
+      "i": 8,
+      "exit": 1
+    },
+    {
+      "arm": "newsocket",
+      "i": 9,
+      "exit": 1
+    },
+    {
+      "arm": "repunch",
+      "i": 1,
+      "exit": 0,
+      "a": {
+        "quic": 0.04140806198120117,
+        "received": true
+      },
+      "b": {
+        "quic": 0.05658721923828125,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 10,
+      "exit": 0,
+      "a": {
+        "quic": 0.041666269302368164,
+        "received": true
+      },
+      "b": {
+        "quic": 0.05111098289489746,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 11,
+      "exit": 0,
+      "a": {
+        "quic": 0.06129264831542969,
+        "received": true
+      },
+      "b": {
+        "quic": 0.06781649589538574,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 12,
+      "exit": 0,
+      "a": {
+        "quic": 0.06197619438171387,
+        "received": true
+      },
+      "b": {
+        "quic": 0.07623028755187988,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 13,
+      "exit": 0,
+      "a": {
+        "quic": 0.06155872344970703,
+        "received": true
+      },
+      "b": {
+        "quic": 0.06931376457214355,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 14,
+      "exit": 0,
+      "a": {
+        "quic": 0.08187508583068848,
+        "received": true
+      },
+      "b": {
+        "quic": 0.0810389518737793,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 15,
+      "exit": 0,
+      "a": {
+        "quic": 0.06172609329223633,
+        "received": true
+      },
+      "b": {
+        "quic": 0.06824207305908203,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 16,
+      "exit": 0,
+      "a": {
+        "quic": 0.08189916610717773,
+        "received": true
+      },
+      "b": {
+        "quic": 0.08016800880432129,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 17,
+      "exit": 0,
+      "a": {
+        "quic": 0.06109166145324707,
+        "received": true
+      },
+      "b": {
+        "quic": 0.06454253196716309,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 18,
+      "exit": 0,
+      "a": {
+        "quic": 0.0814812183380127,
+        "received": true
+      },
+      "b": {
+        "quic": 0.08466529846191406,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 19,
+      "exit": 0,
+      "a": {
+        "quic": 0.06165194511413574,
+        "received": true
+      },
+      "b": {
+        "quic": 0.06272768974304199,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 2,
+      "exit": 0,
+      "a": {
+        "quic": 0.04181814193725586,
+        "received": true
+      },
+      "b": {
+        "quic": 0.05058860778808594,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 20,
+      "exit": 0,
+      "a": {
+        "quic": 0.06159520149230957,
+        "received": true
+      },
+      "b": {
+        "quic": 0.07756829261779785,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 3,
+      "exit": 0,
+      "a": {
+        "quic": 0.041300296783447266,
+        "received": true
+      },
+      "b": {
+        "quic": 0.04925680160522461,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 4,
+      "exit": 0,
+      "a": {
+        "quic": 0.061300039291381836,
+        "received": true
+      },
+      "b": {
+        "quic": 0.06863689422607422,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 5,
+      "exit": 0,
+      "a": {
+        "quic": 0.04129314422607422,
+        "received": true
+      },
+      "b": {
+        "quic": 0.056423187255859375,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 6,
+      "exit": 0,
+      "a": {
+        "quic": 0.10161495208740234,
+        "received": true
+      },
+      "b": {
+        "quic": 0.1030271053314209,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 7,
+      "exit": 0,
+      "a": {
+        "quic": 0.0817561149597168,
+        "received": true
+      },
+      "b": {
+        "quic": 0.07845902442932129,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 8,
+      "exit": 0,
+      "a": {
+        "quic": 0.04166984558105469,
+        "received": true
+      },
+      "b": {
+        "quic": 0.05368828773498535,
+        "received": true
+      }
+    },
+    {
+      "arm": "repunch",
+      "i": 9,
+      "exit": 0,
+      "a": {
+        "quic": 0.08296942710876465,
+        "received": true
+      },
+      "b": {
+        "quic": 0.07879805564880371,
+        "received": true
+      }
+    }
+  ],
+  "summary": {
+    "direct": {
+      "n": 20,
+      "ok": 20,
+      "median_quic_s": 0.061478376388549805,
+      "all_quic_s": [
+        0.08181905746459961,
+        0.06143951416015625,
+        0.06162881851196289,
+        0.06132364273071289,
+        0.04151153564453125,
+        0.061688899993896484,
+        0.061244964599609375,
+        0.04128098487854004,
+        0.08135676383972168,
+        0.06187701225280762,
+        0.04148077964782715,
+        0.04162287712097168,
+        0.0414426326751709,
+        0.10146045684814453,
+        0.04151201248168945,
+        0.08153414726257324,
+        0.061625003814697266,
+        0.061788082122802734,
+        0.06151103973388672,
+        0.06144571304321289
+      ]
+    },
+    "repunch": {
+      "n": 20,
+      "ok": 20,
+      "median_quic_s": 0.0615769624710083,
+      "all_quic_s": [
+        0.04140806198120117,
+        0.041666269302368164,
+        0.06129264831542969,
+        0.06197619438171387,
+        0.06155872344970703,
+        0.08187508583068848,
+        0.06172609329223633,
+        0.08189916610717773,
+        0.06109166145324707,
+        0.0814812183380127,
+        0.06165194511413574,
+        0.04181814193725586,
+        0.06159520149230957,
+        0.041300296783447266,
+        0.061300039291381836,
+        0.04129314422607422,
+        0.10161495208740234,
+        0.0817561149597168,
+        0.04166984558105469,
+        0.08296942710876465
+      ]
+    },
+    "newsocket": {
+      "n": 10,
+      "ok": 0,
+      "median_quic_s": null,
+      "all_quic_s": []
+    }
+  }
+}
