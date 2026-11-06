@@ -18,6 +18,7 @@ import datetime
 import hashlib
 import ipaddress
 import ssl
+import struct
 from contextlib import AsyncExitStack
 from pathlib import Path
 from typing import Any, Callable
@@ -100,11 +101,18 @@ class QuicChatProtocol(QuicConnectionProtocol):
         if isinstance(event, StreamDataReceived):
             buf = self._buffers.setdefault(event.stream_id, bytearray())
             buf.extend(event.data)
-            if event.end_stream:
-                payload = bytes(buf)
-                self._buffers.pop(event.stream_id, None)
+            # Frames are length-prefixed so multiple frames can share one
+            # QUIC stream. This keeps large files off the 128-stream limit.
+            while len(buf) >= 4:
+                size = struct.unpack("!I", buf[:4])[0]
+                if len(buf) < 4 + size:
+                    break
+                payload = bytes(buf[4 : 4 + size])
+                del buf[: 4 + size]
                 if self._on_message is not None:
                     self._on_message(self, payload)
+            if event.end_stream:
+                self._buffers.pop(event.stream_id, None)
         elif isinstance(event, ConnectionTerminated):
             self._notify_closed()
 
@@ -131,10 +139,18 @@ class QuicChatProtocol(QuicConnectionProtocol):
     def send_message(self, text: str) -> None:
         self.send_bytes(text.encode("utf-8"))
 
-    def send_bytes(self, data: bytes) -> None:
-        stream_id = self._quic.get_next_available_stream_id()
-        self._quic.send_stream_data(stream_id, data, end_stream=True)
+    def open_stream(self) -> int:
+        return self._quic.get_next_available_stream_id()
+
+    def send_stream(
+        self, stream_id: int, data: bytes, *, end_stream: bool = False
+    ) -> None:
+        frame = struct.pack("!I", len(data)) + data
+        self._quic.send_stream_data(stream_id, frame, end_stream=end_stream)
         self.transmit()
+
+    def send_bytes(self, data: bytes) -> None:
+        self.send_stream(self.open_stream(), data, end_stream=True)
 
 
 class QuicChatSession:
@@ -157,6 +173,14 @@ class QuicChatSession:
 
     async def send_bytes(self, data: bytes) -> None:
         self.protocol.send_bytes(data)
+
+    def open_stream(self) -> int:
+        return self.protocol.open_stream()
+
+    async def send_stream(
+        self, stream_id: int, data: bytes, *, end_stream: bool = False
+    ) -> None:
+        self.protocol.send_stream(stream_id, data, end_stream=end_stream)
 
     async def close(self) -> None:
         self._manager._sessions.pop(self.session_id, None)

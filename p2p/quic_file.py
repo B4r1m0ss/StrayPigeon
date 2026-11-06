@@ -312,7 +312,9 @@ class FileSender:
 
     async def start(self, session: QuicChatSession, timeout: float = 120.0) -> None:
         digest = sha256_file(self.path, self.chunk_size)
-        await session.send_bytes(
+        stream_id = session.open_stream()
+        await session.send_stream(
+            stream_id,
             encode_frame(
                 {
                     "kind": "file_offer",
@@ -323,7 +325,7 @@ class FileSender:
                     "chunk_size": self.chunk_size,
                     "chunk_count": self.chunk_count,
                 }
-            )
+            ),
         )
         await asyncio.wait_for(self._accepted.wait(), timeout)
         if self._error:
@@ -333,19 +335,22 @@ class FileSender:
             for sent, index in enumerate(missing, 1):
                 fh.seek(index * self.chunk_size)
                 payload = fh.read(self.chunk_size)
-                await session.send_bytes(
+                await session.send_stream(
+                    stream_id,
                     encode_frame(
                         {"kind": "file_chunk", "file_id": self.file_id, "index": index},
                         payload,
-                    )
+                    ),
                 )
                 if self.on_progress is not None:
                     self.on_progress(
                         self.file_id, len(self._have) + sent, self.chunk_count
                     )
                 await asyncio.sleep(0)
-        await session.send_bytes(
-            encode_frame({"kind": "file_end", "file_id": self.file_id})
+        await session.send_stream(
+            stream_id,
+            encode_frame({"kind": "file_end", "file_id": self.file_id}),
+            end_stream=True,
         )
         await asyncio.wait_for(self._done.wait(), timeout)
         if self._error:
