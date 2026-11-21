@@ -47,7 +47,6 @@ python3 aggregate.py --json         # 同上，机器可读
 | `e5_netem_summary.json` | netem 100 Mbps 与 100 ms+1% | 表 11 |
 | `e5_netem_decomp.json` | 弱网分解的 13 轮 | §7.7、图 7 |
 | `e5_big_files.json` / `e5_ab_4c4g.json` | 1/2 GiB | 表 10、图 6 |
-| `e5_netem_summary.json` | netem 两档 | 表 8 |
 | `e1b_lan_4m.json` / `e1b_lan_64m.json` | 真实邮箱 + LAN 文件传输 | §7.3 |
 | `e6b_cloud.json` | 云→家庭 NAT 1 MiB ×6 | §7.4 |
 | `e2_netns_batch_summary.json` 等 | E2 PING 对照（off 有效 5、on 25） | 表 12 |
