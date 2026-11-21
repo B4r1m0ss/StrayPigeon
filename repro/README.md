@@ -1,6 +1,6 @@
 # StrayPigeon 复现包
 
-本目录是论文《复用邮箱信令的直连 P2P 通信：设计、实现与受控边界评估》的复现材料：
+本目录是论文《不建信令服务器、数据面不设中继的直连 P2P 通信：邮箱信令的可行性与代价》的复现材料：
 **逐轮 JSON + 汇总脚本 + 校验脚本 + JSON Schema**。
 
 **不含**原始 pcap、邮箱授权码与真实网络标识。已脱敏：
@@ -35,24 +35,24 @@ python3 aggregate.py --json         # 同上，机器可读
 
 | 文件 | 内容 | 论文位置 |
 |---|---|---|
-| `e1_100_summary.json` | E1 100 轮连接时间的中位/p95/max | 表 5 |
-| `e6_100_summary.json` | E6 同上 | 表 5 |
-| `e1_session_20.json` / `e1_session_80.json` | E1 逐轮记录（含 4 个状态时间戳） | 表 5、图 2 |
-| `e6_cloud_b_20.json` / `e6_cloud_b_80.json` | E6 逐轮记录 | 表 5、图 2 |
-| `sessions_phase_summary.json` | E1/E6 阶段分解与探针启动偏差 | 表 5、图 2 |
-| `e3_netns_batch_summary.json` / `e3_netns_batch2_summary.json` | E3 三臂逐轮 | 表 6、图 3 |
-| `e3_newsocket_lan.json` | 新 socket 的无 NAT 对照（3/3） | §7.2 |
-| `e4_apdm_batch.json` / `e4_apdm_actual.json` | E4 30 次打洞记录（28 有效） | 表 7 |
-| `e5_lan_summary.json` | LAN 4/64/256 MiB | 表 8、图 4 |
-| `e5_netem_summary.json` | netem 100 Mbps 与 100 ms+1% | 表 8 |
-| `e5_netem_decomp.json` | 弱网分解的 13 轮 | §7.4 |
-| `e5_big_files.json` / `e5_ab_4c4g.json` | 1/2 GiB | 表 8、图 4 |
+| `e1_100_summary.json` | E1 100 轮连接时间的中位/p95/max | 表 6 |
+| `e6_100_summary.json` | E6 同上 | 表 6 |
+| `e1_session_20.json` / `e1_session_80.json` | E1 逐轮记录（含 4 个状态时间戳） | 表 6、图 4 |
+| `e6_cloud_b_20.json` / `e6_cloud_b_80.json` | E6 逐轮记录 | 表 6、图 4 |
+| `sessions_phase_summary.json` | E1/E6 阶段分解与探针启动偏差 | 表 6、图 4 |
+| `e3_netns_batch_summary.json` / `e3_netns_batch2_summary.json` | E3 三臂逐轮 | 表 8、图 5 |
+| `e3_newsocket_lan.json` | 新 socket 的无 NAT 对照（3/3） | §7.5 |
+| `e4_apdm_batch.json` / `e4_apdm_actual.json` | E4 30 次打洞记录（28 有效） | 表 9 |
+| `e5_lan_summary.json` | LAN 4/64/256 MiB | 表 10、图 6 |
+| `e5_netem_summary.json` | netem 100 Mbps 与 100 ms+1% | 表 11 |
+| `e5_netem_decomp.json` | 弱网分解的 13 轮 | §7.7、图 7 |
+| `e5_big_files.json` / `e5_ab_4c4g.json` | 1/2 GiB | 表 10、图 6 |
 | `e5_netem_summary.json` | netem 两档 | 表 8 |
-| `e1b_lan_4m.json` / `e1b_lan_64m.json` | 真实邮箱 + LAN 文件传输 | §7.1 |
-| `e6b_cloud.json` | 云→家庭 NAT 1 MiB ×6 | §7.1 |
-| `e2_netns_batch_summary.json` 等 | E2 PING 对照（off 有效 5、on 25） | 表 9 |
-| `e8_pinning_pilot.json` | pinning 50/50 | 表 10 |
-| `e9_batch.json` | 16 会话 / MTU / 模拟续传 | 表 11 |
+| `e1b_lan_4m.json` / `e1b_lan_64m.json` | 真实邮箱 + LAN 文件传输 | §7.3 |
+| `e6b_cloud.json` | 云→家庭 NAT 1 MiB ×6 | §7.4 |
+| `e2_netns_batch_summary.json` 等 | E2 PING 对照（off 有效 5、on 25） | 表 12 |
+| `e8_pinning_pilot.json` | pinning 50/50 | 表 13 |
+| `e9_batch.json` | 16 会话 / max_datagram_size / 模拟续传 | 表 14 |
 
 ## 不重跑实验能验证到什么
 

@@ -18,11 +18,11 @@
 - **公开仓库包含应用源码 + 论文复现数据包**（`repro/`：逐轮 JSON、汇总与校验脚本）；内部实验脚本和测试套件不随公开仓库提供；
 - **QUIC 直接建立在 legacy Session 打洞后的同一个 UDP socket 上**，不再二次打洞；
 - **QUIC PING 每 15 秒**，`idle_timeout=600s`；
-- **尚未做安全审计**；QUIC TLS 当前是 `CERT_NONE`，证书指纹固定（fingerprint pinning）还没实现，不能当作生产级端到端认证。
+- **尚未做安全审计**；QUIC TLS 默认是 `CERT_NONE`；可选证书指纹固定（fingerprint pinning）已在 `p2p/quic_transport.py` 实现，默认关闭，需显式配置。它不能替代完整 PKI/生产级端到端认证。
 
 ## 复现数据
 
-论文（《复用邮箱信令的直连 P2P 通信：设计、实现与受控边界评估》）的逐轮实验记录放在
+论文（《不建信令服务器、数据面不设中继的直连 P2P 通信：邮箱信令的可行性与代价》）的逐轮实验记录放在
 [`repro/`](repro/)：25 个 JSON 加 `schema.json`、`validate.py`、`aggregate.py`。
 
 ```bash
@@ -261,7 +261,7 @@ PSK 的三个用途：
 2. **信令邮件**：CANDIDATE 用 PSK 封装，邮件服务商看不到候选内容；
 3. **UDP 打洞探测包**：probe 用 PSK 做 HMAC 标签，防止无关包被当成打洞包。
 
-> **PSK 不是 QUIC 的 TLS 证书/密钥。** QUIC 数据面是 TLS 1.3；当前 `CERT_NONE`，没有把 PSK 或证书 fingerprint 绑定到 QUIC。证书 fingerprint pinning 是后续工作。
+> **PSK 不是 QUIC 的 TLS 证书/密钥。** QUIC 数据面是 TLS 1.3；默认 `CERT_NONE`，但代码已支持可选的证书 SHA-256 fingerprint pinning，需显式配置；默认配置仍不校验证书。
 
 ## 实网验收
 
@@ -292,13 +292,13 @@ QUIC PING 心跳 / 空闲后再聊天
 - **邀请码**：含双方邮箱/共享邮箱、PSK、role、checksum；不是身份口令，但拿到邀请码的人可以加入该对话。
 - **vault**：邮箱授权码和 PSK 用 `scrypt(n=2^15, r=8, p=1)` + `ChaCha20-Poly1305` 加密；口令不保存。
 - **Legacy 数据面**：X25519 临时密钥 → HKDF → ChaCha20-Poly1305；序号防重放；心跳不携带聊天内容。
-- **QUIC 数据面**：QUIC/TLS 加密；**当前客户端 `CERT_NONE`，没有证书指纹固定**，所以只能算实验性加密通道，不能算生产级端到端认证。后续需要把服务器证书 fingerprint 写入邀请码/contact 并强制校验。
+- **QUIC 数据面**：QUIC/TLS 加密；默认客户端 `CERT_NONE`，可选证书指纹固定已实现但默认关闭；生产部署仍需把服务器证书 fingerprint 写入邀请码/contact 并强制校验。
 - **信令**：IMAP 993 / SMTP 465 走 TLS；邮件服务商能看到信令邮件主题（`p2p1/<sid>/<seq>`）的元数据，但看不到 PSK/聊天内容；邀请码不经过邮件。
 - **没有中继**：没有 TURN/relay；双方都是对称 NAT 时可能打洞失败。
 
 ## 已知限制
 
-- **QUIC TLS 证书未固定**：当前 `CERT_NONE`，存在 MITM 风险；生产前必须实现 fingerprint pinning。
+- **QUIC TLS 默认不校验证书**：默认 `CERT_NONE`，存在 MITM 风险；可选 fingerprint pinning 已实现但默认关闭，生产前必须启用并完成信任链设计。
 - **没有 TURN/relay 兜底**：对称 NAT/CGNAT 下可能无法直连。
 - **`advertise_host` 固定 127.0.0.1**：跨机器主要依赖 STUN srflx；LAN 纯 host 候选需要后续加 GUI 字段。
 - **大文件未做 100 GB 级实测**：目前 4 MB 单文件、16 × 1 MB 并发；`.part.json` 每 chunk 写一次，超大文件需要优化。
